@@ -214,7 +214,7 @@
         const yieldData = data.barData.map(d => d.yield);
       const isAndroid = /Android/i.test(navigator.userAgent);
         const chartAspectRatio = isAndroid ? 1 : 2;
-        const legendFontSize = isAndroid ? 9:12;
+        const legendFontSize = isAndroid ? 6:12;
         new Chart(document.getElementById("barChart"), {
           type: "bar",
           data: {
