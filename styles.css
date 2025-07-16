@@ -18,6 +18,28 @@ body {
 .wrapper {
   flex: 1;
 }
+/* Wrapper for iframe */
+.iframe-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Prevent shrinking or scaling issues on mobile */
+.iframe-wrapper iframe {
+  width: 100%;
+  height: 800px;
+  border: none;
+  display: block;
+}
+
+/* Optional: Make it adapt slightly on very small screens */
+@media screen and (max-width: 600px) {
+  .iframe-wrapper iframe {
+    height: 90vh;
+  }
+}
+
 /*para sa image gallery sa activities*/
 
 .gallery-section {
