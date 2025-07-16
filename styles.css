@@ -204,6 +204,173 @@ nav a:hover {
 nav a.active {
   background-color: #3d7a3f;
 }
+/*dropdown navigation*/
+/* Dropdown container inside nav */
+.navigations .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style the main link */
+.navigations .dropdown .dropdown-toggle {
+  text-decoration: none;
+  padding: 14px 16px;
+  display: inline-block;
+  color: white;
+}
+
+/* Dropdown menu hidden by default */
+.navigations .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside dropdown */
+.navigations .dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+}
+
+/* Hover styles */
+.navigations .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Optional: Hover effect on dropdown links */
+.navigations .dropdown-content a:hover {
+  background-color: #e0e0e0;
+}
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown content hidden by default */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  display: block;
+  text-decoration: none;
+}
+
+/* Hover or focus to show dropdown */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Hover effect for dropdown links */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/*para sa chart sa prtf*/
+ .newscontent1pie {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+       justify-content: space-around;
+      gap: 30px;
+      padding: 20px 0;
+     
+    }
+     .newscontent1pies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px 0;
+    
+    }
+    .newscontent1pie canvas {
+      max-width: 200px;
+    }
+    .no-data-box {
+      width: 300px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+      
+    }
+    .chart-label {
+      text-align: center;
+      margin-top: 10px;
+      
+    }
+        
+      .chart-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 300px; /* or adjust based on your chart size */
+        width: 300px;  /* optional fixed width */
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      .chart-box canvas {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .chart-box p {
+        margin-top: auto;
+        text-align: center;
+        font-weight: bold;
+        font-size: 0.95rem;
+      }
+    
+    .newstittle{
+        text-align:center;
+    }
+    .newscontent1table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  position: relative;
+}
+
+.newscontent1table table {
+  margin: 0 auto;
+  width: auto;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+.cent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
 
 /* ====== Spacing for Fixed Header ====== */
 section.homevission,section.homevission1,
