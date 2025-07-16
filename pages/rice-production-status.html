@@ -230,20 +230,20 @@
   maintainAspectRatio: true,
             aspectRatio: chartAspectRatio,
             scales: { y: { beginAtZero: true } },
-             plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          // Force legend order and sort
-              font:{
-            size:legendFontSize
-                  },
-          sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
-                }
-            },
-      tooltip: { mode: "index", intersect: false }
-            }
-          }
+                               plugins: {
+                        legend: {
+                          position: "bottom",
+                          labels: {
+                            // Force legend order and sort
+                                font:{
+                              size:legendFontSize
+                                    },
+                      
+                                  }
+                              },
+                        tooltip: { mode: "index", intersect: false }
+                              }
+                            }
         });
 
         function createPie(ctxId, labels, values, colors) {
