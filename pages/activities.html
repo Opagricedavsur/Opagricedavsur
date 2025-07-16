@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAG Rice Section - Activities</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header>
+    <nav> 
+      <ul>
+        <li class="login" id="login-area">
+          <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
+        </li>
+      </ul>
+    </nav>  
+
+    <ul class="opagheader">
+      <li class="opaghead1"><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
+      <li class="opaghead2">OPAG Rice Section</li>
+    </ul>
+  </header>
+
+  <nav class="navigations">
+     <a href="../index.html">Home</a>
+    <a href="activities.html" class="active">Activities</a>
+        <a href="rice-production-status.html">Rice Production Status</a>
+     <a href="news.html">News & Updates</a>
+    <a href="prtf.html">PRTF 2025</a>
+ 
+ 
+  </nav>
+
+  <main class="maincontentnews1">
+    <section id="news" class="news1content1">
+     <section id="activity-slideshow" class="gallery-section">
+  <h2>Activity Slideshow</h2>
+  <div class="video-container">
+    <iframe 
+      src="https://docs.google.com/presentation/d/e/2PACX-1vS85DwPye73HFB-J45wu9yn-iskv6PdeZ7pWClBssuhcPC1iuYYlAdtGk1BvimG6choH14yn5Y7PDZz/pubembed?start=true&loop=true&delayms=5000" 
+      frameborder="0" 
+      width="100%" 
+      height="480" 
+      allowfullscreen 
+      mozallowfullscreen 
+      webkitallowfullscreen>
+    </iframe>
+  </div>
+</section>
+
+</section>
+
+<section id="activity-gallery" class="gallery-section">
+  <h2>Activity Photo Gallery</h2>
+  <div class="gallery">
+    <figure>
+        <iframe 
+      src="https://drive.google.com/file/d/1Y4eEfE0pdupbzYxKynqEOWmCEeugQz1C/preview" 
+      width="100%" 
+      height="480" 
+      allow="autoplay"
+      style="border: none;" alt="Activity 1"
+    ></iframe>
+
+       <figcaption>Fertilizer Demo – Panaglib, June 2025</figcaption>
+    </figure>
+    <figure>
+      <img src="https://drive.google.com/uc?export=view&id=YOUR_IMAGE_ID_2" alt="Activity 2">
+      <figcaption>Seed Variety Trial – Sibonga, June 2025</figcaption>
+    </figure>
+    <!-- Add more <figure> blocks as needed -->
+  </div>
+</section>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+  <script>
+  // Detect Android devices
+  function isAndroid() {
+    return /Android/i.test(navigator.userAgent);
+  }
+
+  // Change class if Android + handle login/logout
+  document.addEventListener("DOMContentLoaded", () => {
+    // Android detection and class swap
+    if (isAndroid()) {
+      const mainContent = document.querySelector(".maincontentnews1");
+      if (mainContent) {
+        mainContent.classList.remove("maincontentnews1");
+        mainContent.classList.add("maincontentnews2");
+      }
+    }
+
+    // Login/logout logic
+    const loginArea = document.getElementById("login-area");
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    let rawImg = localStorage.getItem("profileImg") || "";
+    let profileImg = "";
+
+    // ✅ Google Drive Link
+    if (rawImg.includes("drive.google.com/file/d/")) {
+      profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+    }
+    // ✅ <img src="..."> HTML tag from Google Sheets
+    else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+      const match = rawImg.match(/src=["']([^"']+)["']/);
+      profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+    }
+    // ✅ Direct image URL
+    else {
+      profileImg = rawImg || "../../logo-pic/account logo.png";
+    }
+
+    localStorage.setItem("profileImg", profileImg);
+    const fullName = localStorage.getItem("fullName") || "User Name";
+
+    if (isLoggedIn && loginArea) {
+      loginArea.innerHTML = `
+        <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
+             onerror="this.src='../../logo-pic/account logo.png'">
+        <div id="profileDropdown" class="profile-dropdown">
+          <img src="${profileImg}" alt="Profile" />
+          <p>${fullName}</p>
+          <button onclick="logout()">Logout</button>
+        </div>
+      `;
+
+      const profilePic = document.getElementById("profilePic");
+      const dropdown = document.getElementById("profileDropdown");
+
+      profilePic.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.style.display = "none";
+        }
+      });
+    }
+  });
+
+  function logout() {
+    const username = localStorage.getItem("username") || "Unknown";
+    const email = localStorage.getItem("email") || "Unknown";
+
+    const logData = { username, email, action: 'logout' };
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+    fetch(scriptURL, {
+      method: 'POST',
+      body: JSON.stringify(logData)
+    }).finally(() => {
+      localStorage.clear();
+      location.reload();
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>OPAG Rice Section - Home</title>
+        <link rel="stylesheet" href="../styles.css" />
+
+    </head>
+    <body>
+        <header>
+            
+             <nav> 
+                <ul>
+                    <li class="login" id="login-area"> <a href="signin.html" class="signin">Login</a>
+                     
+                    </li>
+
+                </ul>
+            </nav>  
+            
+            <ul class="opagheader">
+               <li ><img src="../logo-pic/logo opag.png" class="opaglogo"></li>
+               <li >OPAG Rice Section</li>
+            </ul>
+  </header>
+             
+    <nav class="navigations">
+        <a href="index.html" class="active">Home</a>
+        <a href="news.html">News & Updates</a>
+        <a href="submit.html">Submit Reports</a>
+        <a href="prtf.html">PRTF 2025</a>
+        
+        <a href="contact.html">Contact Us</a>
+    </nav>          
+  </header>
+   <main>
+        <section id="home" class="homevission">
+            <h2>Mission & Vision</h2>
+            <h3>Our Mission</h3>
+            <p>OPAG Rice Section aims to advance rice technology, promote sustainable rice farming, and improve the livelihoods of rice farmers through innovative research and community engagement.</p>
+            <h3>Our Vision</h3>
+            <p>A future where rice farming is sustainable, efficient, and profitable for Filipino farmers, ensuring food security and economic growth.</p>
+        </section>
+    </main>
+        <footer>
+            <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+        </footer>
+
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginArea = document.getElementById("login-area");
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+      let rawImg = localStorage.getItem("profileImg") || "";
+      let profileImg = "";
+
+      // ✅ Google Drive Link
+      if (rawImg.includes("drive.google.com/file/d/")) {
+        profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+      }
+      // ✅ <img src="..."> HTML tag from Google Sheets
+      else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+        const match = rawImg.match(/src=["']([^"']+)["']/);
+        profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+      }
+      // ✅ Direct image URL
+      else {
+        profileImg = rawImg || "../../logo-pic/account logo.png";
+      }
+
+      localStorage.setItem("profileImg", profileImg);
+      const fullName = localStorage.getItem("fullName") || "User Name";
+
+      if (isLoggedIn && loginArea) {
+        loginArea.innerHTML = `
+          <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
+               onerror="this.src='../../logo-pic/account logo.png'">
+          <div id="profileDropdown" class="profile-dropdown">
+            <img src="${profileImg}" alt="Profile" />
+            <p>${fullName}</p>
+            <button onclick="logout()">Logout</button>
+          </div>
+        `;
+
+        const profilePic = document.getElementById("profilePic");
+        const dropdown = document.getElementById("profileDropdown");
+
+        profilePic.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+          }
+        });
+      }
+    });
+
+    function logout() {
+  const username = localStorage.getItem("username") || "Unknown";
+  const email = localStorage.getItem("email") || "Unknown";
+
+  const logData = { username, email, action: 'logout' };
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(logData)
+  }).finally(() => {
+    localStorage.clear();
+    location.reload(); // 🔁 Reload current page
+  });
+}
+
+  </script>
+
+   
+    </body>
+</html>

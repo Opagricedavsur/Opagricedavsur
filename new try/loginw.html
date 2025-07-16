@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Log Form</title>
+</head>
+<body> <!-- ✅ Your opening <body> tag was after </body>, which was a mistake -->
+
+  <form id="logForm">
+    <label for="login-email">Email or Username:</label>
+    <input type="text" id="login-email" name="username" placeholder="Enter email or username" required />
+
+    <label for="login-password">Password:</label>
+    <input type="password" id="login-password" name="password" placeholder="Password" required />
+
+    <!-- Optional: Add hidden action field -->
+    <input type="hidden" name="action" value="login">
+
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwkxJ-ceoWZMpyB_gbs51l5FB1sJCljcop5iWolkHoEyMxQf8FoieWkZ3m1LpzNNhdJMg/exec';
+
+    document.getElementById('logForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const data = {
+        username: form.username.value,
+        password: form.password.value,
+        action: 'login' // or 'logout' if you use this for logout too
+      };
+
+      try {
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.text();
+        alert(result);
+      } catch (err) {
+        alert('Logging failed.');
+      }
+    });
+  </script>
+
+</body>
+</html>

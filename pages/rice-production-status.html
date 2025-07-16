@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>OPAG Rice Section - Rice Status</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .chart-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0;
+    }
+    .chart-box1 {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      width: 600px;
+      max-width: 90vw;
+    }
+    .chart-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      width: 250px;
+      max-width: 90vw;
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+    h3.section-header {
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <nav> 
+        <ul>
+          <li class="login" id="login-area">
+            <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
+          </li>
+        </ul>
+      </nav>  
+      <ul class="opagheader">
+        <li><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
+        <li>OPAG Rice Section</li>
+      </ul>
+    </header>
+
+    <nav class="navigations">
+      <a href="../index.html">Home</a>
+      <a href="news.html">News & Updates</a>
+      <a href="rice-production-status.html" class="active">Davao del Sur Production Status</a>
+      <a href="prtf.html">PRTF 2025</a>
+    </nav>
+
+    <main class="maincontentnews1">
+      <section>
+        <h3 class="section-header">Annual Rice Production by Ecosystem (2013–Present)</h3>
+        <div class="chart-section">
+          <div class="chart-box1">
+            <h4>Annual Yield (MT/ha)</h4>
+            <canvas id="ecosystemLineChart"></canvas>
+          </div>
+        </div>
+
+        <h3 class="section-header">Municipality Rice Production Overview</h3>
+        <div class="chart-section">
+          <div class="chart-box1">
+            <h4>Area, Production & Yield per Municipality</h4>
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+
+        <h3 class="section-header">Ecosystem Classification</h3>
+        <div class="chart-section">
+          <div class="chart-box"><h4>Area</h4><canvas id="ecoArea"></canvas></div>
+          <div class="chart-box"><h4>Production</h4><canvas id="ecoProd"></canvas></div>
+          <div class="chart-box"><h4>Average Yield</h4><canvas id="ecoYield"></canvas></div>
+        </div>
+
+        <h3 class="section-header">Seed Classification</h3>
+        <div class="chart-section">
+          <div class="chart-box"><h4>Area</h4><canvas id="seedArea"></canvas></div>
+          <div class="chart-box"><h4>Production</h4><canvas id="seedProd"></canvas></div>
+          <div class="chart-box"><h4>Average Yield</h4><canvas id="seedYield"></canvas></div>
+        </div>
+
+        <h3 class="section-header">Season (2024)</h3>
+        <div class="chart-section">
+          <div class="chart-box"><h4>Area</h4><canvas id="seasonArea"></canvas></div>
+          <div class="chart-box"><h4>Production</h4><canvas id="seasonProd"></canvas></div>
+          <div class="chart-box"><h4>Average Yield</h4><canvas id="seasonYield"></canvas></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+  <!-- Login/Profile Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginArea = document.getElementById("login-area");
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      let rawImg = localStorage.getItem("profileImg") || "";
+      let profileImg = "";
+
+      if (rawImg.includes("drive.google.com/file/d/")) {
+        profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+      } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+        const match = rawImg.match(/src=["']([^"']+)["']/);
+        profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+      } else {
+        profileImg = rawImg || "../../logo-pic/account logo.png";
+      }
+
+      localStorage.setItem("profileImg", profileImg);
+      const fullName = localStorage.getItem("fullName") || "User Name";
+
+      if (isLoggedIn && loginArea) {
+        loginArea.innerHTML = `
+          <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img"
+            onerror="this.src='../../logo-pic/account logo.png'">
+          <div id="profileDropdown" class="profile-dropdown">
+            <img src="${profileImg}" alt="Profile" />
+            <p>${fullName}</p>
+            <button onclick="logout()">Logout</button>
+          </div>
+        `;
+
+        const profilePic = document.getElementById("profilePic");
+        const dropdown = document.getElementById("profileDropdown");
+
+        profilePic.addEventListener("click", e => {
+          e.stopPropagation();
+          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", e => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+          }
+        });
+      }
+    });
+
+    function logout() {
+      const username = localStorage.getItem("username") || "Unknown";
+      const email = localStorage.getItem("email") || "Unknown";
+      const logData = { username, email, action: 'logout' };
+
+      fetch('https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec', {
+        method: 'POST',
+        body: JSON.stringify(logData)
+      }).finally(() => {
+        localStorage.clear();
+        location.reload();
+      });
+    }
+  </script>
+
+  <!-- Chart Data Loader -->
+  <script>
+    fetch("https://script.google.com/macros/s/AKfycbzNrn2xudYBMtmCpdEjl1cqTVvCGKBN53rdJo4bJZdrI9cwf1qzjpC1zzr-H1Ix3ECwWA/exec")
+      .then(res => res.json())
+      .then(data => {
+        const barLabels = data.barData.map(d => d.municipality);
+        const areaData = data.barData.map(d => d.area);
+        const prodData = data.barData.map(d => d.production);
+        const yieldData = data.barData.map(d => d.yield);
+
+        new Chart(document.getElementById("barChart"), {
+          type: "bar",
+          data: {
+            labels: barLabels,
+            datasets: [
+              { label: "Area (ha)", data: areaData, backgroundColor: "#4dc9f6" },
+              { label: "Production (MT)", data: prodData, backgroundColor: "#f67019" },
+              { label: "Yield (MT/ha)", data: yieldData, backgroundColor: "#00a950" }
+            ]
+          },
+          options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+          }
+        });
+
+        function createPie(ctxId, labels, values, colors) {
+          new Chart(document.getElementById(ctxId), {
+            type: "pie",
+            data: { labels, datasets: [{ data: values, backgroundColor: colors }] },
+            options: { responsive: true }
+          });
+        }
+
+        // === Line Chart for Ecosystem per Year ===
+  const ecos = ["Irrigated", "Lowland", "Upland"];
+const yearsSet = new Set();
+
+ecos.forEach(eco => {
+  Object.keys(data.yearlyEcosystem?.[eco] || {}).forEach(year => yearsSet.add(year));
+});
+const sortedYears = Array.from(yearsSet).sort((a, b) => +a - +b);
+
+const colorMap = {
+  Irrigated: "#007bff",
+  Lowland: "#28a745",
+  Upland: "#dc3545"
+};
+
+const datasets = [];
+
+// Area and Production bars
+["area", "production"].forEach(type => {
+  ecos.forEach(eco => {
+    datasets.push({
+      type: "bar",
+      label: `${type === "area" ? "Area" : "Production"} - ${eco}`,
+      data: sortedYears.map(year => {
+        const val = data.yearlyEcosystem?.[eco]?.[year];
+        return val ? +val[type] : 0;
+      }),
+      backgroundColor: Chart.helpers.color(colorMap[eco]).alpha(type === "area" ? 0.4 : 0.75).rgbString(),
+      yAxisID: 'y',
+      stack: type
+    });
+  });
+});
+
+// Yield line
+ecos.forEach(eco => {
+  datasets.push({
+    type: "line",
+    label: `Yield - ${eco}`,
+    data: sortedYears.map(year => {
+      const val = data.yearlyEcosystem?.[eco]?.[year];
+      return val ? +val.avgYield.toFixed(2) : null;
+    }),
+    borderColor: colorMap[eco],
+    backgroundColor: colorMap[eco],
+    yAxisID: "yYield",
+    tension: 0.3,
+    fill: false
+  });
+});
+
+// Sort legend entries manually: area > production > yield
+const legendOrder = [];
+["Area", "Production", "Yield"].forEach(section => {
+  ecos.forEach(eco => legendOrder.push(`${section} - ${eco}`));
+});
+
+new Chart(document.getElementById("ecosystemLineChart"), {
+  data: {
+    labels: sortedYears,
+    datasets: datasets
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: "Area / Production" }
+      },
+      yYield: {
+        position: "right",
+        beginAtZero: true,
+        title: { display: true, text: "Yield (MT/ha)" },
+        grid: { drawOnChartArea: false }
+      },
+      x: {
+        title: { display: true, text: "Year" }
+      }
+    },
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          // Force legend order and sort
+          sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
+        }
+      },
+      tooltip: { mode: "index", intersect: false }
+    }
+  }
+});
+
+
+
+        // Pie Charts
+        const ecoLabels = Object.keys(data.ecosystem);
+        createPie("ecoArea", ecoLabels, ecoLabels.map(k => data.ecosystem[k].area), ["#ff6384", "#ff9f40", "#ffcd56"]);
+        createPie("ecoProd", ecoLabels, ecoLabels.map(k => data.ecosystem[k].production), ["#ff6384", "#ff9f40", "#ffcd56"]);
+        createPie("ecoYield", ecoLabels, ecoLabels.map(k => +data.ecosystem[k].avgYield.toFixed(2)), ["#ff6384", "#ff9f40", "#ffcd56"]);
+
+        const seedLabels = Object.keys(data.seedClass);
+        createPie("seedArea", seedLabels, seedLabels.map(k => data.seedClass[k].area), ["#36a2eb", "#9966ff", "#c9cbcf"]);
+        createPie("seedProd", seedLabels, seedLabels.map(k => data.seedClass[k].production), ["#36a2eb", "#9966ff", "#c9cbcf"]);
+        createPie("seedYield", seedLabels, seedLabels.map(k => +data.seedClass[k].avgYield.toFixed(2)), ["#36a2eb", "#9966ff", "#c9cbcf"]);
+
+        const seasonLabels = Object.keys(data.season);
+        createPie("seasonArea", seasonLabels, seasonLabels.map(k => data.season[k].area), ["#7cc576", "#fcaf58", "#f282b4"]);
+        createPie("seasonProd", seasonLabels, seasonLabels.map(k => data.season[k].production), ["#7cc576", "#fcaf58", "#f282b4"]);
+        createPie("seasonYield", seasonLabels, seasonLabels.map(k => +data.season[k].avgYield.toFixed(2)), ["#7cc576", "#fcaf58", "#f282b4"]);
+      })
+      .catch(err => {
+        console.error("Error loading chart data:", err);
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="../styles.css" />
+
+  
+</head>
+<div class="wrapper">
+  <header>
+    <ul class="opagheaderlist">
+      <li class="opaghead1"><img src="../logo-pic/logo opag.png" alt="OPAG Logo" /></li>
+      <li class="opaghead2">OPAG Rice Section</li>
+    </ul>
+  </header>
+
+  <section id="login"class="homevission">
+    <h2>Sign Up</h2>
+    <form>
+      <label for="signup-firstname">First Name:</label><br>
+      <input type="text" id="signup-firstname" placeholder="Your first name" required><br><br>
+      <label for="signup-midname">Middle Name:</label><br>
+      <input type="text" id="signup-midname" placeholder="Your middle name" required><br><br>
+      <label for="signup-lastname">Last Name:</label><br>
+      <input type="text" id="signup-lastname" placeholder="Your last name" required><br><br>
+      <label for="signup-birthday">Birthday:</label><br>
+      <input type="date" id="signup-birthday" required><br><br>
+      <label for="signup-username">User Name:</label><br>
+      <input type="text" id="signup-username" placeholder="Your User name" required><br><br>
+      <label for="signup-email">Email:</label>
+      <input type="email" id="signup-email" placeholder="your.email@example.com" required />
+
+      <label for="signup-password">Password:</label>
+      <input type="password" id="signup-password" placeholder="Password" required />
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+</div>
+  <footer>
+    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+ <script>
+  document.querySelector('form').addEventListener('submit', function (e) {
+    e.preventDefault(); // 🔴 This stops the default page reload
+
+    const data = {
+      firstName: document.getElementById("signup-firstname").value.trim(),
+      middleName: document.getElementById("signup-midname").value.trim(),
+      lastName: document.getElementById("signup-lastname").value.trim(),
+      birthday: document.getElementById("signup-birthday").value,
+      username: document.getElementById("signup-username").value.trim(),
+      email: document.getElementById("signup-email").value.trim(),
+      password: document.getElementById("signup-password").value.trim()
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbyMOAJJcc5h6kFWEMzTtUYQk0qWC9ZydJg37uHZIzxdLbPUIF4rgRMJYfPrEOG8V4ci/exec", {
+     method: "POST",
+  body: JSON.stringify(data),
+  mode: "no-cors", // ⚠️ Only if you're not reading the response!
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+    .then(response => response.text())
+    .then(text => {
+      alert("✅ " + text); // Optional
+      window.location.href = "../pages/signin.html"; // or wherever you want to go next
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      alert("❌ Signup failed.");
+    });
+  });
+</script>
+
+
+</body>
+</html>

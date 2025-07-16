@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+   <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+  <header>
+    <ul class="opagheaderlist">
+      <li class="opaghead1"><img src="../logo-pic/logo opag.png" alt="OPAG Logo" /></li>
+      <li class="opaghead2">OPAG Rice Section</li>
+    </ul>
+  </header>
+
+  <section id="login" class="homevission1">
+    <h2 class="loginheader">Login</h2>
+    <form id="logForm" autocomplete="on">
+      <label for="login-email">Email or Username:</label>
+      <input type="text" id="login-email" name="username" placeholder="Enter email or username" required autocomplete="username" />
+
+      <label for="login-password">Password:</label>
+      <input type="password" id="login-password" name="password" placeholder="Password" required autocomplete="current-password" />
+
+      <button type="submit">Login</button>
+    </form>
+
+  </section>
+</div>
+  <footer>
+    <p>© 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+ <script>
+  let localUsers = [];
+
+  // 1. Fetch user list from your Google Sheets endpoint
+  fetch("https://script.google.com/macros/s/AKfycbyzOGaaMqxhnplt5ti5WeDVRhS-EZt6_KMfpwqOiGo9lPSXWaBUc5xdj6AQfihXj3mU/exec")
+    .then(res => res.json())
+    .then(data => {
+      localUsers = data;
+    })
+    
+    .catch(err => {
+      console.error("Failed to fetch user data:", err);
+    });
+
+  document.getElementById('logForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    console.log("Fetched users:", localUsers);
+
+    const emailOrUsername = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    const match = localUsers.find(user =>
+      (user.email === emailOrUsername || user.username === emailOrUsername) &&
+      user.password === password
+    );
+
+    if (match) {
+      // ✅ Save login state to localStorage
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("profileImg", match.profileImg || "../logo pic/account logo.png");
+
+      localStorage.setItem("fullName", `${match.firstName} ${match.lastName}`);
+        localStorage.setItem("username", match.username);
+         localStorage.setItem("email", match.email);
+
+      // ✅ Log successful login to Google Sheets
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+      const logData = {
+        username: match.username,
+        email: match.email,
+        action: 'login'
+      };
+
+      try {
+        await fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify(logData),
+        });
+
+        alert(`✅ Welcome, ${match.firstName.toUpperCase()} ${match.lastName.toUpperCase()}!`);
+        const redirectURL = localStorage.getItem("redirectAfterLogin") || "../index.html";
+        localStorage.removeItem("redirectAfterLogin"); // Clean up
+        window.location.href = redirectURL;
+        // Redirect to homepage
+      } catch (error) {
+        alert('⚠️ Login succeeded, but logging failed.');
+        console.error(error);
+      }
+    } else {
+      alert("❌ Invalid login. Please check your credentials.");
+    }
+  });
+</script>
+
+
+</body>
+
+</html>

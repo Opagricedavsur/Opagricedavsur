@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>OPAG Rice Section - Home</title>
+        <link rel="stylesheet" href="styles.css" />
+        
+    </head>
+    <body>
+       <div class="wrapper">
+        <header>
+            
+             <nav> 
+                <ul>
+                    <li class="login" id="login-area">
+                     <a href="pages/signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
+
+                    </li>
+                   
+                </ul>
+            </nav>  
+            
+            <ul class="opagheader">
+               <li ><img src="logo-pic/logo opag.png" alt="OPAG Logo" width="90" height="90" style= margin-left:10px;"></li>
+               <li >OPAG Rice Section</li>
+            </ul>
+        </header>
+             
+    <nav class="navigations">
+        <a href="pages/index.html" class="active">Home</a>
+
+         <a href="pages/activities.html">Activities</a>
+         <a href="pages/rice-production-status.html">Rice Production Status</a>
+         
+        <a href="pages/prtf.html">PRTF 2025</a>
+         <!-- 🔐 Hidden links for logged-in users -->
+            <a href="pages/profile.html" class="auth-only" style="display: none;">Profile</a>
+            <a href="manage-data.html" class="auth-only" style="display: none;">Manage Data</a>
+        
+    </nav>
+    <main>
+        <section id="home" class="homevission">
+            <h2>Mission & Vision</h2>
+            <h3>Mission</h3>
+            <p>OPAG Serves as  catalyst involving highly motivated and capacitated implementers and partner stakeholders through effective inter-agency coordination for a sustainable and profitable agri-fishery industrialized province… In a balanced ecological system.</p>
+            <h3>Vision</h3>
+            <p>OPAG envisions for a dynamic self reliant agro-industrialized province with farmers and fisherfolks turned successful entrepreneurs through a sustainable agriculture development that passed the international standards of safety, healthful and environment-friendly policy framework formulated and adopted by its constituents</p>
+        </section>
+        <section id="home" class="homevission">
+            <h2>Mandate</h2>
+            <h3></h3>
+            <p>OPAG is the lead agency of the Provincial Local Government Unit (PLGU) of Davao del Sur responsible for the implementation of agricultural growth and development initiatives. It provides the policy framework, helps direct public investments in partnership with the national agencies, (NGAs), Non-Government organizations (NGOs), private agencies and individuals in the provision of extension and technical services in the countryside and to inculcate upon the public minds that agriculture the backbone of the country’s economy.</p>
+          
+    </main>
+    </div>
+        <footer>
+            <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+        </footer>
+
+         <script>
+   document.addEventListener("DOMContentLoaded", () => {
+  const loginArea = document.getElementById("login-area");
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  let rawImg = localStorage.getItem("profileImg") || "";
+  let profileImg = "";
+
+  if (rawImg.includes("drive.google.com/file/d/")) {
+    profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+  } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+    const match = rawImg.match(/src=["']([^"']+)["']/);
+    profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+  } else {
+    profileImg = rawImg || "../../logo-pic/account logo.png";
+  }
+
+  localStorage.setItem("profileImg", profileImg);
+  const fullName = localStorage.getItem("fullName") || "User Name";
+
+  if (isLoggedIn && loginArea) {
+    // ✅ Show links for authenticated users
+    document.querySelectorAll(".auth-only").forEach(link => {
+      link.style.display = "inline-block";
+    });
+
+    // ✅ Show profile UI
+    loginArea.innerHTML = `
+      <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
+           onerror="this.src='../../logo-pic/account logo.png'">
+      <div id="profileDropdown" class="profile-dropdown">
+        <img src="${profileImg}" alt="Profile" />
+        <p>${fullName}</p>
+        <button onclick="logout()">Logout</button>
+      </div>
+    `;
+
+    const profilePic = document.getElementById("profilePic");
+    const dropdown = document.getElementById("profileDropdown");
+
+    profilePic.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
+      }
+    });
+  }
+});
+
+
+    function logout() {
+  const username = localStorage.getItem("username") || "Unknown";
+  const email = localStorage.getItem("email") || "Unknown";
+
+  const logData = { username, email, action: 'logout' };
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(logData)
+  }).finally(() => {
+    localStorage.clear();
+    location.reload(); // 🔁 Reload current page
+  });
+}
+
+  </script>
+    </body>
+</html>

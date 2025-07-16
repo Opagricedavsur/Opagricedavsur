@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAG Rice Section - PRTF</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .newscontent1pie {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+       justify-content: space-around;
+      gap: 30px;
+      padding: 20px 0;
+     
+    }
+     .newscontent1pies {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px 0;
+    
+    }
+    .newscontent1pie canvas {
+      max-width: 200px;
+    }
+    .no-data-box {
+      width: 300px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 16px;
+      color: #555;
+      
+    }
+    .chart-label {
+      text-align: center;
+      margin-top: 10px;
+      
+    }
+        
+      .chart-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        height: 300px; /* or adjust based on your chart size */
+        width: 300px;  /* optional fixed width */
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      .chart-box canvas {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .chart-box p {
+        margin-top: auto;
+        text-align: center;
+        font-weight: bold;
+        font-size: 0.95rem;
+      }
+    
+    .newstittle{
+        text-align:center;
+    }
+    .newscontent1table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  position: relative;
+}
+
+.newscontent1table table {
+  margin: 0 auto;
+  width: auto;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+.cent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+    
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <nav> 
+        <ul>
+          <li class="login" id="login-area">
+            <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
+          </li>
+        </ul>
+      </nav>  
+      <ul class="opagheader">
+        <li><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
+        <li>OPAG Rice Section</li>
+      </ul>
+    </header>
+
+    <nav class="navigations">
+      <a href="../index.html">Home</a>
+      
+    <a href="activities.html">Activities</a>
+    <a href="rice-production-status.html">Rice Production Status</a>
+     <a href="news.html">News & Updates</a>
+      <a href="prtf.html" class="active">PRTF 2025</a>
+    </nav>
+
+    <main class="maincontentnews2">
+      <section id="news" class="news1content1">
+        <h2>Provincial Rice Technology Forum 2025</h2>
+
+        <h3 class="newstittle">Visual Summary of PRTF Company Participation and Product Entries</h3>
+            <div class="newscontent1pie">
+                <div class="chart-box">
+                    <canvas id="chartCompanyParticipation" width="100" height="200"></canvas>
+                    <p>Overall Entries per Company</p>
+                </div>
+                
+                <div class="chart-box">
+                    <canvas id="chartFertilizerType" width="100" height="200"></canvas>
+                    <p>Fertilizer Company Participation</p>
+                </div>
+
+                <div class="chart-box">
+                    <canvas id="chartSeedCompanies" width="100" height="200"></canvas>
+                    <p>Seed Company Participation</p>
+                </div>
+
+
+            
+            </div>
+
+
+        <h3 class="newstittle">List of participating companies and their rice fertilizer and seed product entries</h3>
+        <ul class="cent">
+        <div class="newscontent1table">
+          <p>Loading participating companies...</p>
+        </div>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+  <!-- === User Login/Profile Script === -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginArea = document.getElementById("login-area");
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+      let rawImg = localStorage.getItem("profileImg") || "";
+      let profileImg = "";
+
+      if (rawImg.includes("drive.google.com/file/d/")) {
+        profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+      } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+        const match = rawImg.match(/src=["']([^"']+)["']/);
+        profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+      } else {
+        profileImg = rawImg || "../../logo-pic/account logo.png";
+      }
+
+      localStorage.setItem("profileImg", profileImg);
+      const fullName = localStorage.getItem("fullName") || "User Name";
+
+      if (isLoggedIn && loginArea) {
+        loginArea.innerHTML = `
+          <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
+               onerror="this.src='../../logo-pic/account logo.png'">
+          <div id="profileDropdown" class="profile-dropdown">
+            <img src="${profileImg}" alt="Profile" />
+            <p>${fullName}</p>
+            <button onclick="logout()">Logout</button>
+          </div>
+        `;
+
+        const profilePic = document.getElementById("profilePic");
+        const dropdown = document.getElementById("profileDropdown");
+
+        profilePic.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+          }
+        });
+      }
+    });
+
+    function logout() {
+      const username = localStorage.getItem("username") || "Unknown";
+      const email = localStorage.getItem("email") || "Unknown";
+
+      const logData = { username, email, action: 'logout' };
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(logData)
+      }).finally(() => {
+        localStorage.clear();
+        location.reload();
+      });
+    }
+  </script>
+
+  <!-- === Company Data and Chart Script === -->
+ <!-- ... Existing HTML and script tags remain unchanged ... -->
+
+<script>
+   const companyDataURL = 'https://script.google.com/macros/s/AKfycbwFnwtqazzVw8oQwCgkc4f5ep1Y6bSpnX-2uB8dBUCWAXrb4va7xvMjztyMeas7KUJL/exec';
+
+    fetch(companyDataURL)
+      .then(response => response.json())
+      .then(data => {
+        const container = document.querySelector(".newscontent1table");
+        if (!container) return;
+
+        // Process fertilizer companies (unchanged)
+        const fertilizerCompanies = data.filter(entry =>
+          entry["entry type"] &&
+          entry["entry type"].toLowerCase().trim() === "balance fertilization technique"
+        );
+
+        // Process seed companies with blank name handling
+        const seedCompanies = data.filter(entry =>
+          entry["entry type"] &&
+          entry["entry type"].toLowerCase().includes("seed varietal demo")
+        );
+
+        // Process seed companies with proper blank name handling
+        let currentCompany = "";
+        const seedCompaniesProcessed = [];
+        
+        seedCompanies.forEach(entry => {
+          if (entry["Company Name"] && entry["Company Name"].trim() !== "") {
+            currentCompany = entry["Company Name"].trim();
+          }
+          if (entry["Product"]) {
+            seedCompaniesProcessed.push({
+              company: currentCompany || "Unnamed Entries",
+              variety: entry["Product"]
+            });
+          }
+        });
+
+        // Group varieties by company for table display
+        const seedCompaniesGrouped = {};
+        seedCompaniesProcessed.forEach(entry => {
+          if (!seedCompaniesGrouped[entry.company]) {
+            seedCompaniesGrouped[entry.company] = [];
+          }
+          seedCompaniesGrouped[entry.company].push(entry.variety);
+        });
+
+        // === TABLE GENERATION (REMAINS EXACTLY THE SAME) ===
+        let html = "";
+
+        if (fertilizerCompanies.length > 0) {
+          html += `
+            <h3 style="text-align:center;">Companies Using Balance Fertilization Technique</h3>
+            <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
+              <thead>
+                <tr style="background-color:#f0f0f0;">
+                  <th>Company Name</th>
+                  <th>Product</th>
+                  <th>Fertilizer Type</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          fertilizerCompanies.forEach(entry => {
+            html += `
+              <tr>
+                <td>${entry["Company Name"] || ""}</td>
+                <td>${entry["Product"] || ""}</td>
+                <td>${entry["Fertilizer Type"] || ""}</td>
+              </tr>
+            `;
+          });
+          html += `</tbody></table>`;
+        } else {
+          html += `<p>No companies using Balance Fertilization Technique.</p>`;
+        }
+
+        if (seedCompanies.length > 0) {
+          html += `
+            <h3 style="margin-top:40px;">Participating Seed Companies</h3>
+            <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
+              <thead>
+                <tr style="background-color:#f0f0f0;">
+                  <th>Company Name</th>
+                  <th>Variety Name</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          seedCompanies.forEach(entry => {
+            html += `
+              <tr>
+                <td>${entry["Company Name"] || ""}</td>
+                <td>${entry["Product"] || ""}</td>
+              </tr>
+            `;
+          });
+          html += `</tbody></table>`;
+        } else {
+          html += `<p>No seed companies listed.</p>`;
+        }
+
+        container.innerHTML = html;
+
+        // === PIE CHART MODIFICATIONS (ONLY THIS SECTION CHANGED) ===
+        
+        // 1. Fertilizer Type Chart (count products by type)
+        const fertilizerTypeCount = {};
+        fertilizerCompanies.forEach(entry => {
+          const type = entry["Fertilizer Type"] ? entry["Fertilizer Type"].trim() : "Other Fertilizer";
+          fertilizerTypeCount[type] = (fertilizerTypeCount[type] || 0) + 1;
+        });
+
+        // 2. Seed Company Chart (count varieties per company, handling blanks)
+        const seedCompanyCount = {};
+        seedCompaniesProcessed.forEach(entry => {
+          const name = entry.company;
+          seedCompanyCount[name] = (seedCompanyCount[name] || 0) + 1;
+        });
+
+        // 3. Overall Participation (count total products)
+        const totalTypeCount = {
+          "Fertilizer Products": fertilizerCompanies.length,
+          "Seed Varieties": seedCompaniesProcessed.length
+        };
+
+        // Draw the charts with improved function
+        function createEnhancedPieChart(canvasId, dataObj, title) {
+          const canvasEl = document.getElementById(canvasId);
+          if (!canvasEl) return;
+
+          if (Object.keys(dataObj).length === 0) {
+            canvasEl.parentElement.innerHTML = `
+              <div class="no-data-box">No data available for ${title}</div>
+              <p class="chart-label">${title}</p>
+            `;
+            return;
+          }
+
+          new Chart(canvasEl, {
+            type: 'pie',
+            data: {
+              labels: Object.keys(dataObj),
+              datasets: [{
+                data: Object.values(dataObj),
+                backgroundColor: [
+                  '#f39c12', '#27ae60', '#8e44ad', '#3498db', '#e74c3c',
+                  '#1abc9c', '#c0392b', '#34495e', '#9b59b6', '#2ecc71'
+                ],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: {
+                    font: { size: 12 },
+                    padding: 15
+                  }
+                },
+                tooltip: {
+                  callbacks: {
+                    label: (context) => {
+                      const label = context.label || '';
+                      const value = context.raw || 0;
+                      const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                      const percentage = Math.round((value / total) * 100);
+                      return `${label}: ${value} (${percentage}%)`;
+                    }
+                  }
+                }
+              }
+            }
+          });
+        }
+
+        // Draw all three charts
+        createEnhancedPieChart("chartFertilizerType", fertilizerTypeCount, "Fertilizer Types (Product Count)");
+        createEnhancedPieChart("chartSeedCompanies", seedCompanyCount, "Seed Companies (Variety Count)");
+        createEnhancedPieChart("chartCompanyParticipation", totalTypeCount, "Total Products by Type");
+      })
+      .catch(error => {
+        console.error("Error loading company data:", error);
+        const container = document.querySelector(".newscontent1");
+        container.innerHTML = "<p>Unable to load company data at this time.</p>";
+      });
+</script>
+
+</body>
+</html>

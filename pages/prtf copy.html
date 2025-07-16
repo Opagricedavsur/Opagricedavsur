@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>OPAG Rice Section - PRTF</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+  <header>
+    <nav> 
+      <ul>
+        <li class="login" id="login-area">
+          <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
+        </li>
+      </ul>
+    </nav>  
+    
+    <ul class="opagheader">
+      <li><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
+      <li>OPAG Rice Section</li>
+    </ul>
+  </header>
+
+  <nav class="navigations">
+    <a href="../index.html">Home</a>
+    <a href="news.html">News & Updates</a>
+    <a href="submit.html">Submit Reports</a>
+    <a href="prtf.html" class="active">PRTF 2025</a>
+    <a href="contact.html">Contact Us</a>
+  </nav>
+
+  <main class="maincontentnews1">
+    <section id="news" class="news1content1">
+      <h2>PRTF Participants Updates</h2>
+      <h3 class="newstittle">Participating Companies</h3>
+      <div class="newscontent1">
+        <p>Loading participating companies...</p>
+      </div>
+    </section>
+  </main>
+</div>
+  <footer>
+    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+  <!-- === User Login/Profile Script === -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginArea = document.getElementById("login-area");
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+      let rawImg = localStorage.getItem("profileImg") || "";
+      let profileImg = "";
+
+      if (rawImg.includes("drive.google.com/file/d/")) {
+        profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+      } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+        const match = rawImg.match(/src=["']([^"']+)["']/);
+        profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+      } else {
+        profileImg = rawImg || "../../logo-pic/account logo.png";
+      }
+
+      localStorage.setItem("profileImg", profileImg);
+      const fullName = localStorage.getItem("fullName") || "User Name";
+
+      if (isLoggedIn && loginArea) {
+        loginArea.innerHTML = `
+          <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
+               onerror="this.src='../../logo-pic/account logo.png'">
+          <div id="profileDropdown" class="profile-dropdown">
+            <img src="${profileImg}" alt="Profile" />
+            <p>${fullName}</p>
+            <button onclick="logout()">Logout</button>
+          </div>
+        `;
+
+        const profilePic = document.getElementById("profilePic");
+        const dropdown = document.getElementById("profileDropdown");
+
+        profilePic.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!dropdown.contains(e.target)) {
+            dropdown.style.display = "none";
+          }
+        });
+      }
+    });
+
+    function logout() {
+      const username = localStorage.getItem("username") || "Unknown";
+      const email = localStorage.getItem("email") || "Unknown";
+
+      const logData = { username, email, action: 'logout' };
+
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(logData)
+      }).finally(() => {
+        localStorage.clear();
+        location.reload();
+      });
+    }
+  </script>
+
+  <!-- === Participating Companies Display Script === -->
+  <script>
+    const companyDataURL = 'https://script.google.com/macros/s/AKfycbyQD2cKpWI2JuPoBxFoZM25O8VT_IIFxqDHo5pSG91OJ8UG08big6XuLDgozy1YIF3J/exec'; // 🔁 Replace this with your Apps Script Web App URL
+
+    fetch(companyDataURL)
+      .then(response => response.json())
+      .then(data => {
+        const container = document.querySelector(".newscontent1");
+
+        if (!container) return;
+
+        if (data.length === 0) {
+          container.innerHTML = "<p>No participating companies yet.</p>";
+          return;
+        }
+
+        let html = `
+          <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
+            <thead>
+              <tr style="background-color:#f0f0f0;">
+                <th>Company Name</th>
+                <th>Product</th>
+                <th>Fertilizer Type</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        data.forEach(entry => {
+          html += `
+            <tr>
+              <td>${entry["Company Name"] || ""}</td>
+              <td>${entry["Product"] || ""}</td>
+              <td>${entry["Fertilizer Type"] || ""}</td>
+            </tr>
+          `;
+        });
+
+        html += `
+            </tbody>
+          </table>
+        `;
+
+        container.innerHTML = html;
+      })
+      .catch(error => {
+        console.error("Error loading company data:", error);
+        const container = document.querySelector(".newscontent1");
+        container.innerHTML = "<p>Unable to load participating companies at this time.</p>";
+      });
+  </script>
+
+</body>
+</html>
