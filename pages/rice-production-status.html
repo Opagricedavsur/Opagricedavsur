@@ -229,7 +229,20 @@
   responsive: true,
   maintainAspectRatio: true,
             aspectRatio: chartAspectRatio,
-            scales: { y: { beginAtZero: true } }
+            scales: { y: { beginAtZero: true } },
+             plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          // Force legend order and sort
+              font:{
+            size:legendFontSize
+                  },
+          sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
+                }
+            },
+      tooltip: { mode: "index", intersect: false }
+            }
           }
         });
 
@@ -308,33 +321,33 @@ new Chart(document.getElementById("ecosystemLineChart"), {
     maintainAspectRatio: true,
     aspectRatio: chartAspectRatio,
     scales: {
-      y: {
-        beginAtZero: true,
-        title: { display: true, text: "Area / Production" }
-      },
-      yYield: {
-        position: "right",
-        beginAtZero: true,
-        title: { display: true, text: "Yield (MT/ha)" },
-        grid: { drawOnChartArea: false }
-      },
-      x: {
-        title: { display: true, text: "Year" }
-      }
-    },
+                  y: {
+                      beginAtZero: true,
+                        title: { display: true, text: "Area / Production" }
+                    },
+                yYield: {
+                      position: "right",
+                      beginAtZero: true,
+                      title: { display: true, text: "Yield (MT/ha)" },
+                      grid: { drawOnChartArea: false }
+                      },
+                x: {
+                        title: { display: true, text: "Year" }
+                    }
+            },
     plugins: {
       legend: {
         position: "bottom",
         labels: {
           // Force legend order and sort
-          font:{
+              font:{
             size:legendFontSize
-          },
+                  },
           sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
-        }
-      },
+                }
+            },
       tooltip: { mode: "index", intersect: false }
-    }
+            }
   }
 });
 
