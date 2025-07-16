@@ -33,12 +33,7 @@ body {
   display: block;
 }
 
-/* Optional: Make it adapt slightly on very small screens */
-@media screen and (max-width: 600px) {
-  .iframe-wrapper iframe {
-    height: 90vh;
-  }
-}
+
 
 /*para sa image gallery sa activities*/
 
@@ -724,5 +719,11 @@ section.news1content1 {
   footer {
     font-size: 0.8rem;
     padding: 10px 50px;
+  }
+}
+/* Optional: Make it adapt slightly on very small screens */
+@media screen and (max-width: 600px) {
+  .iframe-wrapper iframe {
+    height: 90vh;
   }
 }
