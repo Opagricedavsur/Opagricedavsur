@@ -140,5 +140,32 @@
 }
 
   </script>
+        <script>
+  // Detect touch screen (mobile)
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (isTouchDevice) {
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownContent = document.querySelector('.dropdown-content');
+
+      if (dropdownToggle && dropdownContent) {
+        dropdownToggle.addEventListener('click', function(e) {
+          e.preventDefault(); // prevent link navigation
+          // Toggle dropdown
+          dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Optional: close dropdown if clicking outside
+        document.addEventListener('click', function(e) {
+          if (!dropdownContent.contains(e.target) && !dropdownToggle.contains(e.target)) {
+            dropdownContent.style.display = 'none';
+          }
+        });
+      }
+    });
+  }
+</script>
+
     </body>
 </html>
