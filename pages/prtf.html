@@ -6,96 +6,7 @@
   <title>OPAG Rice Section - PRTF</title>
   <link rel="stylesheet" href="../styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .newscontent1pie {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-       justify-content: space-around;
-      gap: 30px;
-      padding: 20px 0;
-     
-    }
-     .newscontent1pies {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      padding: 20px 0;
-    
-    }
-    .newscontent1pie canvas {
-      max-width: 200px;
-    }
-    .no-data-box {
-      width: 300px;
-      height: 220px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 16px;
-      color: #555;
-      
-    }
-    .chart-label {
-      text-align: center;
-      margin-top: 10px;
-      
-    }
-        
-      .chart-box {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        height: 300px; /* or adjust based on your chart size */
-        width: 300px;  /* optional fixed width */
-        padding: 10px;
-        box-sizing: border-box;
-      }
-
-      .chart-box canvas {
-        max-width: 100%;
-        height: auto;
-      }
-
-      .chart-box p {
-        margin-top: auto;
-        text-align: center;
-        font-weight: bold;
-        font-size: 0.95rem;
-      }
-    
-    .newstittle{
-        text-align:center;
-    }
-    .newscontent1table {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: auto;
-  position: relative;
-}
-
-.newscontent1table table {
-  margin: 0 auto;
-  width: auto;
-  max-width: 100%;
-  border-collapse: collapse;
-}
-.cent{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-    
-  </style>
+ 
 <header>
     <nav> 
       <ul>
@@ -117,7 +28,15 @@
     <a href="activities.html">Activities</a>
     <a href="rice-production-status.html">Rice Production Status</a>
      <a href="news.html">News & Updates</a>
-      <a href="prtf.html" class="active">PRTF 2025</a>
+     <div class="dropdown">
+         <a href="prtf.html" class="active">PRTF 2025 ▾</a>
+        <div class="dropdown-content">
+            <a href="prtf-guidelines.html">PRTF Guidelines</a>
+             <a href="about-prtf.html">About PRTF</a>
+             <a href="join-prtf.html">Join PRTF</a>
+            <a href="list-of-participants.html">List of Participants</a>
+        </div>
+      </div>
     </nav>
 
     <main class="maincontentnews2">
@@ -432,6 +351,23 @@
         container.innerHTML = "<p>Unable to load company data at this time.</p>";
       });
 </script>
+<script>
+  document.querySelectorAll('.dropdown > a').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const dropdownContent = trigger.nextElementSibling;
+      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+  });
 
+  // Hide dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.dropdown-content').forEach(menu => {
+      if (!menu.parentElement.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  });
+</script>
 </body>
 </html>
