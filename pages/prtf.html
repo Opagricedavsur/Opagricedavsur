@@ -1,373 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OPAG Rice Section - PRTF</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
- 
-<header>
-    <nav> 
-      <ul>
-        <li class="login" id="login-area">
-          <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
-        </li>
-      </ul>
-    </nav>  
+    <head>
+        
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <ul class="opagheader">
-      <li class="opaghead1"><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
-      <li class="opaghead2">OPAG Rice Section</li>
-    </ul>
-  </header>
+   <title>OPAG Rice Section - PRTF</title>
+        <link rel="stylesheet" href="../../styles.css" />
+        
+    </head>
+    <body>
+       <div class="wrapper">
+        <header>
+            
+             <nav> 
+                <ul>
+                    <li class="login" id="login-area">
+                     <a href="../pages/signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
 
-    <nav class="navigations">
-     <a href="../index.html">Home</a>
-      
-    <a href="activities.html">Activities</a>
-    <a href="rice-production-status.html">Rice Production Status</a>
-     <a href="news.html">News & Updates</a>
-     <div class="dropdown">
-         <a href="prtf.html" class="active">PRTF 2025 ▾</a>
+                    </li>
+                   
+                </ul>
+            </nav>  
+            
+            <ul class="opagheader">
+               <li ><img src="../../logo-pic/logo opag.png" alt="OPAG Logo" width="90" height="90" style= margin-left:10px;"></li>
+               <li >OPAG Rice Section</li>
+            </ul>
+        </header>
+             
+   <nav class="navigations">
+      <a href="../index.html">Home</a>
+      <a href="activities.html">Activities</a>
+      <a href="rice-production-status.html">Rice Production Status</a>
+      <a href="news.html">News & Updates</a>
+      <div class="dropdown">
+         <a  class="active">PRTF 2025 ▾</a>
         <div class="dropdown-content">
-            <a href="prtf-guidelines.html">PRTF Guidelines</a>
-             <a href="about-prtf.html">About PRTF</a>
-             <a href="join-prtf.html">Join PRTF</a>
-            <a href="list-of-participants.html">List of Participants</a>
+                  <a href="prtf  pages/about-prtf.html">About PRTF</a>
+                  <a href="prtf-pages/prtfguidelines.html">PRTF Guidelines</a>
+                  
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKZOFGZN80F6o6Jx72X-05IJR3wnxGQr19EK-ftI9X3Zjf8w/viewform?usp=dialog" target="_blank">Join PRTF</a>
+                  <a href="prtf  pages/prtf_participants.html">List of Participants</a>
         </div>
       </div>
+
     </nav>
+         <!-- 🔐 Hidden links for logged-in users -->
+            <a href="pages/profile.html" class="auth-only" style="display: none;">Profile</a>
+            <a href="manage-data.html" class="auth-only" style="display: none;">Manage Data</a>
+        
+    </nav>
+      <main class="about-prtf-section">
+          <section class="container">
+            <h1 class="section-title">About the Provincial Rice Technology Forum (PRTF)</h1>
+            <h2 class="subtitle">Davao del Sur</h2>
+            <p class="intro">
+              The <strong>Provincial Rice Technology Forum (PRTF)</strong> is a joint initiative of the Provincial Government of Davao del Sur through OPAG, in partnership with DA-RFO XI, NIA, PhilRice, ATI-XI, LGUs, and private stakeholders. It is a season-long field demonstration platform designed to showcase and evaluate modern rice technologies to boost productivity and sustainability in rice farming.
+            </p>
 
-    <main class="maincontentnews2">
-      <section id="news" class="news1content1">
-        <h2>Provincial Rice Technology Forum 2025</h2>
-
-        <h3 class="newstittle">Visual Summary of PRTF Company Participation and Product Entries</h3>
-            <div class="newscontent1pie">
-                <div class="chart-box">
-                    <canvas id="chartCompanyParticipation" width="100" height="200"></canvas>
-                    <p>Overall Entries per Company</p>
-                </div>
-                
-                <div class="chart-box">
-                    <canvas id="chartFertilizerType" width="100" height="200"></canvas>
-                    <p>Fertilizer Company Participation</p>
-                </div>
-
-                <div class="chart-box">
-                    <canvas id="chartSeedCompanies" width="100" height="200"></canvas>
-                    <p>Seed Company Participation</p>
-                </div>
-
-
-            
+            <div class="content-block">
+              <h3 class="block-title">🎯 Objectives</h3>
+              <ul class="styled-list">
+                <li>Demonstrate effective seed and fertilizer technologies</li>
+                <li>Promote yield-enhancing and cost-saving practices</li>
+                <li>Encourage public-private cooperation</li>
+                <li>Identify top-performing rice technologies</li>
+              </ul>
             </div>
 
+            <div class="content-block">
+              <h3 class="block-title">👥 Who Can Join?</h3>
+              <ul class="styled-list">
+                <li>Private Companies (seed, fertilizer, and agri-input providers)</li>
+                <li>Farmer Cooperators and Farmers’ Associations (FCA)</li>
+              </ul>
+            </div>
 
-        <h3 class="newstittle">List of participating companies and their rice fertilizer and seed product entries</h3>
-        <ul class="cent">
-        <div class="newscontent1table">
-          <p>Loading participating companies...</p>
-        </div>
-        </ul>
-      </section>
+            <div class="content-block">
+              <h3 class="block-title">📋 Participation Flow</h3>
+              <ol class="numbered-list">
+                <li>MLGU identifies techno-demo sites; validated by DA-PLGU-NIA</li>
+                <li>Private companies submit PRTF Form 1 (Intent to Join)</li>
+                <li>PLGU finalizes and presents protocol for agreement</li>
+                <li>Interested PPCs register via PRTF Form 2 with workplan + ₱5,000 fee</li>
+              </ol>
+            </div>
+
+            <div class="content-block">
+              <h3 class="block-title">🚜 Field Demonstration Highlights</h3>
+              <ul class="styled-list">
+                <li>Minimum of 0.5 ha demo area per entry (max of 2 entries)</li>
+                <li>GPS-based plot measurement and signage</li>
+                <li>50-50 land preparation cost shared with FC</li>
+                <li>Disclosure of all inputs, prices, and strategies</li>
+                <li>Complete documentation, monitored applications, and crop-cutting</li>
+                <li>100% yield returns go to the Farmer Cooperator</li>
+              </ul>
+            </div>
+
+            <div class="content-block">
+              <h3 class="block-title">🌾 Trial Categories</h3>
+              <ul class="styled-list">
+                <li><strong>Hybrid Seed Varietal Trials:</strong> Max of 2 varieties per company; no duplication</li>
+                <li><strong>Balanced Fertilization Technique (BFT):</strong> Demo with bio/organic fertilizers as add-ons</li>
+              </ul>
+            </div>
+
+            <div class="content-block">
+              <h3 class="block-title">🛠 Monitoring & Evaluation</h3>
+              <p>The Composite Team (OPAG, MLGU, DA, FCs) handles field monitoring, data recording, evaluation, and post-analysis. The top 5 entries will be identified based on yield and cost-efficiency.</p>
+            </div>
+
+            <div class="content-block">
+              <h3 class="block-title">💡 Support & Funding</h3>
+              <p>Logistics, inputs, meals, and documentation are co-funded by the PLGU, MLGU, BLGU, DA, and private sector. Cost-sharing ensures transparency and sustainability.</p>
+            </div>
+
+            <div class="content-block">
+              <h3 class="block-title">🏆 Recognition</h3>
+              <p>The top five most productive and cost-efficient product entries will receive official recognition during the culminating Farmers’ Forum or Congress.</p>
+            </div>
+          </section>
     </main>
-  </div>
 
-  <footer>
-    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
-  </footer>
 
-  <!-- === User Login/Profile Script === -->
-  <script>
-     // Detect Android devices
-  function isAndroid() {
-    return /Android/i.test(navigator.userAgent);
+    </div>
+        <footer>
+            <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
+        </footer>
+
+         <script>
+   document.addEventListener("DOMContentLoaded", () => {
+  const loginArea = document.getElementById("login-area");
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  let rawImg = localStorage.getItem("profileImg") || "";
+  let profileImg = "";
+
+  if (rawImg.includes("drive.google.com/file/d/")) {
+    profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
+  } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
+    const match = rawImg.match(/src=["']([^"']+)["']/);
+    profileImg = match ? match[1] : "../../logo-pic/account logo.png";
+  } else {
+    profileImg = rawImg || "../../logo-pic/account logo.png";
   }
 
-  // Change class if Android + handle login/logout
-  document.addEventListener("DOMContentLoaded", () => {
-    // Android detection and class swap
-    if (isAndroid()) {
-      const mainContent = document.querySelector(".maincontentnews1");
-      if (mainContent) {
-        mainContent.classList.remove("maincontentnews1");
-        mainContent.classList.add("maincontentnews2");
-      }
-    }
+  localStorage.setItem("profileImg", profileImg);
+  const fullName = localStorage.getItem("fullName") || "User Name";
 
-    // Login/logout logic
-      const loginArea = document.getElementById("login-area");
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  if (isLoggedIn && loginArea) {
+    // ✅ Show links for authenticated users
+    document.querySelectorAll(".auth-only").forEach(link => {
+      link.style.display = "inline-block";
+    });
 
-      let rawImg = localStorage.getItem("profileImg") || "";
-      let profileImg = "";
+    // ✅ Show profile UI
+    loginArea.innerHTML = `
+      <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
+           onerror="this.src='../../logo-pic/account logo.png'">
+      <div id="profileDropdown" class="profile-dropdown">
+        <img src="${profileImg}" alt="Profile" />
+        <p>${fullName}</p>
+        <button onclick="logout()">Logout</button>
+      </div>
+    `;
 
-      if (rawImg.includes("drive.google.com/file/d/")) {
-        profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
-      } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
-        const match = rawImg.match(/src=["']([^"']+)["']/);
-        profileImg = match ? match[1] : "../../logo-pic/account logo.png";
-      } else {
-        profileImg = rawImg || "../../logo-pic/account logo.png";
-      }
+    const profilePic = document.getElementById("profilePic");
+    const dropdown = document.getElementById("profileDropdown");
 
-      localStorage.setItem("profileImg", profileImg);
-      const fullName = localStorage.getItem("fullName") || "User Name";
+    profilePic.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    });
 
-      if (isLoggedIn && loginArea) {
-        loginArea.innerHTML = `
-          <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
-               onerror="this.src='../../logo-pic/account logo.png'">
-          <div id="profileDropdown" class="profile-dropdown">
-            <img src="${profileImg}" alt="Profile" />
-            <p>${fullName}</p>
-            <button onclick="logout()">Logout</button>
-          </div>
-        `;
-
-        const profilePic = document.getElementById("profilePic");
-        const dropdown = document.getElementById("profileDropdown");
-
-        profilePic.addEventListener("click", (e) => {
-          e.stopPropagation();
-          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-        });
-
-        document.addEventListener("click", (e) => {
-          if (!dropdown.contains(e.target)) {
-            dropdown.style.display = "none";
-          }
-        });
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
       }
     });
+  }
+});
+
 
     function logout() {
-      const username = localStorage.getItem("username") || "Unknown";
-      const email = localStorage.getItem("email") || "Unknown";
+  const username = localStorage.getItem("username") || "Unknown";
+  const email = localStorage.getItem("email") || "Unknown";
 
-      const logData = { username, email, action: 'logout' };
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+  const logData = { username, email, action: 'logout' };
 
-      fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(logData)
-      }).finally(() => {
-        localStorage.clear();
-        location.reload();
-      });
-    }
-  </script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
 
-  <!-- === Company Data and Chart Script === -->
- <!-- ... Existing HTML and script tags remain unchanged ... -->
-
-<script>
-   const companyDataURL = 'https://script.google.com/macros/s/AKfycbwFnwtqazzVw8oQwCgkc4f5ep1Y6bSpnX-2uB8dBUCWAXrb4va7xvMjztyMeas7KUJL/exec';
-
-    fetch(companyDataURL)
-      .then(response => response.json())
-      .then(data => {
-        const container = document.querySelector(".newscontent1table");
-        if (!container) return;
-
-        // Process fertilizer companies (unchanged)
-        const fertilizerCompanies = data.filter(entry =>
-          entry["entry type"] &&
-          entry["entry type"].toLowerCase().trim() === "balance fertilization technique"
-        );
-
-        // Process seed companies with blank name handling
-        const seedCompanies = data.filter(entry =>
-          entry["entry type"] &&
-          entry["entry type"].toLowerCase().includes("seed varietal demo")
-        );
-
-        // Process seed companies with proper blank name handling
-        let currentCompany = "";
-        const seedCompaniesProcessed = [];
-        
-        seedCompanies.forEach(entry => {
-          if (entry["Company Name"] && entry["Company Name"].trim() !== "") {
-            currentCompany = entry["Company Name"].trim();
-          }
-          if (entry["Product"]) {
-            seedCompaniesProcessed.push({
-              company: currentCompany || "Unnamed Entries",
-              variety: entry["Product"]
-            });
-          }
-        });
-
-        // Group varieties by company for table display
-        const seedCompaniesGrouped = {};
-        seedCompaniesProcessed.forEach(entry => {
-          if (!seedCompaniesGrouped[entry.company]) {
-            seedCompaniesGrouped[entry.company] = [];
-          }
-          seedCompaniesGrouped[entry.company].push(entry.variety);
-        });
-
-        // === TABLE GENERATION (REMAINS EXACTLY THE SAME) ===
-        let html = "";
-
-        if (fertilizerCompanies.length > 0) {
-          html += `
-            <h3 style="text-align:center;">Companies Using Balance Fertilization Technique</h3>
-            <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
-              <thead>
-                <tr style="background-color:#f0f0f0;">
-                  <th>Company Name</th>
-                  <th>Product</th>
-                  <th>Fertilizer Type</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          fertilizerCompanies.forEach(entry => {
-            html += `
-              <tr>
-                <td>${entry["Company Name"] || ""}</td>
-                <td>${entry["Product"] || ""}</td>
-                <td>${entry["Fertilizer Type"] || ""}</td>
-              </tr>
-            `;
-          });
-          html += `</tbody></table>`;
-        } else {
-          html += `<p>No companies using Balance Fertilization Technique.</p>`;
-        }
-
-        if (seedCompanies.length > 0) {
-          html += `
-            <h3 style="margin-top:40px;">Participating Seed Companies</h3>
-            <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
-              <thead>
-                <tr style="background-color:#f0f0f0;">
-                  <th>Company Name</th>
-                  <th>Variety Name</th>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          seedCompanies.forEach(entry => {
-            html += `
-              <tr>
-                <td>${entry["Company Name"] || ""}</td>
-                <td>${entry["Product"] || ""}</td>
-              </tr>
-            `;
-          });
-          html += `</tbody></table>`;
-        } else {
-          html += `<p>No seed companies listed.</p>`;
-        }
-
-        container.innerHTML = html;
-
-        // === PIE CHART MODIFICATIONS (ONLY THIS SECTION CHANGED) ===
-        
-        // 1. Fertilizer Type Chart (count products by type)
-        const fertilizerTypeCount = {};
-        fertilizerCompanies.forEach(entry => {
-          const type = entry["Fertilizer Type"] ? entry["Fertilizer Type"].trim() : "Other Fertilizer";
-          fertilizerTypeCount[type] = (fertilizerTypeCount[type] || 0) + 1;
-        });
-
-        // 2. Seed Company Chart (count varieties per company, handling blanks)
-        const seedCompanyCount = {};
-        seedCompaniesProcessed.forEach(entry => {
-          const name = entry.company;
-          seedCompanyCount[name] = (seedCompanyCount[name] || 0) + 1;
-        });
-
-        // 3. Overall Participation (count total products)
-        const totalTypeCount = {
-          "Fertilizer Products": fertilizerCompanies.length,
-          "Seed Varieties": seedCompaniesProcessed.length
-        };
-
-        // Draw the charts with improved function
-        function createEnhancedPieChart(canvasId, dataObj, title) {
-          const canvasEl = document.getElementById(canvasId);
-          if (!canvasEl) return;
-
-          if (Object.keys(dataObj).length === 0) {
-            canvasEl.parentElement.innerHTML = `
-              <div class="no-data-box">No data available for ${title}</div>
-              <p class="chart-label">${title}</p>
-            `;
-            return;
-          }
-
-          new Chart(canvasEl, {
-            type: 'pie',
-            data: {
-              labels: Object.keys(dataObj),
-              datasets: [{
-                data: Object.values(dataObj),
-                backgroundColor: [
-                  '#f39c12', '#27ae60', '#8e44ad', '#3498db', '#e74c3c',
-                  '#1abc9c', '#c0392b', '#34495e', '#9b59b6', '#2ecc71'
-                ],
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'bottom',
-                  labels: {
-                    font: { size: 12 },
-                    padding: 15
-                  }
-                },
-                tooltip: {
-                  callbacks: {
-                    label: (context) => {
-                      const label = context.label || '';
-                      const value = context.raw || 0;
-                      const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                      const percentage = Math.round((value / total) * 100);
-                      return `${label}: ${value} (${percentage}%)`;
-                    }
-                  }
-                }
-              }
-            }
-          });
-        }
-
-        // Draw all three charts
-        createEnhancedPieChart("chartFertilizerType", fertilizerTypeCount, "Fertilizer Types (Product Count)");
-        createEnhancedPieChart("chartSeedCompanies", seedCompanyCount, "Seed Companies (Variety Count)");
-        createEnhancedPieChart("chartCompanyParticipation", totalTypeCount, "Total Products by Type");
-      })
-      .catch(error => {
-        console.error("Error loading company data:", error);
-        const container = document.querySelector(".newscontent1");
-        container.innerHTML = "<p>Unable to load company data at this time.</p>";
-      });
-</script>
-<script>
-  document.querySelectorAll('.dropdown > a').forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      const dropdownContent = trigger.nextElementSibling;
-      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-    });
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify(logData)
+  }).finally(() => {
+    localStorage.clear();
+    location.reload(); // 🔁 Reload current page
   });
+}
 
-  // Hide dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    document.querySelectorAll('.dropdown-content').forEach(menu => {
-      if (!menu.parentElement.contains(e.target)) {
-        menu.style.display = 'none';
+  </script>
+        <script>
+  // Detect touch screen (mobile)
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (isTouchDevice) {
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownContent = document.querySelector('.dropdown-content');
+
+      if (dropdownToggle && dropdownContent) {
+        dropdownToggle.addEventListener('click', function(e) {
+          e.preventDefault(); // prevent link navigation
+          // Toggle dropdown
+          dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Optional: close dropdown if clicking outside
+        document.addEventListener('click', function(e) {
+          if (!dropdownContent.contains(e.target) && !dropdownToggle.contains(e.target)) {
+            dropdownContent.style.display = 'none';
+          }
+        });
       }
     });
-  });
+  }
 </script>
-</body>
+
+    </body>
 </html>
