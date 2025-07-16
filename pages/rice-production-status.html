@@ -15,14 +15,17 @@
       gap: 30px;
       margin: 20px 0;
     }
-    .chart-box1 {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      width: 600px;
-      max-width: 90vw;
-    }
+   .chart-box1 {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 95vw;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
     .chart-box {
       background: #fff;
       padding: 20px;
@@ -31,10 +34,12 @@
       width: 250px;
       max-width: 90vw;
     }
-    canvas {
-      width: 100% !important;
-      height: auto !important;
-    }
+   canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+}
+
     h3.section-header {
       text-align: center;
       margin-top: 40px;
@@ -211,7 +216,8 @@
             ]
           },
           options: {
-            responsive: true,
+  responsive: true,
+  maintainAspectRatio: false,
             scales: { y: { beginAtZero: true } }
           }
         });
@@ -288,6 +294,7 @@ new Chart(document.getElementById("ecosystemLineChart"), {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: true,
