@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAG Rice Section - Home</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header>
+    <nav> 
+      <ul>
+        <li class="login" id="login-area">
+          <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
+        </li>
+      </ul>
+    </nav>  
 
-        <title>OPAG Rice Section - Home</title>
-        <link rel="stylesheet" href="styles.css" />
-        
-    </head>
-    <body>
-       <div class="wrapper">
-        <header>
-            
-             <nav> 
-                <ul>
-                    <li class="login" id="login-area">
-                     <a href="pages/signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
-
-                    </li>
-                   
-                </ul>
-            </nav>  
-            
-            <ul class="opagheader">
-               <li ><img src="logo-pic/logo opag.png" alt="OPAG Logo" width="90" height="90" style= margin-left:10px;"></li>
-               <li >OPAG Rice Section</li>
-            </ul>
-        </header>
+    <ul class="opagheader">
+      <li class="opaghead1"><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
+      <li class="opaghead2">OPAG Rice Section</li>
+    </ul>
+  </header>
              
     <nav class="navigations">
         <a href="pages/index.html" class="active">Home</a>
