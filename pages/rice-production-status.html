@@ -214,6 +214,7 @@
         const yieldData = data.barData.map(d => d.yield);
       const isAndroid = /Android/i.test(navigator.userAgent);
         const chartAspectRatio = isAndroid ? 1 : 2;
+        const legendFontSize = isAndroid ? 9:12;
         new Chart(document.getElementById("barChart"), {
           type: "bar",
           data: {
@@ -326,6 +327,9 @@ new Chart(document.getElementById("ecosystemLineChart"), {
         position: "bottom",
         labels: {
           // Force legend order and sort
+          font:{
+            size:legendFontSize
+          },
           sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
         }
       },
