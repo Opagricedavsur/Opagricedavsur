@@ -212,7 +212,8 @@
         const areaData = data.barData.map(d => d.area);
         const prodData = data.barData.map(d => d.production);
         const yieldData = data.barData.map(d => d.yield);
-
+      const isAndroid = /Android/i.test(navigator.userAgent);
+        const chartAspectRatio = isAndroid ? 1 : 2;
         new Chart(document.getElementById("barChart"), {
           type: "bar",
           data: {
@@ -226,7 +227,7 @@
           options: {
   responsive: true,
   maintainAspectRatio: true,
-            aspectRatio:1,
+            aspectRatio: chartAspectRatio,
             scales: { y: { beginAtZero: true } }
           }
         });
