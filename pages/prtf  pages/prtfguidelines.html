@@ -60,8 +60,26 @@
     <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
   </footer>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
+   <script>
+ // Detect Android devices
+  function isAndroid() {
+    return /Android/i.test(navigator.userAgent);
+  }
+
+  // Change class if Android + handle login/logout
+  document.addEventListener("DOMContentLoaded", () => {
+    // Android detection and class swap
+    if (isAndroid()) {
+      const mainContent = document.querySelector(".maincontentnews1");
+      if (mainContent) {
+        mainContent.classList.remove("maincontentnews1");
+        mainContent.classList.add("maincontentnews2");
+      }
+    }
+
+    // Login/logout logic
+    
+  
       const loginArea = document.getElementById("login-area");
       const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -130,23 +148,5 @@
 }
 
   </script>
-  <script>
-  document.querySelectorAll('.dropdown > a').forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      const dropdownContent = trigger.nextElementSibling;
-      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-    });
-  });
-
-  // Hide dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    document.querySelectorAll('.dropdown-content').forEach(menu => {
-      if (!menu.parentElement.contains(e.target)) {
-        menu.style.display = 'none';
-      }
-    });
-  });
-</script>
 </body>
 </html>
