@@ -133,5 +133,23 @@
 }
 
   </script>
+    <script>
+  document.querySelectorAll('.dropdown > a').forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const dropdownContent = trigger.nextElementSibling;
+      dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.dropdown-content').forEach(menu => {
+      if (!menu.parentElement.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  });
+</script>
     </body>
 </html>
