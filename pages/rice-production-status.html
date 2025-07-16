@@ -36,7 +36,7 @@
     }
    canvas {
   width: 100% !important;
-  height: 400px !important;
+  height: auto !important;
   max-width: 100%;
 }
 
@@ -225,7 +225,8 @@
           },
           options: {
   responsive: true,
-  maintainAspectRatio: false,
+  maintainAspectRatio: true,
+            aspectRatio:2,
             scales: { y: { beginAtZero: true } }
           }
         });
@@ -302,7 +303,8 @@ new Chart(document.getElementById("ecosystemLineChart"), {
   },
   options: {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
+    aspectRatio: 2,
     scales: {
       y: {
         beginAtZero: true,
