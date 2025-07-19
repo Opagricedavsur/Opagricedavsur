@@ -34,38 +34,38 @@
   </footer>
 
   <script>
-    // 🔒 Use the SAME URL as in doPost (replace with your Apps Script URL)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEWcX38P_pWDxWPNasnIJRX1USUBRQG8C0GM9GZZez3gLBw4Q2pK2icgjuzyQFTFoK/exec";
 
     document.getElementById('logForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const username = document.getElementById("login-email").value.trim();
-      const password = document.getElementById("login-password").value.trim();
+      const button = e.target.querySelector('button[type="submit"]');
+      button.disabled = true;
+      button.textContent = "Logging in...";
 
       try {
+        const username = document.getElementById("login-email").value.trim();
+        const password = document.getElementById("login-password").value.trim();
+
         const response = await fetch(SCRIPT_URL, {
           method: 'POST',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: 'login',
             username: username,
-            password: password // 🔒 Server hashes this
+            password: password
           }),
         });
 
         const result = await response.json();
 
         if (result.status === "success") {
-          // ✅ Save user data from SERVER response (not localUsers)
+          // Store user data
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("profileImg", result.user.profileImg || "../logo-pic/account logo.png");
           localStorage.setItem("fullName", `${result.user.firstName} ${result.user.lastName}`);
           localStorage.setItem("username", result.user.username);
           localStorage.setItem("email", result.user.email || "");
 
-          // Show welcome message
-          alert(`✅ Welcome, ${result.user.firstName.toUpperCase()} ${result.user.lastName.toUpperCase()}!`);
-          
           // Redirect
           const redirectURL = localStorage.getItem("redirectAfterLogin") || "../index.html";
           localStorage.removeItem("redirectAfterLogin");
@@ -76,6 +76,9 @@
       } catch (error) {
         alert("⚠️ Server error. Try again later.");
         console.error(error);
+      } finally {
+        button.disabled = false;
+        button.textContent = "Login";
       }
     });
   </script>
