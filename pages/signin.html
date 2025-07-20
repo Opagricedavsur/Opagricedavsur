@@ -1,65 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-  <img src="/logo pic/logo opag.png" alt="OPAG Logo" style="height: 80px;">
-  
-  <form id="loginForm">
-    <input type="text" placeholder="Username" required>
-    <input type="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-    <p id="error" style="color:red;"></p>
-  </form>
+  <div class="wrapper">
+  <header>
+    <ul class="opagheaderlist">
+      <li class="opaghead1"><img src="../logo-pic/logo opag.png" alt="OPAG Logo" /></li>
+      <li class="opaghead2">OPAG Rice Section</li>
+    </ul>
+  </header>
 
-  <script>
-   document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const errorElement = document.getElementById('error');
-  errorElement.textContent = '';
-  
-  try {
-    const response = await fetch('/.netlify/functions/google-script-proxy', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'login',
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value
-      })
+  <section id="login" class="homevission1">
+    <h2 class="loginheader">Login</h2>
+    <form id="logForm" autocomplete="on">
+      <label for="login-email">Email or Username:</label>
+      <input type="text" id="login-email" name="username" placeholder="Enter email or username" required autocomplete="username" />
+
+      <label for="login-password">Password:</label>
+      <input type="password" id="login-password" name="password" placeholder="Password" required autocomplete="current-password" />
+
+      <button type="submit">Login</button>
+    </form>
+
+  </section>
+</div>
+  <footer>
+    <p>© 2024 OPAG Rice Section | All rights reserved.</p>
+  </footer>
+
+ <script>
+  let localUsers = [];
+
+  // 1. Fetch user list from your Google Sheets endpoint
+  fetch("https://script.google.com/macros/s/AKfycbyzOGaaMqxhnplt5ti5WeDVRhS-EZt6_KMfpwqOiGo9lPSXWaBUc5xdj6AQfihXj3mU/exec")
+    .then(res => res.json())
+    .then(data => {
+      localUsers = data;
+    })
+    
+    .catch(err => {
+      console.error("Failed to fetch user data:", err);
     });
 
-    // First check if response is OK
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+  document.getElementById('logForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    console.log("Fetched users:", localUsers);
 
-    // Then try to parse as JSON
-    const text = await response.text();
-    let result;
-    
-    try {
-      result = text ? JSON.parse(text) : {};
-    } catch (parseError) {
-      console.error("Failed to parse JSON:", text);
-      throw new Error("Invalid server response");
-    }
+    const emailOrUsername = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
 
-    if (result.error) {
-      throw new Error(result.error);
+    const match = localUsers.find(user =>
+      (user.email === emailOrUsername || user.username === emailOrUsername) &&
+      user.password === password
+    );
+
+    if (match) {
+      // ✅ Save login state to localStorage
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("profileImg", match.profileImg || "../logo pic/account logo.png");
+
+      localStorage.setItem("fullName", `${match.firstName} ${match.lastName}`);
+        localStorage.setItem("username", match.username);
+         localStorage.setItem("email", match.email);
+
+      // ✅ Log successful login to Google Sheets
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+
+      const logData = {
+        username: match.username,
+        email: match.email,
+        action: 'login'
+      };
+
+      try {
+        await fetch(scriptURL, {
+          method: 'POST',
+          body: JSON.stringify(logData),
+        });
+
+        alert(`✅ Welcome, ${match.firstName.toUpperCase()} ${match.lastName.toUpperCase()}!`);
+        const redirectURL = localStorage.getItem("redirectAfterLogin") || "../index.html";
+        localStorage.removeItem("redirectAfterLogin"); // Clean up
+        window.location.href = redirectURL;
+        // Redirect to homepage
+      } catch (error) {
+        alert('⚠️ Login succeeded, but logging failed.');
+        console.error(error);
+      }
+    } else {
+      alert("❌ Invalid login. Please check your credentials.");
     }
-    
-    // Login successful
-    localStorage.setItem('user', JSON.stringify(result.user));
-    window.location.href = '/index.html';
-    
-  } catch (error) {
-    errorElement.textContent = error.message;
-    console.error('Login error:', error);
-  }
-});
-  </script>
+  });
+</script>
+
+
 </body>
+
 </html>
