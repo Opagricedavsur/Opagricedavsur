@@ -3,225 +3,465 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>OPAG Rice Section - Rice Status</title>
-  <link rel="stylesheet" href="../styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="../scripts/platformStylesforactivities.js"></script>
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <style>
+    /* --- Responsive Chart Containers (from Pasted_Text_1753690297758.txt) --- */
     .chart-section {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
+      gap: 20px; /* Reduced gap for better spacing */
       margin: 20px 0;
     }
-   .chart-box1 {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 95vw;
-  box-sizing: border-box;
-  overflow-x: auto;
-}
-
-    .chart-box {
+    .chart-box-large {
       background: #fff;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      width: 250px;
-      max-width: 90vw;
+      width: 100%; /* Full width on smaller screens */
+      max-width: 900px; /* Max width for larger screens */
+      flex: 1 1 800px; /* Flex grow, shrink, basis for responsiveness */
     }
-   canvas {
-  width: 100% !important;
-  height: auto !important;
-  max-width: 100%;
-}
+    .chart-box-medium {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px; /* Adjusted max width */
+      flex: 1 1 500px;
+    }
+    /* --- Enhanced Styles for Pie Charts --- */
+    /* Flex container for the group of 3 pie charts */
+    .pie-charts-flex-container {
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      justify-content: center;
+      gap: 25px; /* Space between pie charts */
+      width: 100%;
+      margin-top: 15px; /* Space above the chart group */
+      margin-bottom: 20px; /* Space below the chart group */
+    }
 
+    /* Individual pie chart box - enhanced */
+    .chart-box-enhanced {
+      background: #ffffff;
+      padding: 20px; /* Increased padding */
+      border-radius: 15px; /* Slightly rounder corners */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer, more pronounced shadow */
+      flex: 1 1 280px; /* Flex grow, shrink, basis for responsiveness */
+      min-width: 0; /* Allows flex item to shrink below content size if needed */
+      max-width: 100%; /* Prevent overflow */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Subtle hover effect */
+    }
+
+    .chart-box-enhanced:hover {
+        transform: translateY(-3px); /* Lift effect on hover */
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Pie chart title */
+    .pie-chart-title {
+        font-size: 1.1em; /* Slightly larger title */
+        font-weight: 600; /* Semi-bold */
+        margin-bottom: 15px; /* Space below title */
+        color: #333; /* Darker text color */
+        text-align: center;
+    }
+
+    /* Ensure canvas takes available space within the enhanced box */
+    .chart-box-enhanced canvas {
+        width: 100% !important;
+        height: 100% !important; /* Let Chart.js handle the aspect ratio */
+        max-height: 250px; /* Optional: Constrain height if needed */
+    }
+    /* --- End Enhanced Pie Chart Styles --- */
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+    /* --- Section Headers --- */
     h3.section-header {
       text-align: center;
       margin-top: 40px;
+      margin-bottom: 15px; /* Add space below header */
     }
-    <style>
-  @media (max-width: 768px) {
-    .chart-box1 {
-      height: 400px;
+    /* --- Filter Buttons (from Pasted_Text_1753690297758.txt, enhanced) --- */
+    .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 15px; /* Space below buttons */
     }
-  }
-</style>
+    .filter-btn {
+        padding: 8px 16px;
+        background-color: #f1f3f5; /* Lighter default background */
+        border: 1px solid #ced4da; /* Distinct border */
+        border-radius: 6px; /* Slightly rounder */
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500; /* Medium font weight */
+        color: #495057; /* Darker text */
+        transition: all 0.2s ease-in-out; /* Smooth transition for all properties */
+    }
+    .filter-btn:hover {
+        background-color: #e9ecef; /* Hover background */
+        border-color: #adb5bd; /* Hover border */
+        color: #212529; /* Darker text on hover */
+    }
+    .filter-btn.active {
+        background-color: #007bff; /* Active Bootstrap primary color */
+        color: white;
+        border-color: #007bff; /* Active border color */
+        box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2); /* Subtle active shadow */
+    }
 
+    /* --- Specific Adjustments --- */
+    #ecosystemLineChartContainer {
+        width: 100%;
+    }
+    #barChartContainer {
+        width: 100%;
+    }
+    /* Media query for smaller screens (e.g., mobile) */
+    @media (max-width: 768px) {
+        .chart-section {
+            gap: 15px; /* Smaller gap on mobile */
+        }
+        .chart-box-large, .chart-box-medium, .chart-box-enhanced {
+            padding: 15px; /* Reduce padding on mobile */
+        }
+        .filter-btn {
+            padding: 6px 12px; /* Smaller buttons */
+            font-size: 0.85em;
+        }
+        .pie-charts-flex-container {
+            gap: 15px; /* Reduce gap further on small screens */
+        }
+        .chart-box-enhanced {
+            flex: 1 1 100%; /* Force full width stacking on small screens */
+        }
+    }
   </style>
- <header>
-    <nav> 
-      <ul>
-        <li class="login" id="login-area">
-          <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
-        </li>
-      </ul>
-    </nav>  
+</head>
+<body>
+  <div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" id="closeModalBtn">&times;</span>
+    <h2>Login</h2>
+    <form id="logForm">
+      <input type="text" id="login-email" placeholder="Username or Email" required />
+      <div class="password-wrapper">
+        <input type="password" id="login-password" placeholder="Password" required />
+        <i class="uil uil-eye-slash toggle-password" id="togglePassword"></i>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
 
-    <ul class="opagheader">
-      <li class="opaghead1"><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
-      <li class="opaghead2">OPAG Rice Section</li>
-    </ul>
-  </header>
+<!-- Toast Notification -->
+<div id="toast" class="toast-notification"></div>
 
-    <nav class="navigations">
+<header>
+  <nav class="top-nav">
+    <div id="login-area">
+      <button class="button" id="loginButton">Login</button>
+    </div>
+  </nav>
+  <ul class="opagheader">
+    <li><img src="../../logo-pic/logo opag.png" alt="OPAG Logo" class="opag-logo"></li>
+    <li>OPAG Rice Section</li>
+  </ul>
+  
+</header>
+    <nav class="navigatio">
+  <div class="navigations">
+      <a href="#" id="toggleSidebarBtn" class="auth-only hamburger-menu" style="display: none;">
+          <span class="hamburger-line line1"></span>
+          <span class="hamburger-line line2"></span>
+          <span class="hamburger-line line3"></span>
+          
+      </a>
+
       <a href="../index.html">Home</a>
-      
       <a href="activities.html">Activities</a>
       <a href="rice-production-status.html" class="active">Rice Production Status</a>
-       <a href="news.html">News & Updates</a>
+      <a href="news.html">News & Updates</a>
       <div class="dropdown">
-            <a  class="dropdown-toggle">PRTF 2025 ▾</a>
-                <div class="dropdown-content">
+         <a >PRTF 2025 ▾</a>
+        <div class="dropdown-content">
                   <a href="prtf  pages/about-prtf.html">About PRTF</a>
-                   <a href="prtf  pages/prtfguidelines.html">PRTF Guidelines</a>
-                  
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKZOFGZN80F6o6Jx72X-05IJR3wnxGQr19EK-ftI9X3Zjf8w/viewform?usp=dialog" target="_blank">Join PRTF</a>
+                  <a href="prtf  pages/prtfguidelines.html">PRTF Guidelines</a>
+            <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" target="_blank">Join PRTF</a>
                   <a href="prtf  pages/prtf_participants.html">List of Participants</a>
-                </div>
-          </div>
+        </div>
+      </div>
+    </div>
     </nav>
+    <div class="main-layout">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar hide">
+    <a href="#" class="nav_logo" id="sidebar-user-info">
+      <!-- Filled by session.js -->
+    </a>
 
+    <a href="dashboard.php" class="uil uil-house-user"><strong class="n">Home</strong></a>
+    <a href="cart.php" class="uil uil-analytics">MPOR</a>
+    <a href="rental.php" class="uil uil-document-layout-left">IPCR</a>
+    <a href="order.php" class="uil uil-heart-alt">Monthly Report</a>
+    <a href="cart.php" class="uil uil-plane">Travel Order</a>
+    <a href="orderhistory.php" class="uil uil-history">Profile</a>
+    <a href="settings.php" class="uil uil-cog">Settings</a>
+    <button type="button" id="sidebarLogoutBtn" class="logout-btna">Logout</button>
+  </div>
     <main class="maincontentnews1">
       <section>
+        <!-- === Annual Rice Production by Ecosystem (from Pasted_Text_1753690297758.txt) === -->
         <h3 class="section-header">Annual Rice Production by Ecosystem (2013–Present)</h3>
+        <div class="filter-buttons" id="ecosystemFilterButtons">
+          <button class="filter-btn active" data-ecosystem="total">Total/Overall</button>
+          <button class="filter-btn" data-ecosystem="Irrigated">Irrigated</button>
+          <button class="filter-btn" data-ecosystem="Lowland">Lowland</button>
+          <button class="filter-btn" data-ecosystem="Upland">Upland</button>
+        </div>
         <div class="chart-section">
-          <div class="chart-box1">
+          <div class="chart-box-large">
             <h4>Annual Yield (MT/ha)</h4>
-            <canvas id="ecosystemLineChart"></canvas>
+             <div id="ecosystemLineChartContainer" style="position: relative; height: 500px;">
+                <canvas id="ecosystemLineChart"></canvas>
+             </div>
           </div>
         </div>
 
+        <!-- === Municipality Rice Production Overview (from Pasted_Text_1753690297758.txt) === -->
         <h3 class="section-header">Municipality Rice Production Overview</h3>
         <div class="chart-section">
-          <div class="chart-box1">
+           <div class="chart-box-medium">
             <h4>Area, Production & Yield per Municipality</h4>
-            <canvas id="barChart"></canvas>
+            <div id="barChartContainer" style="position: relative; height: 500px;">
+                <canvas id="barChart"></canvas>
+            </div>
           </div>
         </div>
 
+        <!-- === Global Pie Chart Filter === -->
+        <h3 class="section-header">Detailed Classifications</h3>
+        <div class="filter-buttons" id="globalPieFilterButtons">
+          <button class="filter-btn active" data-category="Area">Area</button>
+          <button class="filter-btn" data-category="Production">Production</button>
+          <button class="filter-btn" data-category="Average Yield">Average Yield</button>
+        </div>
+
+        <!-- === Ecosystem Classification Pie Charts (Flex Layout) === -->
         <h3 class="section-header">Ecosystem Classification</h3>
-        <div class="chart-section">
-          <div class="chart-box"><h4>Area</h4><canvas id="ecoArea"></canvas></div>
-          <div class="chart-box"><h4>Production</h4><canvas id="ecoProd"></canvas></div>
-          <div class="chart-box"><h4>Average Yield</h4><canvas id="ecoYield"></canvas></div>
+        <div class="pie-charts-flex-container">
+          <div class="chart-box-enhanced">
+            <div class="pie-chart-title">Area</div>
+            <canvas id="ecoArea"></canvas>
+          </div>
+          <!-- Initially hide Production and Average Yield charts -->
+          <div class="chart-box-enhanced" style="display: none;">
+            <div class="pie-chart-title">Production</div>
+            <canvas id="ecoProd"></canvas>
+          </div>
+          <div class="chart-box-enhanced" style="display: none;">
+            <div class="pie-chart-title">Average Yield</div>
+            <canvas id="ecoYield"></canvas>
+          </div>
         </div>
 
+        <!-- === Seed Classification Pie Charts (Flex Layout) === -->
         <h3 class="section-header">Seed Classification</h3>
-        <div class="chart-section">
-          <div class="chart-box"><h4>Area</h4><canvas id="seedArea"></canvas></div>
-          <div class="chart-box"><h4>Production</h4><canvas id="seedProd"></canvas></div>
-          <div class="chart-box"><h4>Average Yield</h4><canvas id="seedYield"></canvas></div>
+        <div class="pie-charts-flex-container">
+          <div class="chart-box-enhanced">
+            <div class="pie-chart-title">Area</div>
+            <canvas id="seedArea"></canvas>
+          </div>
+          <!-- Initially hide Production and Average Yield charts -->
+          <div class="chart-box-enhanced" style="display: none;">
+            <div class="pie-chart-title">Production</div>
+            <canvas id="seedProd"></canvas>
+          </div>
+          <div class="chart-box-enhanced" style="display: none;">
+            <div class="pie-chart-title">Average Yield</div>
+            <canvas id="seedYield"></canvas>
+          </div>
         </div>
 
+        <!-- === Season Pie Charts (Flex Layout) === -->
         <h3 class="section-header">Season (2024)</h3>
-        <div class="chart-section">
-          <div class="chart-box"><h4>Area</h4><canvas id="seasonArea"></canvas></div>
-          <div class="chart-box"><h4>Production</h4><canvas id="seasonProd"></canvas></div>
-          <div class="chart-box"><h4>Average Yield</h4><canvas id="seasonYield"></canvas></div>
+        <div class="pie-charts-flex-container">
+          <div class="chart-box-enhanced">
+            <div class="pie-chart-title">Area</div>
+            <canvas id="seasonArea"></canvas>
+          </div>
+          <!-- Initially hide Production and Average Yield charts -->
+          <div class="chart-box-enhanced" style="display: none;">
+            <div class="pie-chart-title">Production</div>
+            <canvas id="seasonProd"></canvas>
+          </div>
+          <div class="chart-box-enhanced" style="display: none;">
+            <div class="pie-chart-title">Average Yield</div>
+            <canvas id="seasonYield"></canvas>
+          </div>
         </div>
       </section>
     </main>
   </div>
+   <footer>
+  <p>&copy; <span id="current-year"></span> OPAG Rice Section | All rights reserved.</p>
+</footer>
 
-  <footer>
-    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
-  </footer>
+<!-- Loading Spinner -->
+<div id="login-loading-spinner">
+  <div class="spinner" style="width:40px; height:40px; border:4px solid #ccc; border-top:4px solid #007bff; border-radius:50%; animation: spin 1s linear infinite;"></div>
+  <p style="margin-top:10px; font-weight:bold; color:#007bff;">Logging in...</p>
+</div>
 
-  <!-- Login/Profile Script -->
+<script src="../scripts/login.js"></script>
+<script src="../scripts/logout.js"></script>
+<script src="../scripts/openmenu.js"></script>
+<script src="../scripts/user_dashboard.js"></script>
+<script src="../scripts/session.js"></script>
+
+<script>
+  // Set current year
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+  
+  // Close modal functionality
+  document.getElementById('closeModalBtn').addEventListener('click', function() {
+    document.getElementById('loginModal').style.display = 'none';
+  });
+  
+  // Toggle password visibility
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('login-password');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.classList.toggle('uil-eye');
+    this.classList.toggle('uil-eye-slash');
+  });
+</script>
+
   <script>
- // Detect Android devices
-  function isAndroid() {
-    return /Android/i.test(navigator.userAgent);
-  }
-
-  // Change class if Android + handle login/logout
-  document.addEventListener("DOMContentLoaded", () => {
-    // Android detection and class swap
-    if (isAndroid()) {
-      const mainContent = document.querySelector(".maincontentnews1");
-      if (mainContent) {
-        mainContent.classList.remove("maincontentnews1");
-        mainContent.classList.add("maincontentnews2");
-      }
-    }
-
-    // Login/logout logic
-      const loginArea = document.getElementById("login-area");
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-      let rawImg = localStorage.getItem("profileImg") || "";
-      let profileImg = "";
-
-      if (rawImg.includes("drive.google.com/file/d/")) {
-        profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
-      } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
-        const match = rawImg.match(/src=["']([^"']+)["']/);
-        profileImg = match ? match[1] : "../../logo-pic/account logo.png";
-      } else {
-        profileImg = rawImg || "../../logo-pic/account logo.png";
-      }
-
-      localStorage.setItem("profileImg", profileImg);
-      const fullName = localStorage.getItem("fullName") || "User Name";
-
-      if (isLoggedIn && loginArea) {
-        loginArea.innerHTML = `
-          <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img"
-            onerror="this.src='../../logo-pic/account logo.png'">
-          <div id="profileDropdown" class="profile-dropdown">
-            <img src="${profileImg}" alt="Profile" />
-            <p>${fullName}</p>
-            <button onclick="logout()">Logout</button>
-          </div>
-        `;
-
-        const profilePic = document.getElementById("profilePic");
-        const dropdown = document.getElementById("profileDropdown");
-
-        profilePic.addEventListener("click", e => {
-          e.stopPropagation();
-          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      // Ecosystem Line Chart Filter (from Pasted_Text_1753690297758.txt)
+      document.querySelectorAll('#ecosystemFilterButtons .filter-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('#ecosystemFilterButtons .filter-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            const selectedEcosystem = this.getAttribute('data-ecosystem');
+            filterEcosystemChart(selectedEcosystem);
         });
-
-        document.addEventListener("click", e => {
-          if (!dropdown.contains(e.target)) {
-            dropdown.style.display = "none";
-          }
-        });
-      }
-    });
-
-    function logout() {
-      const username = localStorage.getItem("username") || "Unknown";
-      const email = localStorage.getItem("email") || "Unknown";
-      const logData = { username, email, action: 'logout' };
-
-      fetch('https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec', {
-        method: 'POST',
-        body: JSON.stringify(logData)
-      }).finally(() => {
-        localStorage.clear();
-        location.reload();
       });
+
+       // --- Global Pie Chart Filter Logic ---
+      document.querySelectorAll('#globalPieFilterButtons .filter-btn').forEach(button => {
+          button.addEventListener('click', function() {
+              // Update active state for the global filter buttons
+              document.querySelectorAll('#globalPieFilterButtons .filter-btn').forEach(btn => btn.classList.remove('active'));
+              this.classList.add('active');
+
+              // Get the selected category (Area, Production, Average Yield)
+              const selectedCategory = this.getAttribute('data-category');
+
+              // Define the mapping of categories to canvas suffixes
+              const categoryMap = {
+                  'Area': 'Area',
+                  'Production': 'Prod',
+                  'Average Yield': 'Yield'
+              };
+              const suffix = categoryMap[selectedCategory];
+              if (!suffix) return; // Guard clause if category not found
+
+              // Define the base names for the chart groups
+              const chartGroups = ['eco', 'seed', 'season'];
+
+              // Loop through each group base name
+              chartGroups.forEach(baseName => {
+                  // Hide all chart boxes in the group first
+                  // Loop through all possible suffixes for the group
+                  ['Area', 'Prod', 'Yield'].forEach(type => {
+                      // Construct the canvas ID for the chart to hide
+                      const canvasIdToHide = `${baseName}${type}`;
+                      const canvasToHide = document.getElementById(canvasIdToHide);
+                      if (canvasToHide) {
+                          // Find the parent .chart-box-enhanced and hide it
+                          const boxToHide = canvasToHide.closest('.chart-box-enhanced');
+                          if (boxToHide) {
+                              boxToHide.style.display = 'none';
+                          }
+                      }
+                  });
+
+                  // Show the target chart box for the group
+                  // Construct the target canvas ID based on the selected global category
+                  const targetCanvasId = `${baseName}${suffix}`;
+                  const targetCanvas = document.getElementById(targetCanvasId);
+                  if (targetCanvas) {
+                      // Find the parent .chart-box-enhanced and show it
+                      const targetBox = targetCanvas.closest('.chart-box-enhanced');
+                      if (targetBox) {
+                          targetBox.style.display = 'flex'; // Use flex for proper layout
+                      }
+                  }
+              });
+          });
+      });
+
+    
+
+    
+
+     // --- Chart Filtering Logic (from Pasted_Text_1753690297758.txt) ---
+    let ecosystemChartInstance = null; // Store the chart instance
+
+    function filterEcosystemChart(selectedEcosystem) {
+        if (!ecosystemChartInstance || !window.originalEcosystemData) return;
+
+        const newData = { labels: window.originalEcosystemData.labels, datasets: [] };
+        const baseDatasets = window.originalEcosystemData.datasets;
+
+        if (selectedEcosystem === 'total') {
+            // Show all datasets
+            newData.datasets = baseDatasets;
+        } else {
+            // Filter datasets for the selected ecosystem
+            baseDatasets.forEach(dataset => {
+                if (dataset.label.includes(` - ${selectedEcosystem}`)) {
+                    newData.datasets.push(dataset);
+                }
+            });
+        }
+
+        // Update the chart data and re-render
+        ecosystemChartInstance.data = newData;
+        ecosystemChartInstance.update();
     }
+
   </script>
 
-  <!-- Chart Data Loader -->
+  <!-- Chart Data Loader (from Pasted_Text_1753690297758.txt) -->
   <script>
     fetch("https://script.google.com/macros/s/AKfycbzNrn2xudYBMtmCpdEjl1cqTVvCGKBN53rdJo4bJZdrI9cwf1qzjpC1zzr-H1Ix3ECwWA/exec")
       .then(res => res.json())
       .then(data => {
+        // --- Municipality Bar Chart ---
         const barLabels = data.barData.map(d => d.municipality);
         const areaData = data.barData.map(d => d.area);
         const prodData = data.barData.map(d => d.production);
         const yieldData = data.barData.map(d => d.yield);
-      const isAndroid = /Android/i.test(navigator.userAgent);
-        const chartAspectRatio = isAndroid ? 1 : 2;
-        const legendFontSize = isAndroid ? 6:12;
         new Chart(document.getElementById("barChart"), {
           type: "bar",
           data: {
@@ -233,151 +473,204 @@
             ]
           },
           options: {
-  responsive: true,
-  maintainAspectRatio: true,
-            aspectRatio: chartAspectRatio,
-            scales: { y: { beginAtZero: true } },
-                               plugins: {
-                        legend: {
-                          position: "bottom",
-                          labels: {
-                            // Force legend order and sort
-                                font:{
-                              size:legendFontSize
-                                    },
-                      
-                                  }
-                              },
-                        tooltip: { mode: "index", intersect: false }
-                              }
-                            }
+            responsive: true,
+            maintainAspectRatio: false, // Important for fixed height containers
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        // Optional: Format large numbers if needed
+                        // callback: function(value) { return value.toLocaleString(); }
+                    }
+                },
+                x: {
+                    ticks: {
+                         autoSkip: false, // Try to show all labels, adjust if too crowded
+                         maxRotation: 45, // Rotate labels if they overlap
+                         minRotation: 45
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top', // Position legend at the top
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            }
+          }
         });
 
-        function createPie(ctxId, labels, values, colors) {
-          new Chart(document.getElementById(ctxId), {
+        // --- Ecosystem Line Chart (with Filtering) ---
+        const ecos = ["Irrigated", "Lowland", "Upland"];
+        const yearsSet = new Set();
+        ecos.forEach(eco => {
+          Object.keys(data.yearlyEcosystem?.[eco] || {}).forEach(year => yearsSet.add(year));
+        });
+        const sortedYears = Array.from(yearsSet).sort((a, b) => +a - +b);
+        const colorMap = {
+          Irrigated: "#007bff",
+          Lowland: "#28a745",
+          Upland: "#dc3545"
+        };
+
+        const datasets = [];
+        // Area and Production bars
+        ["area", "production"].forEach(type => {
+          ecos.forEach(eco => {
+            datasets.push({
+              type: "bar",
+              label: `${type === "area" ? "Area" : "Production"} - ${eco}`,
+              data: sortedYears.map(year => {
+                const val = data.yearlyEcosystem?.[eco]?.[year];
+                return val ? +val[type] : 0;
+              }),
+              backgroundColor: Chart.helpers.color(colorMap[eco]).alpha(type === "area" ? 0.4 : 0.75).rgbString(),
+              yAxisID: 'y',
+              stack: type
+            });
+          });
+        });
+        // Yield line
+        ecos.forEach(eco => {
+          datasets.push({
+            type: "line",
+            label: `Yield - ${eco}`,
+            data: sortedYears.map(year => {
+              const val = data.yearlyEcosystem?.[eco]?.[year];
+              return val ? +val.avgYield.toFixed(2) : null;
+            }),
+            borderColor: colorMap[eco],
+            backgroundColor: colorMap[eco],
+            yAxisID: "yYield",
+            tension: 0.3,
+            fill: false
+          });
+        });
+
+        // Sort legend entries manually: area > production > yield
+        const legendOrder = [];
+        ["Area", "Production", "Yield"].forEach(section => {
+          ecos.forEach(eco => legendOrder.push(`${section} - ${eco}`));
+        });
+
+        // Store original data for filtering
+        window.originalEcosystemData = {
+            labels: sortedYears,
+            datasets: datasets,
+            colorMap: colorMap
+        };
+
+        // Create the initial chart instance (showing 'total')
+        ecosystemChartInstance = new Chart(document.getElementById("ecosystemLineChart"), {
+          data: {
+            labels: sortedYears,
+            datasets: datasets // Initially show all
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false, // Important for fixed height container
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: { display: true, text: "Area / Production" }
+              },
+              yYield: {
+                position: "right",
+                beginAtZero: true,
+                title: { display: true, text: "Yield (MT/ha)" },
+                grid: { drawOnChartArea: false }
+              },
+              x: {
+                title: { display: true, text: "Year" }
+              }
+            },
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
+                }
+              },
+              tooltip: { mode: "index", intersect: false }
+            }
+          }
+        });
+
+
+        // --- Pie Chart Creation Helper ---
+        function createPie(ctxId, labels, values, colors, title) {
+          return new Chart(document.getElementById(ctxId), {
             type: "pie",
-            data: { labels, datasets: [{ data: values, backgroundColor: colors }] },
-            options: { responsive: true }
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: colors,
+                    borderWidth: 1 // Add border for better definition
+                }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Important for fixed height containers
+              plugins: {
+                  legend: {
+                      position: 'bottom', // Position legend at the bottom
+                       labels: {
+                           // Optional: Adjust font size or padding
+                           // font: { size: 10 },
+                           // padding: 10
+                       }
+                  },
+                  title: {
+                      display: !!title, // Display title if provided
+                      text: title
+                  }
+              }
+            }
           });
         }
 
-        // === Line Chart for Ecosystem per Year ===
-  const ecos = ["Irrigated", "Lowland", "Upland"];
-const yearsSet = new Set();
-
-ecos.forEach(eco => {
-  Object.keys(data.yearlyEcosystem?.[eco] || {}).forEach(year => yearsSet.add(year));
-});
-const sortedYears = Array.from(yearsSet).sort((a, b) => +a - +b);
-
-const colorMap = {
-  Irrigated: "#007bff",
-  Lowland: "#28a745",
-  Upland: "#dc3545"
-};
-
-const datasets = [];
-
-// Area and Production bars
-["area", "production"].forEach(type => {
-  ecos.forEach(eco => {
-    datasets.push({
-      type: "bar",
-      label: `${type === "area" ? "Area" : "Production"} - ${eco}`,
-      data: sortedYears.map(year => {
-        const val = data.yearlyEcosystem?.[eco]?.[year];
-        return val ? +val[type] : 0;
-      }),
-      backgroundColor: Chart.helpers.color(colorMap[eco]).alpha(type === "area" ? 0.4 : 0.75).rgbString(),
-      yAxisID: 'y',
-      stack: type
-    });
-  });
-});
-
-// Yield line
-ecos.forEach(eco => {
-  datasets.push({
-    type: "line",
-    label: `Yield - ${eco}`,
-    data: sortedYears.map(year => {
-      const val = data.yearlyEcosystem?.[eco]?.[year];
-      return val ? +val.avgYield.toFixed(2) : null;
-    }),
-    borderColor: colorMap[eco],
-    backgroundColor: colorMap[eco],
-    yAxisID: "yYield",
-    tension: 0.3,
-    fill: false
-  });
-});
-
-// Sort legend entries manually: area > production > yield
-const legendOrder = [];
-["Area", "Production", "Yield"].forEach(section => {
-  ecos.forEach(eco => legendOrder.push(`${section} - ${eco}`));
-});
-
-new Chart(document.getElementById("ecosystemLineChart"), {
-  data: {
-    labels: sortedYears,
-    datasets: datasets
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: true,
-    aspectRatio: chartAspectRatio,
-    scales: {
-                  y: {
-                      beginAtZero: true,
-                        title: { display: true, text: "Area / Production" }
-                    },
-                yYield: {
-                      position: "right",
-                      beginAtZero: true,
-                      title: { display: true, text: "Yield (MT/ha)" },
-                      grid: { drawOnChartArea: false }
-                      },
-                x: {
-                        title: { display: true, text: "Year" }
-                    }
-            },
-    plugins: {
-      legend: {
-        position: "bottom",
-        labels: {
-          // Force legend order and sort
-              font:{
-            size:legendFontSize
-                  },
-          sort: (a, b) => legendOrder.indexOf(a.text) - legendOrder.indexOf(b.text)
-                }
-            },
-      tooltip: { mode: "index", intersect: false }
-            }
-  }
-});
-
-
-
-        // Pie Charts
+        // === Ecosystem Pie Charts ===
         const ecoLabels = Object.keys(data.ecosystem);
-        createPie("ecoArea", ecoLabels, ecoLabels.map(k => data.ecosystem[k].area), ["#ff6384", "#ff9f40", "#ffcd56"]);
-        createPie("ecoProd", ecoLabels, ecoLabels.map(k => data.ecosystem[k].production), ["#ff6384", "#ff9f40", "#ffcd56"]);
-        createPie("ecoYield", ecoLabels, ecoLabels.map(k => +data.ecosystem[k].avgYield.toFixed(2)), ["#ff6384", "#ff9f40", "#ffcd56"]);
+        const ecoAreaData = ecoLabels.map(k => data.ecosystem[k].area);
+        const ecoProdData = ecoLabels.map(k => data.ecosystem[k].production);
+        const ecoYieldData = ecoLabels.map(k => +data.ecosystem[k].avgYield.toFixed(2));
+        const ecoColors = ["#ff6384", "#ff9f40", "#ffcd56"];
 
+        createPie("ecoArea", ecoLabels, ecoAreaData, ecoColors, "Area Distribution");
+        createPie("ecoProd", ecoLabels, ecoProdData, ecoColors, "Production Distribution");
+        createPie("ecoYield", ecoLabels, ecoYieldData, ecoColors, "Avg Yield Distribution");
+
+        // === Seed Classification Pie Charts ===
         const seedLabels = Object.keys(data.seedClass);
-        createPie("seedArea", seedLabels, seedLabels.map(k => data.seedClass[k].area), ["#36a2eb", "#9966ff", "#c9cbcf"]);
-        createPie("seedProd", seedLabels, seedLabels.map(k => data.seedClass[k].production), ["#36a2eb", "#9966ff", "#c9cbcf"]);
-        createPie("seedYield", seedLabels, seedLabels.map(k => +data.seedClass[k].avgYield.toFixed(2)), ["#36a2eb", "#9966ff", "#c9cbcf"]);
+        const seedAreaData = seedLabels.map(k => data.seedClass[k].area);
+        const seedProdData = seedLabels.map(k => data.seedClass[k].production);
+        const seedYieldData = seedLabels.map(k => +data.seedClass[k].avgYield.toFixed(2));
+        const seedColors = ["#36a2eb", "#9966ff", "#c9cbcf"];
 
+        createPie("seedArea", seedLabels, seedAreaData, seedColors, "Area Distribution");
+        createPie("seedProd", seedLabels, seedProdData, seedColors, "Production Distribution");
+        createPie("seedYield", seedLabels, seedYieldData, seedColors, "Avg Yield Distribution");
+
+        // === Season Pie Charts ===
         const seasonLabels = Object.keys(data.season);
-        createPie("seasonArea", seasonLabels, seasonLabels.map(k => data.season[k].area), ["#7cc576", "#fcaf58", "#f282b4"]);
-        createPie("seasonProd", seasonLabels, seasonLabels.map(k => data.season[k].production), ["#7cc576", "#fcaf58", "#f282b4"]);
-        createPie("seasonYield", seasonLabels, seasonLabels.map(k => +data.season[k].avgYield.toFixed(2)), ["#7cc576", "#fcaf58", "#f282b4"]);
+        const seasonAreaData = seasonLabels.map(k => data.season[k].area);
+        const seasonProdData = seasonLabels.map(k => data.season[k].production);
+        const seasonYieldData = seasonLabels.map(k => +data.season[k].avgYield.toFixed(2));
+        const seasonColors = ["#7cc576", "#fcaf58", "#f282b4"];
+
+        createPie("seasonArea", seasonLabels, seasonAreaData, seasonColors, "Area Distribution");
+        createPie("seasonProd", seasonLabels, seasonProdData, seasonColors, "Production Distribution");
+        createPie("seasonYield", seasonLabels, seasonYieldData, seasonColors, "Avg Yield Distribution");
+
       })
       .catch(err => {
-        console.error("Error loading chart data:", err);
+        console.error("Error loading chart data: ", err);
+        // Optional: Display an error message to the user
+        alert("Failed to load chart data. Please try again later.");
       });
   </script>
 </body>
