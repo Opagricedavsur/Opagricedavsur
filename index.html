@@ -1,169 +1,149 @@
+
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAG Rice Section - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="scripts/platformStyles.js"></script>
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  
+</head>
 
-        <title>OPAG Rice Section - Home</title>
-        <link rel="stylesheet" href="styles.css" />
-        
-    </head>
-    <body>
-       <div class="wrapper">
-       <header>
-    <nav> 
-      <ul>
-        <li class="login" id="login-area">
-          <a href="pages/signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
-        </li>
-      </ul>
-    </nav>  
-
-    <ul class="opagheader">
-      <li class="opaghead1"><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
-      <li class="opaghead2">OPAG Rice Section</li>
-    </ul>
-  </header>
-             
-    <nav class="navigations">
-        <a href="index.html" class="active">Home</a>
-
-         <a href="pages/activities.html">Activities</a>
-         <a href="pages/rice-production-status.html">Rice Production Status</a>
-          <a href="pages/news.html">News & Updates</a>
-          <div class="dropdown">
-            <a href="pages/prtf  pages/about-prtf.html" class="dropdown-toggle">PRTF 2025 ▾</a>
-                <div class="dropdown-content">
-                  <a href="pages/prtf  pages/about-prtf.html">About PRTF</a>
-                   <a href="pages/prtf  pages/prtfguidelines.html">PRTF Guidelines</a>
-                  
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKZOFGZN80F6o6Jx72X-05IJR3wnxGQr19EK-ftI9X3Zjf8w/viewform?usp=dialog" target="_blank">Join PRTF</a>
-                  <a href="pages/prtf  pages/prtf_participants.html">List of Participants</a>
-                </div>
-          </div>
-
-         <!-- 🔐 Hidden links for logged-in users -->
-            <a href="pages/profile.html" class="auth-only" style="display: none;">Profile</a>
-            <a href="manage-data.html" class="auth-only" style="display: none;">Manage Data</a>
-        
-    </nav>
-     <main class="about-prtf-section">
-        <section id="home" class="homevission">
-            <h2>Mission & Vision</h2>
-            <h3>Mission</h3>
-            <p>OPAG Serves as  catalyst involving highly motivated and capacitated implementers and partner stakeholders through effective inter-agency coordination for a sustainable and profitable agri-fishery industrialized province… In a balanced ecological system.</p>
-            <h3>Vision</h3>
-            <p>OPAG envisions for a dynamic self reliant agro-industrialized province with farmers and fisherfolks turned successful entrepreneurs through a sustainable agriculture development that passed the international standards of safety, healthful and environment-friendly policy framework formulated and adopted by its constituents</p>
-        </section>
-        <section id="home" class="homevission">
-            <h2>Mandate</h2>
-            <h3></h3>
-            <p>OPAG is the lead agency of the Provincial Local Government Unit (PLGU) of Davao del Sur responsible for the implementation of agricultural growth and development initiatives. It provides the policy framework, helps direct public investments in partnership with the national agencies, (NGAs), Non-Government organizations (NGOs), private agencies and individuals in the provision of extension and technical services in the countryside and to inculcate upon the public minds that agriculture the backbone of the country’s economy.</p>
-          
-    </main>
-    </div>
-        <footer>
-            <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
-        </footer>
-
-         <script>
-   document.addEventListener("DOMContentLoaded", () => {
-  const loginArea = document.getElementById("login-area");
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  let rawImg = localStorage.getItem("profileImg") || "";
-  let profileImg = "";
-
-  if (rawImg.includes("drive.google.com/file/d/")) {
-    profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
-  } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
-    const match = rawImg.match(/src=["']([^"']+)["']/);
-    profileImg = match ? match[1] : "../../logo-pic/account logo.png";
-  } else {
-    profileImg = rawImg || "../../logo-pic/account logo.png";
-  }
-
-  localStorage.setItem("profileImg", profileImg);
-  const fullName = localStorage.getItem("fullName") || "User Name";
-
-  if (isLoggedIn && loginArea) {
-    // ✅ Show links for authenticated users
-    document.querySelectorAll(".auth-only").forEach(link => {
-      link.style.display = "inline-block";
-    });
-
-    // ✅ Show profile UI
-    loginArea.innerHTML = `
-      <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
-           onerror="this.src='../../logo-pic/account logo.png'">
-      <div id="profileDropdown" class="profile-dropdown">
-        <img src="${profileImg}" alt="Profile" />
-        <p>${fullName}</p>
-        <button onclick="logout()">Logout</button>
+<body>
+<!-- Login Form Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" id="closeModalBtn">&times;</span>
+    <h2>Login</h2>
+    <form id="logForm">
+      <input type="text" id="login-email" placeholder="Username or Email" required />
+      <div class="password-wrapper">
+        <input type="password" id="login-password" placeholder="Password" required />
+        <i class="uil uil-eye-slash toggle-password" id="togglePassword"></i>
       </div>
-    `;
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
 
-    const profilePic = document.getElementById("profilePic");
-    const dropdown = document.getElementById("profileDropdown");
+<!-- Toast Notification -->
+<div id="toast" class="toast-notification"></div>
 
-    profilePic.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-    });
+<header>
+  <nav class="top-nav">
+    <div id="login-area">
+      <button class="button" id="loginButton">Login</button>
+    </div>
+  </nav>
+  <ul class="opagheader">
+    <li><img src="logo-pic/logo opag.png" alt="OPAG Logo" class="opag-logo"></li>
+    <li>OPAG Rice Section</li>
+  </ul>
+  
+</header>
 
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target)) {
-        dropdown.style.display = "none";
-      }
-    });
-  }
-});
+<nav class="navigatio">
+  <div class="navigations">
+      <a href="#" id="toggleSidebarBtn" class="auth-only hamburger-menu" style="display: none;">
+          <span class="hamburger-line line1"></span>
+          <span class="hamburger-line line2"></span>
+          <span class="hamburger-line line3"></span>
+          
+      </a>
+      <a href="index.html" class="active">Home</a>
+    <a href="pages/activities.html">Activities</a>
+    <a href="pages/rice-production-status.html">Rice Production Status</a>
+    <a href="pages/news.html">News & Updates</a>
+    <div class="dropdown">
+      <a  class="dropdown-toggle">PRTF 2025 ▾</a>
+      <div class="dropdown-content">
+        <a href="pages/prtf  pages/about-prtf.html">About PRTF</a>
+        <a href="pages/prtf  pages/prtfguidelines.html">PRTF Guidelines</a>
+            <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" target="_blank">Join PRTF</a>
+        <a href="pages/prtf  pages/prtf_participants.html">List of Participants</a>
+      </div>
+    </div>
+    
+    
+  </div>
+</nav>
 
+<div class="main-layout">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar hide">
+    <a href="#" class="nav_logo" id="sidebar-user-info">
+      <!-- Filled by session.js -->
+    </a>
 
-    function logout() {
-  const username = localStorage.getItem("username") || "Unknown";
-  const email = localStorage.getItem("email") || "Unknown";
+    <a href="index.html" class="uil uil-house-user"><strong class="n">Home</strong></a>
+    <a href="cart.php" class="uil uil-analytics">MPOR</a>
+    <a href="rental.php" class="uil uil-document-layout-left">IPCR</a>
+    <a href="order.php" class="uil uil-heart-alt">Monthly Report</a>
+    <a href="cart.php" class="uil uil-plane">Travel Order</a>
+    <a href="orderhistory.php" class="uil uil-history">Profile</a>
+    <a href="settings.php" class="uil uil-cog">Settings</a>
+    <button type="button" id="sidebarLogoutBtn" class="logout-btna">Logout</button>
+  </div>
 
-  const logData = { username, email, action: 'logout' };
+  <main class="about-prtf-section">
+     <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to OPAG Rice Section</h1>
+            <p>Empowering farmers and advancing sustainable rice production in our province.</p>
+            <a href="pages/activities.html" class="btn">Explore Our Activities</a>
+        </section>
+    <section id="mission" class="homevission">
+      <h2>Mission & Vision</h2>
+      <h3>Mission</h3>
+      <p>OPAG serves as catalyst for agricultural development through the provision of quality extension services and technology transfer to farmers and fisherfolk in the province.</p>
+      <h3>Vision</h3>
+      <p>OPAG envisions a dynamic, self-reliant and sustainable agricultural sector that contributes to food security, poverty alleviation and rural development.</p>
+    </section>
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+    <section id="mandate" class="homevission">
+      <h2>Mandate</h2>
+      <p>OPAG is the lead agency of the Provincial Local Government Unit responsible for providing agricultural extension services, technology transfer, and other support services to farmers and fisherfolk in the province.</p>
+    </section>
+  </main>
+</div>
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify(logData)
-  }).finally(() => {
-    localStorage.clear();
-    location.reload(); // 🔁 Reload current page
+<footer>
+  <p>&copy; <span id="current-year"></span> OPAG Rice Section | All rights reserved.</p>
+</footer>
+
+<!-- Loading Spinner -->
+<div id="login-loading-spinner">
+  <div class="spinner" style="width:40px; height:40px; border:4px solid #ccc; border-top:4px solid #007bff; border-radius:50%; animation: spin 1s linear infinite;"></div>
+  <p style="margin-top:10px; font-weight:bold; color:#007bff;">Logging in...</p>
+</div>
+
+<script src="scripts/login.js"></script>
+<script src="scripts/logout.js"></script>
+<script src="scripts/openmenu.js"></script>
+<script src="scripts/user_dashboard.js"></script>
+<script src="scripts/session.js"></script>
+
+<script>
+  // Set current year
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+  
+  // Close modal functionality
+  document.getElementById('closeModalBtn').addEventListener('click', function() {
+    document.getElementById('loginModal').style.display = 'none';
   });
-}
-
-  </script>
-        <script>
-  // Detect touch screen (mobile)
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-  if (isTouchDevice) {
-    document.addEventListener('DOMContentLoaded', () => {
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownContent = document.querySelector('.dropdown-content');
-
-      if (dropdownToggle && dropdownContent) {
-        dropdownToggle.addEventListener('click', function(e) {
-          e.preventDefault(); // prevent link navigation
-          // Toggle dropdown
-          dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        });
-
-        // Optional: close dropdown if clicking outside
-        document.addEventListener('click', function(e) {
-          if (!dropdownContent.contains(e.target) && !dropdownToggle.contains(e.target)) {
-            dropdownContent.style.display = 'none';
-          }
-        });
-      }
-    });
-  }
+  
+  // Toggle password visibility
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('login-password');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.classList.toggle('uil-eye');
+    this.classList.toggle('uil-eye-slash');
+  });
 </script>
-
-    </body>
+</body>
 </html>
