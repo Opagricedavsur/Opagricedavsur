@@ -2,175 +2,184 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Essential for mobile responsiveness -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OPAG Rice Section - Activities</title>
-  <link rel="stylesheet" href="../styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <script src="../scripts/platformStylesforactivities.js"></script>
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  
 </head>
+
 <body>
-  <header>
-    <nav> 
-      <ul>
-        <li class="login" id="login-area">
-          <a href="signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
-        </li>
-      </ul>
-    </nav>  
+<!-- Login Form Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" id="closeModalBtn">&times;</span>
+    <h2>Login</h2>
+    <form id="logForm">
+      <input type="text" id="login-email" placeholder="Username or Email" required />
+      <div class="password-wrapper">
+        <input type="password" id="login-password" placeholder="Password" required />
+        <i class="uil uil-eye-slash toggle-password" id="togglePassword"></i>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
 
-    <ul class="opagheader">
-      <li class="opaghead1"><img src="../logo-pic/logo opag.png" class="opaglogo" /></li>
-      <li class="opaghead2">OPAG Rice Section</li>
-    </ul>
-  </header>
+<!-- Toast Notification -->
+<div id="toast" class="toast-notification"></div>
 
-  <nav class="navigations">
-     <a href="../index.html">Home</a>
-    <a href="activities.html" class="active">Activities</a>
-        <a href="rice-production-status.html">Rice Production Status</a>
-     <a href="news.html">News & Updates</a>
-      <div class="dropdown">
-            <a  class="dropdown-toggle">PRTF 2025 ▾</a>
-                <div class="dropdown-content">
-                  <a href="prtf  pages/about-prtf.html">About PRTF</a>
-                   <a href="prtf  pages/prtfguidelines.html">PRTF Guidelines</a>
-                  
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKZOFGZN80F6o6Jx72X-05IJR3wnxGQr19EK-ftI9X3Zjf8w/viewform?usp=dialog" target="_blank">Join PRTF</a>
-                  <a href="prtf  pages/prtf_participants.html">List of Participants</a>
-                </div>
-          </div>
- 
- 
+<header>
+  <nav class="top-nav">
+    <div id="login-area">
+      <button class="button" id="loginButton">Login</button>
+    </div>
   </nav>
-
-  <main class="maincontentnews1">
-    <section id="news" class="news1content1">
-     <section id="activity-slideshow" class="gallery-section">
-  <h2>Activity Slideshow</h2>
-  <div class="video-container">
-    <iframe 
-      src="https://docs.google.com/presentation/d/e/2PACX-1vS85DwPye73HFB-J45wu9yn-iskv6PdeZ7pWClBssuhcPC1iuYYlAdtGk1BvimG6choH14yn5Y7PDZz/pubembed?start=true&loop=true&delayms=5000" 
-      frameborder="0" 
-      width="100%" 
-      height="480" 
-      allowfullscreen 
-      mozallowfullscreen 
-      webkitallowfullscreen>
-    </iframe>
+  <ul class="opagheader">
+    <li><img src="../logo-pic/logo opag.png" alt="OPAG Logo" class="opag-logo"></li>
+    <li>OPAG Rice Section</li>
+  </ul>
+  
+</header>
+<nav class="navigatio">
+  <div class="navigations">
+      <a href="#" id="toggleSidebarBtn" class="auth-only hamburger-menu" style="display: none;">
+          <span class="hamburger-line line1"></span>
+          <span class="hamburger-line line2"></span>
+          <span class="hamburger-line line3"></span>
+          
+      </a>
+      <a href="../index.html">Home</a>
+      <a href="activities.html" class="active">Activities</a>
+      <a href="rice-production-status.html">Rice Production Status</a>
+      <a href="news.html">News & Updates</a>
+        <div class="dropdown">
+            <a  class="dropdown-toggle">PRTF 2025 ▾</a>
+            <div class="dropdown-content">
+              <a href="prtf  pages/about-prtf.html">About PRTF</a>
+              <a href="prtf  pages/prtf_participants.html">PRTF Guidelines</a>
+            <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" target="_blank">Join PRTF</a>
+              <a href="prtf  pages/prtf_participants.html">List of Participants</a>
+            </div>
+          </div>  
+          
   </div>
-</section>
+</nav>
+  <div class="main-layout">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar hide">
+    <a href="#" class="nav_logo" id="sidebar-user-info">
+      <!-- Filled by session.js -->
+    </a>
 
-</section>
-
-<section id="activity-gallery" class="gallery-section">
-   <h2>Activity Photo Gallery</h2>
-  <div class="gallery">
-    <figure>
-        <iframe src="https://drive.google.com/file/d/1DpW7yGUbp_Z1YAikQtQR-db0BMEevyyZ/preview"
-         width="100%" height="300" allow="autoplay"
-      style="border: none;" alt="Activity 1"
-    ></iframe>
-
-       <figcaption>Davao del Sur Rice Technology Showcasing Planning Workshop</figcaption>
-    </figure>
-    <figure>
-     <iframe src="https://drive.google.com/file/d/1oeko4NYHVRRH3twvW9CiBIPuf7x6449M/preview"
-      width="100%" height="300" allow="autoplay" alt="Activity 2">
-      </iframe>
-      <figcaption>Conduct Inspection on Seed Growers Warehouses at Hagonoy, Magsaysay, Bansalan, Digos City, Davao del Sur - July 15, 2025</figcaption>
-    </figure>
-    <!-- Add more <figure> blocks as needed -->
+    <a href="dashboard.php" class="uil uil-house-user"><strong class="n">Home</strong></a>
+    <a href="cart.php" class="uil uil-analytics">MPOR</a>
+    <a href="rental.php" class="uil uil-document-layout-left">IPCR</a>
+    <a href="order.php" class="uil uil-heart-alt">Monthly Report</a>
+    <a href="cart.php" class="uil uil-plane">Travel Order</a>
+    <a href="orderhistory.php" class="uil uil-history">Profile</a>
+    <a href="settings.php" class="uil uil-cog">Settings</a>
+    <button type="button" id="sidebarLogoutBtn" class="logout-btna">Logout</button>
   </div>
-</section>
+    <main class="maincontentnews1"> <!-- Main content area -->
+      <section class="news1content1"> <!-- Content section -->
 
-    </section>
-  </main>
+        <!-- Activity Slideshow Section -->
+        <section id="activity-slideshow" class="gallery-section">
+          <h2>Activity Slideshow</h2>
+          <div class="video-container">
+            <!-- Embed your Google Slides presentation -->
+            <iframe
+              src="https://docs.google.com/presentation/d/e/2PACX-1vS85DwPye73HFB-J45wu9yn-iskv6PdeZ7pWClBssuhcPC1iuYYlAdtGk1BvimG6choH14yn5Y7PDZz/pubembed?start=true&loop=true&delayms=5000"
+              title="OPAG Activities Slideshow"
+              allowfullscreen
+              mozallowfullscreen
+              webkitallowfullscreen>
+            </iframe>
+          </div>
+        </section>
 
-  <footer>
-    <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
-  </footer>
+        <!-- Activity Photo Gallery Section -->
+        <section id="activity-gallery" class="gallery-section">
+          <h2>Activity Photo Gallery</h2>
+          <div class="gallery">
+            <!-- Gallery Item 1 -->
+            <figure>
+              <div class="photo-container">
+                <iframe
+                  src="https://drive.google.com/file/d/1DpW7yGUbp_Z1YAikQtQR-db0BMEevyyZ/preview"
+                  title="Davao del Sur Rice Technology Showcasing Planning Workshop"
+                  allow="autoplay">
+                </iframe>
+              </div>
+              <figcaption>Davao del Sur Rice Technology Showcasing Planning Workshop</figcaption>
+            </figure>
 
-  <script>
-  // Detect Android devices
-  function isAndroid() {
-    return /Android/i.test(navigator.userAgent);
-  }
+            <!-- Gallery Item 2 -->
+            <figure>
+              <div class="photo-container">
+                <iframe
+                  src="https://drive.google.com/file/d/1oeko4NYHVRRH3twvW9CiBIPuf7x6449M/preview"
+                  title="Conduct Inspection on Seed Growers Warehouses at Hagonoy, Magsaysay, Bansalan, Digos City, Davao del Sur - July 15, 2025"
+                  allow="autoplay">
+                </iframe>
+              </div>
+              <figcaption>Conduct Inspection on Seed Growers Warehouses at Hagonoy, Magsaysay, Bansalan, Digos City, Davao del Sur - July 15, 2025</figcaption>
+            </figure>
 
-  // Change class if Android + handle login/logout
-  document.addEventListener("DOMContentLoaded", () => {
-    // Android detection and class swap
-    if (isAndroid()) {
-      const mainContent = document.querySelector(".maincontentnews1");
-      if (mainContent) {
-        mainContent.classList.remove("maincontentnews1");
-        mainContent.classList.add("maincontentnews2");
-      }
-    }
+            <!-- Add more <figure> blocks for additional photos -->
+            <!-- Example:
+            <figure>
+              <div class="photo-container">
+                <iframe src="URL_TO_YOUR_PHOTO" title="Photo Description" allow="autoplay"></iframe>
+              </div>
+              <figcaption>Brief description of the activity/photo.</figcaption>
+            </figure>
+            -->
+          </div>
+        </section>
 
-    // Login/logout logic
-    const loginArea = document.getElementById("login-area");
-    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      </section>
+    </main>
+  </div>
 
-    let rawImg = localStorage.getItem("profileImg") || "";
-    let profileImg = "";
+    <footer>
+  <p>&copy; <span id="current-year"></span> OPAG Rice Section | All rights reserved.</p>
+</footer>
 
-    // ✅ Google Drive Link
-    if (rawImg.includes("drive.google.com/file/d/")) {
-      profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
-    }
-    // ✅ <img src="..."> HTML tag from Google Sheets
-    else if (rawImg.includes("<img") && rawImg.includes("src=")) {
-      const match = rawImg.match(/src=["']([^"']+)["']/);
-      profileImg = match ? match[1] : "../../logo-pic/account logo.png";
-    }
-    // ✅ Direct image URL
-    else {
-      profileImg = rawImg || "../../logo-pic/account logo.png";
-    }
+<!-- Loading Spinner -->
+<div id="login-loading-spinner">
+  <div class="spinner" style="width:40px; height:40px; border:4px solid #ccc; border-top:4px solid #007bff; border-radius:50%; animation: spin 1s linear infinite;"></div>
+  <p style="margin-top:10px; font-weight:bold; color:#007bff;">Logging in...</p>
+</div>
 
-    localStorage.setItem("profileImg", profileImg);
-    const fullName = localStorage.getItem("fullName") || "User Name";
+<script src="../scripts/login.js"></script>
+<script src="../scripts/logout.js"></script>
+<script src="../scripts/openmenu.js"></script>
+<script src="../scripts/user_dashboard.js"></script>
+<script src="../scripts/session.js"></script>
 
-    if (isLoggedIn && loginArea) {
-      loginArea.innerHTML = `
-        <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
-             onerror="this.src='../../logo-pic/account logo.png'">
-        <div id="profileDropdown" class="profile-dropdown">
-          <img src="${profileImg}" alt="Profile" />
-          <p>${fullName}</p>
-          <button onclick="logout()">Logout</button>
-        </div>
-      `;
-
-      const profilePic = document.getElementById("profilePic");
-      const dropdown = document.getElementById("profileDropdown");
-
-      profilePic.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!dropdown.contains(e.target)) {
-          dropdown.style.display = "none";
-        }
-      });
-    }
+<script>
+  // Set current year
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+  
+  // Close modal functionality
+  document.getElementById('closeModalBtn').addEventListener('click', function() {
+    document.getElementById('loginModal').style.display = 'none';
   });
-
-  function logout() {
-    const username = localStorage.getItem("username") || "Unknown";
-    const email = localStorage.getItem("email") || "Unknown";
-
-    const logData = { username, email, action: 'logout' };
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
-
-    fetch(scriptURL, {
-      method: 'POST',
-      body: JSON.stringify(logData)
-    }).finally(() => {
-      localStorage.clear();
-      location.reload();
-    });
-  }
+  
+  // Toggle password visibility
+  document.getElementById('togglePassword').addEventListener('click', function() {
+    const passwordInput = document.getElementById('login-password');
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    this.classList.toggle('uil-eye');
+    this.classList.toggle('uil-eye-slash');
+  });
 </script>
 </body>
 </html>
