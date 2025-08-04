@@ -1,228 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OPAG Rice Section - About PRTF</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="scripts/platformStyles.js"></script>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  </head>
+  <body>
+    <!-- Login Form Modal -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" id="closeModalBtn">&times;</span>
+        <h2>Login</h2>
+        <form id="logForm">
+          <input type="text" id="login-email" placeholder="Username or Email" required />
+          <div class="password-wrapper">
+            <input type="password" id="login-password" placeholder="Password" required />
+            <i class="uil uil-eye-slash toggle-password" id="togglePassword"></i>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </div>
 
-   <title>OPAG Rice Section - PRTF</title>
-        <link rel="stylesheet" href="../../styles.css" />
-        
-    </head>
-    <body>
-       <div class="wrapper">
-        <header>
-    <nav> 
-      <ul>
-        <li class="login" id="login-area">
-          <a href="../signin.html" onclick="localStorage.setItem('redirectAfterLogin', window.location.href)">Login</a>
-        </li>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast-notification"></div>
+
+    <header>
+      <nav class="top-nav">
+        <div id="login-area">
+          <button class="button" id="loginButton">Login</button>
+        </div>
+      </nav>
+      <ul class="opagheader">
+        <li><img src="../../logo-pic/logo opag.png" alt="OPAG Logo" class="opag-logo"></li>
+        <li>OPAG Rice Section</li>
       </ul>
-    </nav>  
+    </header>
 
-    <ul class="opagheader">
-      <li class="opaghead1"><img src="../../logo-pic/logo opag.png" class="opaglogo" /></li>
-      <li class="opaghead2">OPAG Rice Section</li>
-    </ul>
-  </header>
-    <nav class="navigations">
-      <a href="../../index.html">Home</a>
-      <a href="../activities.html">Activities</a>
-      <a href="../rice-production-status.html">Rice Production Status</a>
-      <a href="../news.html">News & Updates</a>
-      <div class="dropdown">
-         <a  class="active">PRTF 2025 ▾</a>
-        <div class="dropdown-content">
-                  <a href="about-prtf.html">About PRTF</a>
-                  <a href="prtfguidelines.html">PRTF Guidelines</a>
-                  
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeKZOFGZN80F6o6Jx72X-05IJR3wnxGQr19EK-ftI9X3Zjf8w/viewform?usp=dialog" target="_blank">Join PRTF</a>
-                  <a href="../prtf.html">List of Participants</a>
+    <nav class="navigatio">
+      <div class="navigations">
+        <a href="#" id="toggleSidebarBtn" class="auth-only hamburger-menu" style="display: none;">
+          <span class="hamburger-line line1"></span>
+          <span class="hamburger-line line2"></span>
+          <span class="hamburger-line line3"></span>
+        </a>
+        <a href="../../index.html">Home</a>
+        <a href="../activities.html">Activities</a>
+        <a href="../rice-production-status.html">Rice Production Status</a>
+        <a href="../news.html">News & Updates</a>
+        <div class="dropdown">
+          <a class="active">PRTF 2026 ▾</a>
+          <div class="dropdown-content">
+            <a href="about-prtf.html">About PRTF</a>
+            <a href="prtfguidelines.html">PRTF Guidelines</a>
+            <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" target="_blank">Join PRTF</a>
+            <a href="prtf_participants.html">List of Participants</a>
+          </div>
         </div>
       </div>
-
     </nav>
-         <!-- 🔐 Hidden links for logged-in users -->
-            <a href="pages/profile.html" class="auth-only" style="display: none;">Profile</a>
-            <a href="manage-data.html" class="auth-only" style="display: none;">Manage Data</a>
-        
-    </nav>
-      <main class="about-prtf-section">
-          <section class="container">
-            <h1 class="section-title">About the Provincial Rice Technology Forum (PRTF)</h1>
-            <h2 class="subtitle">Davao del Sur</h2>
-            <p class="intro">
-              The <strong>Provincial Rice Technology Forum (PRTF)</strong> is a joint initiative of the Provincial Government of Davao del Sur through OPAG, in partnership with DA-RFO XI, NIA, PhilRice, ATI-XI, LGUs, and private stakeholders. It is a season-long field demonstration platform designed to showcase and evaluate modern rice technologies to boost productivity and sustainability in rice farming.
-            </p>
 
-            <div class="content-block">
-              <h3 class="block-title">🎯 Objectives</h3>
-              <ul class="styled-list">
-                <li>Demonstrate effective seed and fertilizer technologies</li>
-                <li>Promote yield-enhancing and cost-saving practices</li>
-                <li>Encourage public-private cooperation</li>
-                <li>Identify top-performing rice technologies</li>
-              </ul>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">👥 Who Can Join?</h3>
-              <ul class="styled-list">
-                <li>Private Companies (seed, fertilizer, and agri-input providers)</li>
-                <li>Farmer Cooperators and Farmers’ Associations (FCA)</li>
-              </ul>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">📋 Participation Flow</h3>
-              <ol class="numbered-list">
-                <li>MLGU identifies techno-demo sites; validated by DA-PLGU-NIA</li>
-                <li>Private companies submit PRTF Form 1 (Intent to Join)</li>
-                <li>PLGU finalizes and presents protocol for agreement</li>
-                <li>Interested PPCs register via PRTF Form 2 with workplan + ₱5,000 fee</li>
-              </ol>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">🚜 Field Demonstration Highlights</h3>
-              <ul class="styled-list">
-                <li>Minimum of 0.5 ha demo area per entry (max of 2 entries)</li>
-                <li>GPS-based plot measurement and signage</li>
-                <li>50-50 land preparation cost shared with FC</li>
-                <li>Disclosure of all inputs, prices, and strategies</li>
-                <li>Complete documentation, monitored applications, and crop-cutting</li>
-                <li>100% yield returns go to the Farmer Cooperator</li>
-              </ul>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">🌾 Trial Categories</h3>
-              <ul class="styled-list">
-                <li><strong>Hybrid Seed Varietal Trials:</strong> Max of 2 varieties per company; no duplication</li>
-                <li><strong>Balanced Fertilization Technique (BFT):</strong> Demo with bio/organic fertilizers as add-ons</li>
-              </ul>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">🛠 Monitoring & Evaluation</h3>
-              <p>The Composite Team (OPAG, MLGU, DA, FCs) handles field monitoring, data recording, evaluation, and post-analysis. The top 5 entries will be identified based on yield and cost-efficiency.</p>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">💡 Support & Funding</h3>
-              <p>Logistics, inputs, meals, and documentation are co-funded by the PLGU, MLGU, BLGU, DA, and private sector. Cost-sharing ensures transparency and sustainability.</p>
-            </div>
-
-            <div class="content-block">
-              <h3 class="block-title">🏆 Recognition</h3>
-              <p>The top five most productive and cost-efficient product entries will receive official recognition during the culminating Farmers’ Forum or Congress.</p>
-            </div>
-          </section>
-    </main>
-
-
-    </div>
-        <footer>
-            <p>&copy; 2024 OPAG Rice Section | All rights reserved.</p>
-        </footer>
-
-         <script>
-   document.addEventListener("DOMContentLoaded", () => {
-  const loginArea = document.getElementById("login-area");
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  let rawImg = localStorage.getItem("profileImg") || "";
-  let profileImg = "";
-
-  if (rawImg.includes("drive.google.com/file/d/")) {
-    profileImg = `https://drive.google.com/uc?export=view&id=${rawImg.split("/d/")[1].split("/")[0]}`;
-  } else if (rawImg.includes("<img") && rawImg.includes("src=")) {
-    const match = rawImg.match(/src=["']([^"']+)["']/);
-    profileImg = match ? match[1] : "../../logo-pic/account logo.png";
-  } else {
-    profileImg = rawImg || "../../logo-pic/account logo.png";
-  }
-
-  localStorage.setItem("profileImg", profileImg);
-  const fullName = localStorage.getItem("fullName") || "User Name";
-
-  if (isLoggedIn && loginArea) {
-    // ✅ Show links for authenticated users
-    document.querySelectorAll(".auth-only").forEach(link => {
-      link.style.display = "inline-block";
-    });
-
-    // ✅ Show profile UI
-    loginArea.innerHTML = `
-      <img id="profilePic" src="${profileImg}" alt="Profile" class="profile-img" 
-           onerror="this.src='../../logo-pic/account logo.png'">
-      <div id="profileDropdown" class="profile-dropdown">
-        <img src="${profileImg}" alt="Profile" />
-        <p>${fullName}</p>
-        <button onclick="logout()">Logout</button>
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <div id="sidebar" class="sidebar hide">
+        <a href="#" class="nav_logo" id="sidebar-user-info"></a>
+        <a href="dashboard.php" class="uil uil-house-user"><strong class="n">Home</strong></a>
+        <a href="cart.php" class="uil uil-analytics">MPOR</a>
+        <a href="rental.php" class="uil uil-document-layout-left">IPCR</a>
+        <a href="order.php" class="uil uil-heart-alt">Monthly Report</a>
+        <a href="cart.php" class="uil uil-plane">Travel Order</a>
+        <a href="orderhistory.php" class="uil uil-history">Profile</a>
+        <a href="settings.php" class="uil uil-cog">Settings</a>
+        <button type="button" id="sidebarLogoutBtn" class="logout-btna">Logout</button>
       </div>
-    `;
 
-    const profilePic = document.getElementById("profilePic");
-    const dropdown = document.getElementById("profileDropdown");
+      <main class="about-prtf-section">
+        <section class="container">
+          <h1 class="section-title">About the Provincial Rice Technology Forum (PRTF)</h1>
+          <h2 class="subtitle">Davao del Sur | Dry Season 2026 (October 2025 – March 2026)</h2>
 
-    profilePic.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-    });
+          <p class="intro">
+            The <strong>Provincial Rice Technology Forum (PRTF) – Davao del Sur</strong> is a collaborative initiative led by the <strong>Office of the Provincial Agriculturist (OPAG)</strong> in partnership with <strong>DA-RFO XI, NIA, PhilRice, ATI, Davao del Sur State College (DSSC), LGUs, and private agri-input companies</strong>. Modeled after the National Rice Techno Forum (NRTF), the PRTF is a season-long field demonstration designed to showcase high-yielding rice technologies, sustainable farming practices, and innovative fertilizer systems.
+          </p>
 
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target)) {
-        dropdown.style.display = "none";
-      }
-    });
-  }
-});
+          <div class="content-block">
+            <h3 class="block-title">🎯 Objectives</h3>
+            <ul class="styled-list">
+              <li>Introduce and demonstrate high-yielding hybrid rice varieties and sustainable practices.</li>
+              <li>Promote adoption of modern, climate-resilient rice farming methods.</li>
+              <li>Facilitate knowledge exchange among farmers, researchers, and private sector partners.</li>
+              <li>Foster public-private collaboration to accelerate agricultural development.</li>
+            </ul>
+          </div>
 
+          <div class="content-block">
+            <h3 class="block-title">👥 Who Can Participate?</h3>
+            <ul class="styled-list">
+              <li><strong>Private Companies (PPCs):</strong> Seed, fertilizer, and fertilizer-related product providers.</li>
+              <li><strong>Farmer Cooperators (FCs):</strong> Registered farmers with suitable land and willingness to follow protocols.</li>
+            </ul>
+          </div>
 
-    function logout() {
-  const username = localStorage.getItem("username") || "Unknown";
-  const email = localStorage.getItem("email") || "Unknown";
+          <div class="content-block">
+            <h3 class="block-title">📋 Participation Process</h3>
+            <ol class="numbered-list">
+              <li><strong>Site Identification:</strong> MLGU (Matanao MAO) identifies demo sites; validated by DA-PLGU-NIA for irrigation and accessibility.</li>
+              <li><strong>Pre-registration:</strong> PPCs submit <strong>PRTF Form 1</strong> (Intent to Join) by August 13, 2025.</li>
+              <li><strong>Protocol Finalization:</strong> PLGU presents and finalizes the PRTF Protocol with all stakeholders.</li>
+              <li><strong>Official Registration:</strong> PPCs submit <strong>PRTF Form 2</strong> with workplan, passport data (for seeds), and <strong>₱5,000 registration fee per entry</strong>.</li>
+              <li><strong>FC-PPC Pairing:</strong> Qualified FCs are matched with PPCs for joint implementation.</li>
+            </ol>
+          </div>
 
-  const logData = { username, email, action: 'logout' };
+          <div class="content-block">
+            <h3 class="block-title">🌾 Trial Categories</h3>
+            <ul class="styled-list">
+              <li><strong>Hybrid Seed Varietal Trials:</strong>
+                <ul>
+                  <li>Max 2 varieties per company.</li>
+                  <li>No duplicate varieties allowed.</li>
+                  <li>Must submit passport data for maturity-based sowing scheduling.</li>
+                </ul>
+              </li>
+              <li><strong>Balanced Fertilization Technique (BFT) Bout:</strong>
+                <ul>
+                  <li>All entries use the <strong>same hybrid variety</strong> (provided by DA-RFO XI).</li>
+                  <li>Focus on bio-fertilizers, soil ameliorants, and organic inputs as <strong>“add-on”</strong> to 80% of standard NPK.</li>
+                  <li>Each plot split into <strong>“+” (add-on)</strong> and <strong>“–” (control)</strong> treatments.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyxdjN9rSxdQIx1POoqfVV75wvPqCDoXJ-jpSeFuzeSpctBkyQFMgUDovhxDqJyGcWiAg/exec';
+          <div class="content-block">
+            <h3 class="block-title">🚜 Field Demonstration Mechanics</h3>
+            <ul class="styled-list">
+              <li><strong>Plot Size:</strong> Minimum 0.5 hectare per entry (max 2 entries/company).</li>
+              <li><strong>GPS Measurement:</strong> Geo-referenced plots ensure fairness.</li>
+              <li><strong>Transplanting:</strong> 50-50 cost sharing between PPC and FC.</li>
+              <li><strong>Input Disclosure:</strong> All inputs and costs must be transparent and verifiable.</li>
+              <li><strong>Signage:</strong> Uniform placards (3.5 x 2 ft) designed by PLGU, printed by PPC.</li>
+              <li><strong>Yield:</strong> 100% of harvest goes to the Farmer Cooperator.</li>
+            </ul>
+          </div>
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify(logData)
-  }).finally(() => {
-    localStorage.clear();
-    location.reload(); // 🔁 Reload current page
-  });
-}
+          <div class="content-block">
+            <h3 class="block-title">📊 Monitoring & Evaluation</h3>
+            <p>The <strong>Composite Team (CT)</strong> — composed of OPAG, MAO, FCs, DA-RFO XI, and DSSC — oversees:</p>
+            <ul class="styled-list">
+              <li>Documentation of all field activities.</li>
+              <li>Soil and microbial analysis (before and after for bio-fertilizers).</li>
+              <li>Data collection at critical stages (tillering, flowering, harvest).</li>
+              <li>Crop-cutting in 10 sampling areas (2m x 2.5m) per plot.</li>
+              <li>Validation of yield and ROI analysis by DA-Research and DSSC.</li>
+            </ul>
+          </div>
 
-  </script>
-        <script>
-  // Detect touch screen (mobile)
-  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+          <div class="content-block">
+            <h3 class="block-title">🚫 Grounds for Disqualification</h3>
+            <ul class="styled-list">
+              <li>Failure to disclose inputs or operations.</li>
+              <li>Implementing activities without monitoring team.</li>
+              <li>Sabotage, bribery, or misrepresentation.</li>
+              <li>Abandoning the entry for 2 weeks without communication.</li>
+              <li>Non-compliance with the PRTF Protocol.</li>
+            </ul>
+          </div>
 
-  if (isTouchDevice) {
-    document.addEventListener('DOMContentLoaded', () => {
-      const dropdownToggle = document.querySelector('.dropdown-toggle');
-      const dropdownContent = document.querySelector('.dropdown-content');
+          <div class="content-block">
+            <h3 class="block-title">🏆 Recognition</h3>
+            <p>The <strong>top 5 highest-performing entries</strong> — based on yield (ton/ha at 14% MC) and cost-efficiency — will be officially recognized during the <strong>Harvest Festival / Farmers’ Field Day</strong> in February 2026.</p>
+          </div>
 
-      if (dropdownToggle && dropdownContent) {
-        dropdownToggle.addEventListener('click', function(e) {
-          e.preventDefault(); // prevent link navigation
-          // Toggle dropdown
-          dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-        });
+          <div class="content-block">
+            <h3 class="block-title">🗓 Key Events Timeline (DS2026)</h3>
+            <ul class="styled-list">
+              <li><strong>Aug 13, 2025:</strong> Deadline for PRTF Form 2 submission</li>
+              <li><strong>Aug 14–15:</strong> Geo-tagging & soil sampling</li>
+              <li><strong>Oct–Nov 2025:</strong> Ceremonial Transplanting / PRTF Launching</li>
+              <li><strong>Dec 2025:</strong> First data gathering</li>
+              <li><strong>Feb 2026:</strong> Harvest Festival, Crop Cutting, and Forum</li>
+            </ul>
+          </div>
 
-        // Optional: close dropdown if clicking outside
-        document.addEventListener('click', function(e) {
-          if (!dropdownContent.contains(e.target) && !dropdownToggle.contains(e.target)) {
-            dropdownContent.style.display = 'none';
-          }
-        });
-      }
-    });
-  }
-</script>
+          <div class="content-block">
+            <h3 class="block-title">🤝 Key Partners & Support</h3>
+            <p>Funding and logistics are shared among:</p>
+            <ul class="styled-list">
+              <li><strong>PLGU:</strong> Fertilizer support (1 bag urea + 1 bag complete per 0.5 ha)</li>
+              <li><strong>DA-RFO XI:</strong> Seeds, irrigation support via NIA</li>
+              <li><strong>Private Companies:</strong> Inputs, workplan, technical staff, T-shirts</li>
+              <li><strong>Farmer Cooperators:</strong> Land, labor, irrigation fee, PCIC enrollment</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
 
-    </body>
+    <footer>
+      <p>&copy; <span id="current-year"></span> OPAG Rice Section | All rights reserved.</p>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div id="login-loading-spinner">
+      <div class="spinner" style="width:40px; height:40px; border:4px solid #ccc; border-top:4px solid #007bff; border-radius:50%; animation: spin 1s linear infinite;"></div>
+      <p style="margin-top:10px; font-weight:bold; color:#007bff;">Logging in...</p>
+    </div>
+
+    <script src="../../scripts/login.js"></script>
+    <script src="../../scripts/logout.js"></script>
+    <script src="../../scripts/openmenu.js"></script>
+    <script src="../../scripts/user_dashboard.js"></script>
+    <script src="../../scripts/session.js"></script>
+    <script src="scripts/chartpie.js"></script>
+    <script>
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      document.getElementById('closeModalBtn').addEventListener('click', function() {
+        document.getElementById('loginModal').style.display = 'none';
+      });
+      
+      document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('login-password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('uil-eye');
+        this.classList.toggle('uil-eye-slash');
+      });
+    </script>
+  </body>
 </html>
