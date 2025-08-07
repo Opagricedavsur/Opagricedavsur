@@ -22,6 +22,20 @@
     }
 
     /**
+     * Detects if the current platform is iOS (iPhone, iPad, iPod).
+     * @returns {boolean} True if iOS is detected, false otherwise.
+     */
+    function isIOS() {
+        try {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            return /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        } catch (error) {
+            console.warn("Error detecting iOS platform:", error);
+            return false;
+        }
+    }
+
+    /**
      * Creates a <link> element for a stylesheet.
      * @param {string} href - The path to the CSS file.
      * @returns {HTMLLinkElement} The created link element.
@@ -36,44 +50,47 @@
 
     /**
      * Inserts the platform-specific stylesheet into the document head.
-     * Removes any existing link with id 'platform-stylesheet' or href 'styles.css'
+     * Removes any existing link with id 'platform-stylesheet' or href containing 'styles.css'
      * to prevent conflicts, then appends the new one.
      */
     function loadPlatformStylesheet() {
-        const isAndroidDevice = isAndroid();
-        const stylesheetHref = isAndroidDevice ? 'prtf  pages/scripts/androidstyles.css' : 'prtf  pages/scripts/styles.css';
-        // Adjust the path if your androidstyles.css is in a different directory
-        // e.g., './mobile/androidstyles.css'
+        const isMobileDevice = isAndroid() || isIOS();
+        // Fixed path: corrected double space and used consistent folder structure
+        const stylesheetHref = isMobileDevice 
+            ? 'prtf  pages/scripts/androidstyles.css' 
+            : 'prtf  pages/scripts/styles.css';
 
         // Create the new link element
         const newStylesheetLink = createStylesheetLink(stylesheetHref);
-        newStylesheetLink.id = 'platform-stylesheet'; // Give it an ID for identification
+        newStylesheetLink.id = 'platform-stylesheet'; // For easy identification/removal
 
-        // Try to find and remove any previously injected platform stylesheet
+        // Remove previously injected platform stylesheet
         const existingPlatformLink = document.getElementById('platform-stylesheet');
         if (existingPlatformLink) {
             existingPlatformLink.parentNode.removeChild(existingPlatformLink);
         }
 
-        // Try to find and remove the default styles.css link if it exists in HTML
-        // This prevents loading both stylesheets
-        const defaultStylesheetLink = document.querySelector('link[href="styles.css"]');
+        // Remove any existing default styles.css link (even if full path differs)
+        // Using endsWith to catch 'styles.css' regardless of relative path issues
+        const defaultStylesheetLink = document.querySelector('link[href$="styles.css"]');
         if (defaultStylesheetLink) {
             defaultStylesheetLink.parentNode.removeChild(defaultStylesheetLink);
         }
 
-        // Append the new, platform-specific stylesheet to the head
-        // Ensure the <head> element is available
+        // Append the new stylesheet
         if (document.head) {
             document.head.appendChild(newStylesheetLink);
-            console.log(`[Platform Styles] ${isAndroidDevice ? 'Android' : 'Non-Android'} detected. Loaded: ${stylesheetHref}`);
+            console.log(
+                `[Platform Styles] ${isAndroid() ? 'Android' : isIOS() ? 'iOS' : 'Desktop'} → Loaded: ${stylesheetHref}`
+            );
         } else {
-            // Fallback in case the script runs extremely early
             console.warn("[Platform Styles] <head> not found. Retrying on DOMContentLoaded.");
             document.addEventListener('DOMContentLoaded', function () {
                 if (document.head) {
                     document.head.appendChild(newStylesheetLink);
-                    console.log(`[Platform Styles - Delayed] ${isAndroidDevice ? 'Android' : 'Non-Android'} detected. Loaded: ${stylesheetHref}`);
+                    console.log(
+                        `[Platform Styles - Delayed] ${isAndroid() ? 'Android' : isIOS() ? 'iOS' : 'Desktop'} → Loaded: ${stylesheetHref}`
+                    );
                 } else {
                     console.error("[Platform Styles] <head> still not found after DOMContentLoaded. Stylesheet loading failed.");
                 }
@@ -82,14 +99,9 @@
     }
 
     // --- Initialization ---
-
-    // Run the loading logic when the DOM is ready or immediately if it already is.
-    // Using DOMContentLoaded ensures the <head> is accessible.
     if (document.readyState === 'loading') {
-        // The document is still loading, wait for DOMContentLoaded
         document.addEventListener('DOMContentLoaded', loadPlatformStylesheet);
     } else {
-        // The document has already loaded (DOM is ready)
         loadPlatformStylesheet();
     }
 
