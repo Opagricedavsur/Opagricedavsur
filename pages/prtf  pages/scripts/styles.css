@@ -1091,7 +1091,7 @@ section.homevission1{
   background: #f9f9f9;
   padding: 40px 20px;
   
-  margin-left: 100px;
+ 
   font-family: 'Segoe UI', sans-serif;
   color: #222;
   justify-content: center;
@@ -1481,3 +1481,4 @@ footer {
   border: none;
   display: block;
 }
+
