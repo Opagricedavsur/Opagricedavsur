@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,6 +11,278 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="scripts/platformStyles.js"></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+    <style>
+      :root {
+        --primary-color: #2c7873;
+        --secondary-color: #6fb0a8;
+        --accent-color: #ff6b35;
+        --text-color: #333;
+        --light-bg: #f8f9fa;
+        --border-color: #e0e0e0;
+        --plgu-bg: #e8f5e9;
+        --plgu-border: #4caf50;
+        --plgu-text: #2e7d32;
+        --mlgu-bg: #e3f2fd;
+        --mlgu-border: #2196f3;
+        --mlgu-text: #1565c0;
+        --da-bg: #fff3e0;
+        --da-border: #ff9800;
+        --da-text: #ef6c00;
+        --ppc-bg: #f3e5f5;
+        --ppc-border: #9c27b0;
+        --ppc-text: #7b1fa2;
+        --fc-bg: #e8f5e8;
+        --fc-border: #66bb6a;
+        --fc-text: #2e7d32;
+        --dssc-bg: #fff8e1;
+        --dssc-border: #ffc107;
+        --dssc-text: #f57f17;
+      }
+      
+      body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        margin: 0;
+        padding: 0;
+        background-color: var(--light-bg);
+      }
+      
+      .main-layout {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      
+      
+      
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .section-title {
+        text-align: center;
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+      
+      .subtitle {
+        text-align: center;
+        color: var(--secondary-color);
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+        font-weight: 500;
+      }
+      
+      .intro {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-size: 1.1rem;
+        color: #444;
+      }
+      
+      .content-block {
+        background-color: white;
+        border-radius: 12px;
+        padding: 1.8rem;
+        margin-bottom: 1.8rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        border: 1px solid var(--border-color);
+      }
+      
+      .block-title {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-top: 0;
+        margin-bottom: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .styled-list {
+        padding-left: 1.5rem;
+        margin: 1rem 0;
+      }
+      
+      .styled-list li {
+        margin-bottom: 0.8rem;
+      }
+      
+      .styled-list li::marker {
+        color: var(--accent-color);
+        font-weight: bold;
+      }
+      
+      .numbered-list {
+        padding-left: 1.8rem;
+        margin: 1rem 0;
+      }
+      
+      .numbered-list li {
+        margin-bottom: 0.8rem;
+      }
+      
+      .key-players-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      
+      .player-card {
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease;
+        border-left: 4px solid;
+        border-right: 1px solid;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+      }
+      
+      .player-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      }
+      
+      .player-card h4 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .player-card ul {
+        padding-left: 1.5rem;
+        margin: 1rem 0;
+      }
+      
+      .player-card li {
+        margin-bottom: 0.6rem;
+      }
+      
+      .plgu-card {
+        background-color: var(--plgu-bg);
+        border-color: var(--plgu-border);
+      }
+      
+      .plgu-card h4 {
+        color: var(--plgu-text);
+      }
+      
+      .mlgu-card {
+        background-color: var(--mlgu-bg);
+        border-color: var(--mlgu-border);
+      }
+      
+      .mlgu-card h4 {
+        color: var(--mlgu-text);
+      }
+      
+      .da-card {
+        background-color: var(--da-bg);
+        border-color: var(--da-border);
+      }
+      
+      .da-card h4 {
+        color: var(--da-text);
+      }
+      
+      .ppc-card {
+        background-color: var(--ppc-bg);
+        border-color: var(--ppc-border);
+      }
+      
+      .ppc-card h4 {
+        color: var(--ppc-text);
+      }
+      
+      .fc-card {
+        background-color: var(--fc-bg);
+        border-color: var(--fc-border);
+      }
+      
+      .fc-card h4 {
+        color: var(--fc-text);
+      }
+      
+      .dssc-card {
+        background-color: var(--dssc-bg);
+        border-color: var(--dssc-border);
+      }
+      
+      .dssc-card h4 {
+        color: var(--dssc-text);
+      }
+      
+      .timeline-item {
+        display: flex;
+        margin-bottom: 1.2rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 1px dashed var(--border-color);
+      }
+      
+      .timeline-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+      
+      .timeline-date {
+        flex-shrink: 0;
+        width: 140px;
+        font-weight: 700;
+        color: var(--accent-color);
+      }
+      
+      .timeline-content {
+        margin-left: 20px;
+        padding: 0.5rem 0;
+      }
+     
+      @media (max-width: 768px) {
+        .navigations {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        
+        .navigations a {
+          margin: 0.5rem 1rem;
+          font-size: 0.9rem;
+        }
+        
+        .content-block {
+          padding: 1.2rem;
+        }
+        
+        .section-title {
+          font-size: 1.8rem;
+        }
+        
+        .subtitle {
+          font-size: 1.1rem;
+        }
+        
+        .timeline-item {
+          flex-direction: column;
+        }
+        
+        .timeline-date {
+          width: auto;
+          margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content {
+          margin-left: 0;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Login Form Modal -->
@@ -27,10 +300,8 @@
         </form>
       </div>
     </div>
-
     <!-- Toast Notification -->
     <div id="toast" class="toast-notification"></div>
-
     <header>
       <nav class="top-nav">
         <div id="login-area">
@@ -42,7 +313,6 @@
         <li>OPAG Rice Section</li>
       </ul>
     </header>
-
     <nav class="navigatio">
       <div class="navigations">
         <a href="#" id="toggleSidebarBtn" class="auth-only hamburger-menu" style="display: none;">
@@ -65,7 +335,6 @@
         </div>
       </div>
     </nav>
-
     <div class="main-layout">
       <!-- Sidebar -->
       <div id="sidebar" class="sidebar hide">
@@ -79,16 +348,14 @@
         <a href="settings.php" class="uil uil-cog">Settings</a>
         <button type="button" id="sidebarLogoutBtn" class="logout-btna">Logout</button>
       </div>
-
       <main class="about-prtf-section">
         <section class="container">
           <h1 class="section-title">About the Provincial Rice Technology Forum (PRTF)</h1>
           <h2 class="subtitle">Davao del Sur | Dry Season 2026 (October 2025 – March 2026)</h2>
-
           <p class="intro">
             The <strong>Provincial Rice Technology Forum (PRTF) – Davao del Sur</strong> is a collaborative initiative led by the <strong>Office of the Provincial Agriculturist (OPAG)</strong> in partnership with <strong>DA-RFO XI, NIA, PhilRice, ATI, Davao del Sur State College (DSSC), LGUs, and private agri-input companies</strong>. Modeled after the National Rice Techno Forum (NRTF), the PRTF is a season-long field demonstration designed to showcase high-yielding rice technologies, sustainable farming practices, and innovative fertilizer systems.
           </p>
-
+          
           <div class="content-block">
             <h3 class="block-title">🎯 Objectives</h3>
             <ul class="styled-list">
@@ -98,26 +365,144 @@
               <li>Foster public-private collaboration to accelerate agricultural development.</li>
             </ul>
           </div>
-
+          
           <div class="content-block">
-            <h3 class="block-title">👥 Who Can Participate?</h3>
-            <ul class="styled-list">
-              <li><strong>Private Companies (PPCs):</strong> Seed, fertilizer, and fertilizer-related product providers.</li>
-              <li><strong>Farmer Cooperators (FCs):</strong> Registered farmers with suitable land and willingness to follow protocols.</li>
-            </ul>
+            <h3 class="block-title">👥 Key Players & Their Roles</h3>
+            <p>The success of the PRTF DS2026 relies on the active participation and collaboration of multiple stakeholders. Below are the detailed roles and responsibilities of each key player:</p>
+            
+            <div class="key-players-grid">
+              <!-- PLGU/OPAG Card -->
+              <div class="player-card plgu-card">
+                <h4><i class="uil uil-building"></i> PLGU/OPAG (Lead-Convenor)</h4>
+                <ul class="styled-list">
+                  <li>Serve as the primary organizer and overall coordinator of the PRTF.</li>
+                  <li>Prepare the PRTF protocol, guidelines, and all necessary forms.</li>
+                  <li>Provide fertilizer support: 1 bag urea + 1 bag complete per 0.5 hectare.</li>
+                  <li>Organize and manage major events (Ceremonial Planting, Harvest Festival).</li>
+                  <li>Design the official plot signage template for all participants.</li>
+                  <li>Coordinate with DA-RFO XI, MLGUs, and other partner agencies.</li>
+                  <li>Ensure proper documentation and data collection throughout the season.</li>
+                  <li>Facilitate the drawing of lots for plot assignment.</li>
+                </ul>
+              </div>
+              
+              <!-- MLGU/MAO Card -->
+              <div class="player-card mlgu-card">
+                <h4><i class="uil uil-building"></i> MLGU/MAO (Assistant Lead-Convenor)</h4>
+                <ul class="styled-list">
+                  <li>Identify feasible techno-demonstration sites within the municipality.</li>
+                  <li>Lead the identification and profiling of prospective Farmer Cooperators (FCs).</li>
+                  <li>Prepare detailed vicinity maps of the demonstration area.</li>
+                  <li>Conduct geo-tagging and geo-referencing of all demonstration plots.</li>
+                  <li>Coordinate with Irrigator Associations (IAs) and farmer groups.</li>
+                  <li>Provide logistical support for field activities and events.</li>
+                  <li>Participate in the staking of sampling areas and monitoring activities.</li>
+                  <li>Select the hybrid rice variety for the Balanced Fertilization Technique (BFT) Bout.</li>
+                </ul>
+              </div>
+              
+              <!-- DA-RFO XI Card -->
+              <div class="player-card da-card">
+                <h4><i class="uil uil-graduation-cap"></i> DA-RFO XI (Overall Supervisor)</h4>
+                <ul class="styled-list">
+                  <li>Provide overall supervision and technical oversight of the PRTF.</li>
+                  <li>Supply the hybrid seeds for the Balanced Fertilization Technique (BFT) Bout.</li>
+                  <li>Coordinate with NIA for timely release of irrigation water.</li>
+                  <li>Provide technical guidance and extension support to all participants.</li>
+                  <li>Facilitate the participation of research and development agencies (PhilRice, ATI).</li>
+                  <li>Support in the validation of data and performance evaluation.</li>
+                  <li>Ensure alignment with national rice development programs and policies.</li>
+                  <li>Monitor compliance with the PRTF protocol.</li>
+                </ul>
+              </div>
+              
+              <!-- Private Companies (PPCs) Card -->
+              <div class="player-card ppc-card">
+                <h4><i class="uil uil-briefcase"></i> Private Companies (PPCs)</h4>
+                <ul class="styled-list">
+                  <li>Pay a registration fee of ₱5,000 per entry.</li>
+                  <li>Submit a detailed workplan and passport data for seed varieties.</li>
+                  <li>Provide all inputs (fertilizers, pesticides, growth regulators) for their entries.</li>
+                  <li>Assign technical personnel to supervise field activities.</li>
+                  <li>Print and install the official plot signage at their demonstration plots.</li>
+                  <li>Provide T-shirts and arm sleeves for their partnered Farmer Cooperators.</li>
+                  <li>Share 50% of the transplanting costs with the FC.</li>
+                  <li>Disclose all inputs and operations to the monitoring team.</li>
+                </ul>
+              </div>
+              
+              <!-- Farmer Cooperators (FCs) Card -->
+              <div class="player-card fc-card">
+                <h4><i class="uil uil-user"></i> Farmer Cooperators (FCs)</h4>
+                <ul class="styled-list">
+                  <li>Provide land with a minimum area of 0.5 hectare for the demonstration plot.</li>
+                  <li>Share 50% of the transplanting costs with the participating private company.</li>
+                  <li>Provide labor for land preparation, weeding, and other crop care activities.</li>
+                  <li>Pay irrigation fees and enroll in PCIC for crop insurance.</li>
+                  <li>Allow monitoring and documentation by the Composite Team.</li>
+                  <li>Retain 100% of the harvest from their demonstration plot.</li>
+                  <li>Submit actual yield data for evaluation and validation.</li>
+                  <li>Participate in all PRTF-related activities and events.</li>
+                </ul>
+              </div>
+              
+              <!-- DSSC & DA-Research Card -->
+              <div class="player-card dssc-card">
+                <h4><i class="uil uil-chart"></i> DSSC & DA-Research (Evaluators)</h4>
+                <ul class="styled-list">
+                  <li>Conduct performance evaluation of all PRTF entries.</li>
+                  <li>Perform soil sampling and microbial analysis (for bio-fertilizer entries).</li>
+                  <li>Collect data at critical growth stages (tillering, flowering, harvest).</li>
+                  <li>Conduct crop-cutting in 10 sampling areas per plot (2m x 2.5m).</li>
+                  <li>Validate yield and return on investment (ROI) analysis.</li>
+                  <li>Determine the top 5 highest-performing entries based on yield and cost-efficiency.</li>
+                  <li>Ensure scientific rigor and transparency in the evaluation process.</li>
+                  <li>Submit official results to the lead convenor for recognition.</li>
+                </ul>
+              </div>
+            </div>
           </div>
-
-          <div class="content-block">
-            <h3 class="block-title">📋 Participation Process</h3>
-            <ol class="numbered-list">
-              <li><strong>Site Identification:</strong> MLGU (Matanao MAO) identifies demo sites; validated by DA-PLGU-NIA for irrigation and accessibility.</li>
-              <li><strong>Pre-registration:</strong> PPCs submit <strong>PRTF Form 1</strong> (Intent to Join) by August 13, 2025.</li>
-              <li><strong>Protocol Finalization:</strong> PLGU presents and finalizes the PRTF Protocol with all stakeholders.</li>
-              <li><strong>Official Registration:</strong> PPCs submit <strong>PRTF Form 2</strong> with workplan, passport data (for seeds), and <strong>₱5,000 registration fee per entry</strong>.</li>
-              <li><strong>FC-PPC Pairing:</strong> Qualified FCs are matched with PPCs for joint implementation.</li>
-            </ol>
-          </div>
-
+          
+           <div class="content-block">
+            <h3 class="block-title">📋 How to Participate</h3>
+            <p>Private companies and farmer cooperators who wish to join the PRTF DS2026 can follow this step-by-step registration process:</p>
+            
+            <div class="registration-process">
+              <div class="step" data-step="1">
+                <div class="step-title">1. Register Online</div>
+                  <p>
+                    Fill out the <strong>
+                      <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" 
+                        target="_blank" 
+                        style="text-decoration: underline;">
+                        Official Google Form
+                      </a>
+                    </strong> to submit your intent to join. This serves as your pre-registration.
+                  </p>
+              </div>
+              
+              <div class="step" data-step="2">
+                <div class="step-title">2. Receive Confirmation & Documents</div>
+                <p>After submitting the form, you will receive an email confirmation. This email will include the soft copy of your accomplished <strong>Registration Form (PRTF Form 2)</strong>, an <strong>Initial Acknowledgment Receipt</strong>, and a link to a shared spreadsheet.</p>
+              </div>
+              
+              <div class="step" data-step="3">
+                <div class="step-title">3. Complete Your Workplan (POT)</div>
+                <p>Use the provided spreadsheet link to input the detailed information for your <strong>Plan of Operation and Timeline (POT) / Workplan</strong>PRTF Form 3. This must include all field operations, cultural practices, fertilizer management, and pest control strategies for your entry.</p>
+              </div>
+              
+              <div class="step" data-step="4">
+                <div class="step-title">4. Prepare for Submission</div>
+                <p>Once your workplan is complete, print the following documents:
+                  <ul class="styled-list">
+                    <li>Your signed Registration Form (PRTF Form 2)</li>
+                    <li>Your Initial Acknowledgment Receipt</li>
+                    <li>Your completed POT/Workplan (from the spreadsheet)</li>
+                  </ul>
+                </p>
+              </div>
+              
+          
           <div class="content-block">
             <h3 class="block-title">🌾 Trial Categories</h3>
             <ul class="styled-list">
@@ -126,93 +511,150 @@
                   <li>Max 2 varieties per company.</li>
                   <li>No duplicate varieties allowed.</li>
                   <li>Must submit passport data for maturity-based sowing scheduling.</li>
+                  <li>Late-maturing varieties established first based on maturity dates.</li>
                 </ul>
               </li>
               <li><strong>Balanced Fertilization Technique (BFT) Bout:</strong>
                 <ul>
-                  <li>All entries use the <strong>same hybrid variety</strong> (provided by DA-RFO XI).</li>
+                  <li>All entries use the <strong>same hybrid variety</strong> (provided by DA-RFO XI, selected by MLGU-MAO).</li>
                   <li>Focus on bio-fertilizers, soil ameliorants, and organic inputs as <strong>“add-on”</strong> to 80% of standard NPK.</li>
-                  <li>Each plot split into <strong>“+” (add-on)</strong> and <strong>“–” (control)</strong> treatments.</li>
+                  <li>Each plot split into <strong>“+” (add-on)</strong> and <strong>“–” (control)</strong> treatments (80:20 scheme).</li>
+                  <li>Product entries must be commercially available and verifiable.</li>
                 </ul>
               </li>
             </ul>
           </div>
-
+          
           <div class="content-block">
             <h3 class="block-title">🚜 Field Demonstration Mechanics</h3>
             <ul class="styled-list">
-              <li><strong>Plot Size:</strong> Minimum 0.5 hectare per entry (max 2 entries/company).</li>
-              <li><strong>GPS Measurement:</strong> Geo-referenced plots ensure fairness.</li>
-              <li><strong>Transplanting:</strong> 50-50 cost sharing between PPC and FC.</li>
-              <li><strong>Input Disclosure:</strong> All inputs and costs must be transparent and verifiable.</li>
-              <li><strong>Signage:</strong> Uniform placards (3.5 x 2 ft) designed by PLGU, printed by PPC.</li>
-              <li><strong>Yield:</strong> 100% of harvest goes to the Farmer Cooperator.</li>
+              <li><strong>Plot Size:</strong> Minimum 0.5 hectare per entry (max 2 entries/company); measured by GPS/geo-referencing.</li>
+              <li><strong>Land Preparation:</strong> Cost borne by FC; any additional prescribed activities (e.g., markers) paid by PPC.</li>
+              <li><strong>Transplanting:</strong> 50-50 cost sharing between PPC and FC; ceremonial transplanting marks PRTF launching.</li>
+              <li><strong>Input Disclosure:</strong> All inputs and costs must be transparent and verifiable; only commercially available technologies allowed.</li>
+              <li><strong>Spacing:</strong> 20cm x 20cm for wet season; 20cm x 15cm for dry season to ensure desired plant population.</li>
+              <li><strong>Signage:</strong> Uniform placards (3.5 x 2 ft with 6ft standee) designed by PLGU, printed and installed by PPC.</li>
+              <li><strong>Yield:</strong> 100% of harvest goes to the Farmer Cooperator; FC must submit actual yield data.</li>
+              <li><strong>Soil Analysis:</strong> Conducted before PRTF begins; bio-fertilizer entries require microbial analysis before and after.</li>
             </ul>
           </div>
-
+          
           <div class="content-block">
             <h3 class="block-title">📊 Monitoring & Evaluation</h3>
-            <p>The <strong>Composite Team (CT)</strong> — composed of OPAG, MAO, FCs, DA-RFO XI, and DSSC — oversees:</p>
+            <p>The <strong>Composite Team (CT)</strong> — composed of OPAG, MAO, FCs, DA-RFO XI, and DSSC — oversees all monitoring and evaluation activities:</p>
             <ul class="styled-list">
-              <li>Documentation of all field activities.</li>
+              <li>Documentation of all field activities witnessed by CT members.</li>
               <li>Soil and microbial analysis (before and after for bio-fertilizers).</li>
               <li>Data collection at critical stages (tillering, flowering, harvest).</li>
               <li>Crop-cutting in 10 sampling areas (2m x 2.5m) per plot.</li>
               <li>Validation of yield and ROI analysis by DA-Research and DSSC.</li>
+              <li>Final results considered official and submitted to the lead convenor.</li>
             </ul>
           </div>
-
+          
           <div class="content-block">
             <h3 class="block-title">🚫 Grounds for Disqualification</h3>
             <ul class="styled-list">
-              <li>Failure to disclose inputs or operations.</li>
-              <li>Implementing activities without monitoring team.</li>
-              <li>Sabotage, bribery, or misrepresentation.</li>
+              <li>Failure to disclose inputs or operations to the monitoring team.</li>
+              <li>Implementing field activities in the absence of the monitoring/documentation team.</li>
+              <li>Sabotage of other competing entries.</li>
+              <li>Bribery (directly or indirectly).</li>
               <li>Abandoning the entry for 2 weeks without communication.</li>
               <li>Non-compliance with the PRTF Protocol.</li>
+              <li>Misrepresentation or fraudulent publication of results.</li>
             </ul>
+            <p><em>Note: Disqualified entities will be barred from joining any government procurement through bidding.</em></p>
           </div>
-
+          
           <div class="content-block">
-            <h3 class="block-title">🏆 Recognition</h3>
-            <p>The <strong>top 5 highest-performing entries</strong> — based on yield (ton/ha at 14% MC) and cost-efficiency — will be officially recognized during the <strong>Harvest Festival / Farmers’ Field Day</strong> in February 2026.</p>
+            <h3 class="block-title">🏆 Recognition & Awards</h3>
+            <p>The <strong>top 5 highest-performing entries</strong> — based on yield (ton/ha at 14% moisture content) and cost-efficiency (low production cost) — will be officially recognized during the <strong>Harvest Festival / Farmers' Field Day</strong> in February 2026.</p>
+            <p>The DA-Research team and Davao del Sur State College (DSSC) will validate all data and determine the winning entries, ensuring transparency and scientific rigor in the selection process.</p>
           </div>
-
+          
           <div class="content-block">
-            <h3 class="block-title">🗓 Key Events Timeline (DS2026)</h3>
+            <h3 class="block-title">🗓 Detailed Implementation Timeline</h3>
+            <div class="timeline-item">
+              <div class="timeline-date">July 29, 2025</div>
+              <div class="timeline-content">Initial site validation meeting; MAO team and IA officials begin identifying Farmer Cooperators</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">July 31 - Aug 1, 2025</div>
+              <div class="timeline-content">Finalization of PRTF protocol; distribution of guidelines and Registration Form 2 to participating companies</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 1-8, 2025</div>
+              <div class="timeline-content">Submission period for PRTF Registration Form 2 with workplan and passport data; collection of registration fees</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 8, 2025</div>
+              <div class="timeline-content">Meeting with NIA and prospective FCs; introduction of PRTF project to farmers</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 13, 2025</div>
+              <div class="timeline-content"><strong>Deadline for submission</strong> of PRTF Registration Form 2, workplan, and registration fee (₱5,000 per entry)</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 14-15, 2025</div>
+              <div class="timeline-content">Conduct of geo-tagging/geo-referencing and soil sampling on harvested areas; OPAG identifies laboratory for microbial analysis</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Aug 20, 2025</div>
+              <div class="timeline-content">Coordination meeting for PRTF protocol orientation, drawing of lots, PPC-FC pairing, and presentation of vicinity map</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Sept 1st/2nd week, 2025</div>
+              <div class="timeline-content">Baseline data survey of Farmer Cooperators</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Sept 2nd/3rd week, 2025</div>
+              <div class="timeline-content">NIA releases irrigation water, signaling commencement of land preparation</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Oct 1st/2nd week, 2025</div>
+              <div class="timeline-content">Sowing of different varieties (late-maturing varieties sown first); installation of plot placards</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Oct last wk/Nov 1st wk, 2025</div>
+              <div class="timeline-content">Ceremonial Transplanting / PRTF Launching at the demo site</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Dec 2nd week, 2025</div>
+              <div class="timeline-content">First data gathering (plant height, tillers, panicle length, pest incidence) during milking to soft dough stage</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Jan 2nd week, 2026</div>
+              <div class="timeline-content">Coordination meeting for pre-planning of Harvest Festival and final monitoring</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">Feb 1st/2nd week, 2026</div>
+              <div class="timeline-content">PRTF Harvest Festival / Farmers Field Day / Forum with crop cutting, data collection, and sensory evaluation</div>
+            </div>
+          </div>
+          
+          <div class="content-block">
+            <h3 class="block-title">📞 Contact Information</h3>
+            <p>For inquiries about the PRTF DS2026, please contact the following officials:</p>
             <ul class="styled-list">
-              <li><strong>Aug 13, 2025:</strong> Deadline for PRTF Form 2 submission</li>
-              <li><strong>Aug 14–15:</strong> Geo-tagging & soil sampling</li>
-              <li><strong>Oct–Nov 2025:</strong> Ceremonial Transplanting / PRTF Launching</li>
-              <li><strong>Dec 2025:</strong> First data gathering</li>
-              <li><strong>Feb 2026:</strong> Harvest Festival, Crop Cutting, and Forum</li>
-            </ul>
-          </div>
-
-          <div class="content-block">
-            <h3 class="block-title">🤝 Key Partners & Support</h3>
-            <p>Funding and logistics are shared among:</p>
-            <ul class="styled-list">
-              <li><strong>PLGU:</strong> Fertilizer support (1 bag urea + 1 bag complete per 0.5 ha)</li>
-              <li><strong>DA-RFO XI:</strong> Seeds, irrigation support via NIA</li>
-              <li><strong>Private Companies:</strong> Inputs, workplan, technical staff, T-shirts</li>
-              <li><strong>Farmer Cooperators:</strong> Land, labor, irrigation fee, PCIC enrollment</li>
+              <li><strong>Dann Angelo P. Agulan</strong> - Davao del Sur Action Officer, DA-RFO XI</li>
+              <li><strong>Raul R. Fueconcillo</strong> - Provincial Agriculturist, OPAG Davao del Sur</li>
+              <li><strong>Evelyn D. Saraum</strong> - Provincial Rice Program Coordinator/ Agriculturist II, OPAG Davao del Sur</li>
+              <li><strong>Florami A. Dedace</strong> - Provincial Hybrid Rice Coordinator/ Agriculturist Technologist, OPAG Davao del Sur</li>
+              <li><strong>Genelyn B. Gasatan</strong> - Provincial INM Coordinator/ Agriculturist Technologist, OPAG Davao del Sur</li>
+              <li><strong>Leonaveth N. Mejias, ABE</strong> - Municipal Agriculturist, Matanao MAO</li>
             </ul>
           </div>
         </section>
       </main>
     </div>
-
     <footer>
       <p>&copy; <span id="current-year"></span> OPAG Rice Section | All rights reserved.</p>
     </footer>
-
     <!-- Loading Spinner -->
     <div id="login-loading-spinner">
       <div class="spinner" style="width:40px; height:40px; border:4px solid #ccc; border-top:4px solid #007bff; border-radius:50%; animation: spin 1s linear infinite;"></div>
       <p style="margin-top:10px; font-weight:bold; color:#007bff;">Logging in...</p>
     </div>
-
     <script src="../../scripts/login.js"></script>
     <script src="../../scripts/logout.js"></script>
     <script src="../../scripts/openmenu.js"></script>
@@ -221,11 +663,9 @@
     <script src="scripts/chartpie.js"></script>
     <script>
       document.getElementById('current-year').textContent = new Date().getFullYear();
-      
       document.getElementById('closeModalBtn').addEventListener('click', function() {
         document.getElementById('loginModal').style.display = 'none';
       });
-      
       document.getElementById('togglePassword').addEventListener('click', function() {
         const passwordInput = document.getElementById('login-password');
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -236,4 +676,3 @@
     </script>
   </body>
 </html>
-
