@@ -1,7 +1,8 @@
 /**
  * Dynamically loads styles.css or androidstyles.css based on the user's platform.
+ * iOS and Android devices will use androidstyles.css; all others use styles.css.
  * This script should be included in the HTML <head> before other stylesheets
- * whose loading it might control, or at least before the body content that depends on the styles.
+ * to prevent style conflicts or flash of unstyled content.
  */
 (function () {
     'use strict';
@@ -13,17 +14,31 @@
     function isAndroid() {
         try {
             const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            // The case-insensitive 'i' flag is important as user agent strings can vary
             return /android/i.test(userAgent);
         } catch (error) {
             console.warn("Error detecting Android platform:", error);
-            return false; // Default to not Android on error
+            return false;
+        }
+    }
+
+    /**
+     * Detects if the current platform is iOS (iPhone, iPad, iPod).
+     * @returns {boolean} True if iOS is detected, false otherwise.
+     */
+    function isIOS() {
+        try {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            // Check for iOS devices
+            return /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        } catch (error) {
+            console.warn("Error detecting iOS platform:", error);
+            return false;
         }
     }
 
     /**
      * Creates a <link> element for a stylesheet.
-     * @param {string} href - The path to the CSS file.
+     * @param {string} href - Path to the CSS file.
      * @returns {HTMLLinkElement} The created link element.
      */
     function createStylesheetLink(href) {
@@ -35,61 +50,52 @@
     }
 
     /**
-     * Inserts the platform-specific stylesheet into the document head.
-     * Removes any existing link with id 'platform-stylesheet' or href 'styles.css'
-     * to prevent conflicts, then appends the new one.
+     * Loads the appropriate stylesheet based on platform.
+     * Removes any previous platform-specific or default stylesheet to avoid conflicts.
      */
     function loadPlatformStylesheet() {
-        const isAndroidDevice = isAndroid();
-        const stylesheetHref = isAndroidDevice ? 'androidstyles.css' : 'styles.css';
-        // Adjust the path if your androidstyles.css is in a different directory
-        // e.g., './mobile/androidstyles.css'
+        const isMobileDevice = isAndroid() || isIOS();
+        const stylesheetHref = isMobileDevice ? '../androidstyles.css' : '../styles.css';
 
-        // Create the new link element
-        const newStylesheetLink = createStylesheetLink(stylesheetHref);
-        newStylesheetLink.id = 'platform-stylesheet'; // Give it an ID for identification
+        // Create new link element
+        const newLink = createStylesheetLink(stylesheetHref);
+        newLink.id = 'platform-stylesheet';
 
-        // Try to find and remove any previously injected platform stylesheet
+        // Remove previously injected platform stylesheet
         const existingPlatformLink = document.getElementById('platform-stylesheet');
         if (existingPlatformLink) {
-            existingPlatformLink.parentNode.removeChild(existingPlatformLink);
+            existingPlatformLink.remove();
         }
 
-        // Try to find and remove the default styles.css link if it exists in HTML
-        // This prevents loading both stylesheets
-        const defaultStylesheetLink = document.querySelector('link[href="styles.css"]');
-        if (defaultStylesheetLink) {
-            defaultStylesheetLink.parentNode.removeChild(defaultStylesheetLink);
+        // Remove hardcoded default stylesheet if present
+        const defaultLink = document.querySelector('link[href="styles.css"]');
+        if (defaultLink) {
+            defaultLink.remove();
         }
 
-        // Append the new, platform-specific stylesheet to the head
-        // Ensure the <head> element is available
+        // Inject the correct stylesheet
         if (document.head) {
-            document.head.appendChild(newStylesheetLink);
-            console.log(`[Platform Styles] ${isAndroidDevice ? 'Android' : 'Non-Android'} detected. Loaded: ${stylesheetHref}`);
+            document.head.appendChild(newLink);
+            console.log(`[Platform Styles] ${isAndroid() ? 'Android' : isIOS() ? 'iOS' : 'Desktop'} → Loaded: ${stylesheetHref}`);
         } else {
-            // Fallback in case the script runs extremely early
-            console.warn("[Platform Styles] <head> not found. Retrying on DOMContentLoaded.");
-            document.addEventListener('DOMContentLoaded', function () {
+            // Fallback if head isn't ready yet
+            console.warn("[Platform Styles] <head> not ready. Delaying injection.");
+            document.addEventListener('DOMContentLoaded', () => {
                 if (document.head) {
-                    document.head.appendChild(newStylesheetLink);
-                    console.log(`[Platform Styles - Delayed] ${isAndroidDevice ? 'Android' : 'Non-Android'} detected. Loaded: ${stylesheetHref}`);
+                    document.head.appendChild(newLink);
+                    console.log(`[Platform Styles - Delayed] ${isAndroid() ? 'Android' : isIOS() ? 'iOS' : 'Desktop'} → Loaded: ${stylesheetHref}`);
                 } else {
-                    console.error("[Platform Styles] <head> still not found after DOMContentLoaded. Stylesheet loading failed.");
+                    console.error("[Platform Styles] Failed to inject stylesheet: <head> missing.");
                 }
             });
         }
     }
 
-    // --- Initialization ---
+    // --- Initialize ---
 
-    // Run the loading logic when the DOM is ready or immediately if it already is.
-    // Using DOMContentLoaded ensures the <head> is accessible.
     if (document.readyState === 'loading') {
-        // The document is still loading, wait for DOMContentLoaded
         document.addEventListener('DOMContentLoaded', loadPlatformStylesheet);
     } else {
-        // The document has already loaded (DOM is ready)
         loadPlatformStylesheet();
     }
 
