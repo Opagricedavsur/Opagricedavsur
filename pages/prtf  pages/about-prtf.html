@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -38,7 +37,6 @@
         --dssc-border: #ffc107;
         --dssc-text: #f57f17;
       }
-      
       body {
         font-family: 'Roboto', sans-serif;
         line-height: 1.6;
@@ -47,21 +45,15 @@
         padding: 0;
         background-color: var(--light-bg);
       }
-      
       .main-layout {
         min-height: 100vh;
         display: flex;
         flex-direction: column;
       }
-      
-      
-      
-      
       .container {
         max-width: 1200px;
         margin: 0 auto;
       }
-      
       .section-title {
         text-align: center;
         color: var(--primary-color);
@@ -69,7 +61,6 @@
         margin-bottom: 0.5rem;
         font-weight: 700;
       }
-      
       .subtitle {
         text-align: center;
         color: var(--secondary-color);
@@ -77,14 +68,12 @@
         margin-bottom: 2rem;
         font-weight: 500;
       }
-      
       .intro {
         text-align: center;
         margin-bottom: 2.5rem;
         font-size: 1.1rem;
         color: #444;
       }
-      
       .content-block {
         background-color: white;
         border-radius: 12px;
@@ -93,7 +82,6 @@
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         border: 1px solid var(--border-color);
       }
-      
       .block-title {
         color: var(--primary-color);
         font-size: 1.5rem;
@@ -103,37 +91,30 @@
         align-items: center;
         gap: 10px;
       }
-      
       .styled-list {
         padding-left: 1.5rem;
         margin: 1rem 0;
       }
-      
       .styled-list li {
         margin-bottom: 0.8rem;
       }
-      
       .styled-list li::marker {
         color: var(--accent-color);
         font-weight: bold;
       }
-      
       .numbered-list {
         padding-left: 1.8rem;
         margin: 1rem 0;
       }
-      
       .numbered-list li {
         margin-bottom: 0.8rem;
       }
-      
       .key-players-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5rem;
         margin: 1.5rem 0;
       }
-      
       .player-card {
         border-radius: 10px;
         padding: 1.5rem;
@@ -144,12 +125,10 @@
         border-top: 1px solid;
         border-bottom: 1px solid;
       }
-      
       .player-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 15px rgba(0,0,0,0.1);
       }
-      
       .player-card h4 {
         margin-top: 0;
         font-size: 1.2rem;
@@ -157,127 +136,136 @@
         align-items: center;
         gap: 10px;
       }
-      
       .player-card ul {
         padding-left: 1.5rem;
         margin: 1rem 0;
       }
-      
       .player-card li {
         margin-bottom: 0.6rem;
       }
-      
       .plgu-card {
         background-color: var(--plgu-bg);
         border-color: var(--plgu-border);
       }
-      
       .plgu-card h4 {
         color: var(--plgu-text);
       }
-      
       .mlgu-card {
         background-color: var(--mlgu-bg);
         border-color: var(--mlgu-border);
       }
-      
       .mlgu-card h4 {
         color: var(--mlgu-text);
       }
-      
       .da-card {
         background-color: var(--da-bg);
         border-color: var(--da-border);
       }
-      
       .da-card h4 {
         color: var(--da-text);
       }
-      
       .ppc-card {
         background-color: var(--ppc-bg);
         border-color: var(--ppc-border);
       }
-      
       .ppc-card h4 {
         color: var(--ppc-text);
       }
-      
       .fc-card {
         background-color: var(--fc-bg);
         border-color: var(--fc-border);
       }
-      
       .fc-card h4 {
         color: var(--fc-text);
       }
-      
       .dssc-card {
         background-color: var(--dssc-bg);
         border-color: var(--dssc-border);
       }
-      
       .dssc-card h4 {
         color: var(--dssc-text);
       }
-      
       .timeline-item {
         display: flex;
         margin-bottom: 1.2rem;
         padding-bottom: 1.2rem;
         border-bottom: 1px dashed var(--border-color);
       }
-      
       .timeline-item:last-child {
         border-bottom: none;
         margin-bottom: 0;
         padding-bottom: 0;
       }
-      
       .timeline-date {
         flex-shrink: 0;
         width: 140px;
         font-weight: 700;
         color: var(--accent-color);
       }
-      
       .timeline-content {
         margin-left: 20px;
         padding: 0.5rem 0;
       }
-     
+      .registration-process {
+        margin-top: 1rem;
+      }
+      .step {
+        background: #ffffff;
+        border-left: 5px solid #0066cc;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 18px;
+        margin-bottom: 16px;
+        border-radius: 0 8px 8px 0;
+        transition: transform 0.2s ease;
+      }
+      .step:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      }
+      .step-title {
+        font-weight: 700;
+        color: #0055aa;
+        font-size: 19px;
+        margin-bottom: 10px;
+      }
+      .note-box {
+        background-color: #fffbe6;
+        border: 1px solid #ffe58f;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        font-size: 14px;
+        color: #5b4d03;
+      }
+      .note-title {
+        font-weight: 600;
+        color: #5b4d03;
+      }
       @media (max-width: 768px) {
         .navigations {
           flex-wrap: wrap;
           justify-content: center;
         }
-        
         .navigations a {
           margin: 0.5rem 1rem;
           font-size: 0.9rem;
         }
-        
         .content-block {
           padding: 1.2rem;
         }
-        
         .section-title {
           font-size: 1.8rem;
         }
-        
         .subtitle {
           font-size: 1.1rem;
         }
-        
         .timeline-item {
           flex-direction: column;
         }
-        
         .timeline-date {
           width: auto;
           margin-bottom: 0.5rem;
         }
-        
         .timeline-content {
           margin-left: 0;
         }
@@ -355,7 +343,6 @@
           <p class="intro">
             The <strong>Provincial Rice Technology Forum (PRTF) – Davao del Sur</strong> is a collaborative initiative led by the <strong>Office of the Provincial Agriculturist (OPAG)</strong> in partnership with <strong>DA-RFO XI, NIA, PhilRice, ATI, Davao del Sur State College (DSSC), LGUs, and private agri-input companies</strong>. Modeled after the National Rice Techno Forum (NRTF), the PRTF is a season-long field demonstration designed to showcase high-yielding rice technologies, sustainable farming practices, and innovative fertilizer systems.
           </p>
-          
           <div class="content-block">
             <h3 class="block-title">🎯 Objectives</h3>
             <ul class="styled-list">
@@ -365,11 +352,9 @@
               <li>Foster public-private collaboration to accelerate agricultural development.</li>
             </ul>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">👥 Key Players & Their Roles</h3>
             <p>The success of the PRTF DS2026 relies on the active participation and collaboration of multiple stakeholders. Below are the detailed roles and responsibilities of each key player:</p>
-            
             <div class="key-players-grid">
               <!-- PLGU/OPAG Card -->
               <div class="player-card plgu-card">
@@ -385,7 +370,6 @@
                   <li>Facilitate the drawing of lots for plot assignment.</li>
                 </ul>
               </div>
-              
               <!-- MLGU/MAO Card -->
               <div class="player-card mlgu-card">
                 <h4><i class="uil uil-building"></i> MLGU/MAO (Assistant Lead-Convenor)</h4>
@@ -400,7 +384,6 @@
                   <li>Select the hybrid rice variety for the Balanced Fertilization Technique (BFT) Bout.</li>
                 </ul>
               </div>
-              
               <!-- DA-RFO XI Card -->
               <div class="player-card da-card">
                 <h4><i class="uil uil-graduation-cap"></i> DA-RFO XI (Overall Supervisor)</h4>
@@ -415,7 +398,6 @@
                   <li>Monitor compliance with the PRTF protocol.</li>
                 </ul>
               </div>
-              
               <!-- Private Companies (PPCs) Card -->
               <div class="player-card ppc-card">
                 <h4><i class="uil uil-briefcase"></i> Private Companies (PPCs)</h4>
@@ -430,7 +412,6 @@
                   <li>Disclose all inputs and operations to the monitoring team.</li>
                 </ul>
               </div>
-              
               <!-- Farmer Cooperators (FCs) Card -->
               <div class="player-card fc-card">
                 <h4><i class="uil uil-user"></i> Farmer Cooperators (FCs)</h4>
@@ -445,7 +426,6 @@
                   <li>Participate in all PRTF-related activities and events.</li>
                 </ul>
               </div>
-              
               <!-- DSSC & DA-Research Card -->
               <div class="player-card dssc-card">
                 <h4><i class="uil uil-chart"></i> DSSC & DA-Research (Evaluators)</h4>
@@ -463,45 +443,79 @@
             </div>
           </div>
           
-           <div class="content-block">
+          <div class="content-block">
             <h3 class="block-title">📋 How to Participate</h3>
             <p>Private companies and farmer cooperators who wish to join the PRTF DS2026 can follow this step-by-step registration process:</p>
             
             <div class="registration-process">
               <div class="step" data-step="1">
-                <div class="step-title">1. Register Online</div>
-                  <p>
-                    Fill out the <strong>
-                      <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" 
-                        target="_blank" 
-                        style="text-decoration: underline;">
-                        Official Google Form
-                      </a>
-                    </strong> to submit your intent to join. This serves as your pre-registration.
-                  </p>
-              </div>
-              
-              <div class="step" data-step="2">
-                <div class="step-title">2. Receive Confirmation & Documents</div>
-                <p>After submitting the form, you will receive an email confirmation. This email will include the soft copy of your accomplished <strong>Registration Form (PRTF Form 2)</strong>, an <strong>Initial Acknowledgment Receipt</strong>, and a link to a shared spreadsheet.</p>
-              </div>
-              
-              <div class="step" data-step="3">
-                <div class="step-title">3. Complete Your Workplan (POT)</div>
-                <p>Use the provided spreadsheet link to input the detailed information for your <strong>Plan of Operation and Timeline (POT) / Workplan</strong>PRTF Form 3. This must include all field operations, cultural practices, fertilizer management, and pest control strategies for your entry.</p>
-              </div>
-              
-              <div class="step" data-step="4">
-                <div class="step-title">4. Prepare for Submission</div>
-                <p>Once your workplan is complete, print the following documents:
-                  <ul class="styled-list">
-                    <li>Your signed Registration Form (PRTF Form 2)</li>
-                    <li>Your Initial Acknowledgment Receipt</li>
-                    <li>Your completed POT/Workplan (from the spreadsheet)</li>
-                  </ul>
+                <div class="step-title">1. Fill Out the Pre-Registration Form (PRTF Form 1)</div>
+                <p>
+                  Submit your intent to join by completing the <strong>
+                    <a target="_blank" style="color: #0066cc;">
+                      Pre-Registration Form (PRTF Form 1)
+                    </a>
+                  </strong>. This step formally expresses your interest in participating in the PRTF Davao del Sur program for the upcoming dry season.
                 </p>
               </div>
-              
+
+              <div class="step" data-step="2">
+                <div class="step-title">2. Read Guidelines & Receive Confirmation</div>
+                <p>
+                  After submission, you will receive an email response containing:
+                </p>
+                <ul class="styled-list">
+                  <li>Confirmation of your pre-registration</li>
+                  <li>Initial Acknowledgment Receipt</li>
+                  <li>A link to the shared spreadsheet for your Package of Technology (POT) / Work Plan (PRTF Form 3)</li>
+                </ul>
+                <p><strong>Note:</strong> Before proceeding, please read and fully understand the <em>PRTF Davao del Sur Dry Season 2025–2026 Guidelines and Protocol</em> sent via email or available on the official portal.</p>
+              </div>
+
+              <div class="step" data-step="3">
+                <div class="step-title">3. Complete the Final Registration Form (PRTF Form 2)</div>
+                <p>
+                  Proceed to fill out the <strong>
+                    <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" target="_blank" style="color: #0066cc;">
+                      Final Registration Form (PRTF Form 2)
+                    </a>
+                  </strong> to finalize your product entry. This is required for official inclusion in the trial program.
+                </p>
+              </div>
+
+              <div class="step" data-step="4">
+                <div class="step-title">4. Accomplish Your POT / Work Plan (PRTF Form 3)</div>
+                <p>
+                  Using the shared spreadsheet link provided in your email, complete your <strong>Package of Technology (POT) / Work Plan (PRTF Form 3)</strong> with the following details per demo area:
+                </p>
+                <ul class="styled-list">
+                  <li>Field operations and timeline</li>
+                  <li>Cultural practices</li>
+                  <li>Fertilization management</li>
+                  <li>Pest and disease control strategies</li>
+                  <li>Other relevant agricultural activities</li>
+                </ul>
+                <div class="note-box">
+                  <span class="note-title">📝 Note:</span> Since the PRTF commences in the upcoming Dry Season 2025–2026, you may input <strong>tentative details</strong> initially. The spreadsheet is editable, allowing updates once final timelines and activities are confirmed.
+                </div>
+              </div>
+
+              <div class="step" data-step="5">
+                <div class="step-title">5. Print, Sign, and Submit Hard Copies</div>
+                <p>
+                  Once all forms are completed, print, sign, and submit the following documents to the <strong>OPAG-RIEC Team</strong>:
+                </p>
+                <ul class="styled-list">
+                  <li>Pre-Registration Form (PRTF Form 1)</li>
+                  <li>Final Registration Form (PRTF Form 2) and Acknowledgment Receipt</li>
+                  <li>Completed POT / Work Plan (PRTF Form 3)</li>
+                </ul>
+                <p>
+                  Along with these documents, pay the required <strong>registration fee / product entry fee</strong> to the designated PRTF cashier.
+                </p>
+              </div>
+            </div>
+          </div>
           
           <div class="content-block">
             <h3 class="block-title">🌾 Trial Categories</h3>
@@ -524,7 +538,6 @@
               </li>
             </ul>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">🚜 Field Demonstration Mechanics</h3>
             <ul class="styled-list">
@@ -538,7 +551,6 @@
               <li><strong>Soil Analysis:</strong> Conducted before PRTF begins; bio-fertilizer entries require microbial analysis before and after.</li>
             </ul>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">📊 Monitoring & Evaluation</h3>
             <p>The <strong>Composite Team (CT)</strong> — composed of OPAG, MAO, FCs, DA-RFO XI, and DSSC — oversees all monitoring and evaluation activities:</p>
@@ -551,7 +563,6 @@
               <li>Final results considered official and submitted to the lead convenor.</li>
             </ul>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">🚫 Grounds for Disqualification</h3>
             <ul class="styled-list">
@@ -565,13 +576,11 @@
             </ul>
             <p><em>Note: Disqualified entities will be barred from joining any government procurement through bidding.</em></p>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">🏆 Recognition & Awards</h3>
             <p>The <strong>top 5 highest-performing entries</strong> — based on yield (ton/ha at 14% moisture content) and cost-efficiency (low production cost) — will be officially recognized during the <strong>Harvest Festival / Farmers' Field Day</strong> in February 2026.</p>
             <p>The DA-Research team and Davao del Sur State College (DSSC) will validate all data and determine the winning entries, ensuring transparency and scientific rigor in the selection process.</p>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">🗓 Detailed Implementation Timeline</h3>
             <div class="timeline-item">
@@ -631,7 +640,6 @@
               <div class="timeline-content">PRTF Harvest Festival / Farmers Field Day / Forum with crop cutting, data collection, and sensory evaluation</div>
             </div>
           </div>
-          
           <div class="content-block">
             <h3 class="block-title">📞 Contact Information</h3>
             <p>For inquiries about the PRTF DS2026, please contact the following officials:</p>
@@ -691,5 +699,3 @@
     </script>
   </body>
 </html>
-
-
