@@ -14,36 +14,30 @@
     /* Prevent FOUC - Basic Layout & Font */
    
    
-   #page-loader {
+  /* PAGE LOADER - Full viewport, guaranteed center */
+#page-loader {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: white; /* Or your preferred background */
+  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: all;
 }
 
+/* Remove fixed size container — let content be centered directly */
 .loader-content {
   position: relative;
-  width: 110px;
-  height: 110px;
+  /* No fixed size needed; just a reference point */
 }
 
-.loader-logo {
-  width: 73px;
-  height: 74px;
-  object-fit: contain;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-}
-
+/* Spinner: use absolute positioning but relative to full viewport */
 .spinners {
   width: 80px;
   height: 80px;
@@ -55,7 +49,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: -2;
+  z-index: 2;
+}
+
+/* Logo above spinner */
+.loader-logo {
+  width: 73px;
+  height: 74px;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3; /* Above spinner */
+  border-radius: 4px;
 }
 
 @keyframes spin {
@@ -63,6 +70,11 @@
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+/* Optional: Hide when done */
+#page-loader.hide {
+  opacity: 0;
+  pointer-events: none;
+}
   </style>
 
     <script src="scripts/platformStyles.js"></script>
@@ -202,16 +214,18 @@
     });
 
     // Hide loader when fully loaded
-    window.addEventListener('load', () => {
-      const loader = document.getElementById('page-loader');
-      loader.style.opacity = '0';
-      setTimeout(() => {
-        loader.style.display = 'none';
-      }, 300);
-    });
+   window.addEventListener('load', () => {
+  const loader = document.getElementById('page-loader');
+  loader.style.opacity = '0';
+  loader.style.pointerEvents = 'none'; // Prevent any interaction
+  setTimeout(() => {
+    loader.style.display = 'none'; // Remove from layout
+  }, 300);
+});
   </script>
 </body>
 </html>
+
 
 
 
