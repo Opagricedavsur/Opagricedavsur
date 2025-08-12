@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPAG Rice Section - PRTF</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+   <style>
+    /* Prevent FOUC - Basic Layout & Font */
+   
+   
+   #page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white; /* Or your preferred background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-content {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.loader-logo {
+  width: 73px;
+  height: 74px;
+  object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.spinner {
+  width: 80px;
+  height: 80px;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #49a367;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 15%;
+  left: 14%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+  </style>
+
+    <script src="scripts/platformStyles.js"></script>
+
+</head>
+<body>
+  <!-- PAGE LOADER -->
+  <div id="page-loader">
+    <div class="loader-content">
+      <img src="../../logo-pic/logo opag.png" alt="OPAG Logo" class="loader-logo">
+      <div class="spinner"></div>
+    
+    </div>
+  </div>
+
+<!-- Login Form Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" id="closeModalBtn">&times;</span>
+    <h2>Login</h2>
+    <form id="logForm">
+      <input type="text" id="login-email" placeholder="Username or Email" required />
+      <div class="password-wrapper">
+        <input type="password" id="login-password" placeholder="Password" required />
+        <i class="uil uil-eye-slash toggle-password" id="togglePassword"></i>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast-notification"></div>
+
+<header>
+  <nav class="top-nav">
+    <div id="login-area">
+      <button class="button" id="loginButton">Login</button>
+    </div>
+  </nav>
+  <ul class="opagheader">
+    <li><img src="../../logo-pic/logo opag.png" alt="OPAG Logo" class="opag-logo"></li>
+    <li>OPAG Rice Section</li>
+  </ul>
+  
+</header>
+    <nav class="navigatio">
+  <div class="navigations">
+      <a href="#" id="toggleSidebarBtn" class="auth-only hamburger-menu" style="display: none;">
+          <span class="hamburger-line line1"></span>
+          <span class="hamburger-line line2"></span>
+          <span class="hamburger-line line3"></span>
+          
+      </a>
+
+      <a href="../../index.html">Home</a>
+      <a href="../activities.html">Activities</a>
+      <a href="../rice-production-status.html">Rice Production Status</a>
+      <a href="../news.html">News & Updates</a>
+      <div class="dropdown">
+         <a class="active">PRTF 2025 ▾</a>
+        <div class="dropdown-content">
+                  <a href="about-prtf.html">About PRTF</a>
+                  <a href="prtfguidelines.html">PRTF Guidelines</a>
+            <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSeLW3jbHL6XjGD23p-TWeadcSPgUt2dBhChWMIe9Ndu08vV9A/formResponse" target="_blank">Join PRTF</a>
+                  <a href="prtf_participants.html">List of Participants</a>
+                  <a href="prtfinvitation.html">PRTF Seed, Fertilizer and Fertilizer Related Companies Invitation</a>
+                  
+        </div>
+      </div>
+    </div>
+    </nav>
+    <div class="main-layout">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar hide">
+    <a href="#" class="nav_logo" id="sidebar-user-info">
+      <!-- Filled by session.js -->
+    </a>
+
+    <a href="dashboard.php" class="uil uil-house-user"><strong class="n">Home</strong></a>
+    <a href="cart.php" class="uil uil-analytics">MPOR</a>
+    <a href="rental.php" class="uil uil-document-layout-left">IPCR</a>
+    <a href="order.php" class="uil uil-heart-alt">Monthly Report</a>
+    <a href="cart.php" class="uil uil-plane">Travel Order</a>
+    <a href="orderhistory.php" class="uil uil-history">Profile</a>
+    <a href="settings.php" class="uil uil-cog">Settings</a>
+    <button type="button" id="sidebarLogoutBtn" class="logout-btna">Logout</button>
+  </div>
+
+  <main class="maincontentnews1">
+    <section id="news" class="news1content1">
+      <h2>Provincial Rice Technology Forum (PRTF) Invitation</h2>
+     
+      <div class="newscontent1">
+        <iframe
+         src="https://drive.google.com/file/d/1W891wS8c0IK-IAss7cgp9866AH8AvV_7/preview"
+          width="100%"
+          height="800"
+          style="border: none;"
+        ></iframe>
+      </div>
+    </section>
+  </main>
+</div>
+ <footer>
+  <p>&copy; <span id="current-year"></span> OPAG Rice Section | All rights reserved.</p>
+</footer>
+
+<!-- Loading Spinner -->
+<div id="login-loading-spinner">
+  <div class="spinner" style="width:40px; height:40px; border:4px solid #ccc; border-top:4px solid #007bff; border-radius:50%; animation: spin 1s linear infinite;"></div>
+  <p style="margin-top:10px; font-weight:bold; color:#007bff;">Logging in...</p>
+</div>
+
+<script src="../../scripts/login.js"></script>
+<script src="../../scripts/logout.js"></script>
+<script src="../../scripts/openmenu.js"></script>
+<script src="../../scripts/user_dashboard.js"></script>
+<script src="../../scripts/session.js"></script>
+<script src="scripts/chartpie.js"></script>
+<script>
+    // Set current year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Close modal
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      document.getElementById('loginModal').style.display = 'none';
+    });
+
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function () {
+      const passwordInput = document.getElementById('login-password');
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.classList.toggle('uil-eye');
+      this.classList.toggle('uil-eye-slash');
+    });
+
+    // Hide loader when fully loaded
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('page-loader');
+      loader.style.opacity = '0';
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 300);
+    });
+  </script>
+</body>
+</html>
