@@ -192,17 +192,20 @@
 async function loadGalleryFromManifest() {
   try {
     const response = await fetch('../gallery/gallery-manifest.json');
-    if (!response.ok) throw new Error('Gallery data not found');
+    if (!response.ok) throw new Error('Failed to load gallery manifest');
 
     const sections = await response.json();
     const container = document.getElementById('gallery-container');
 
-    if (sections.length === 0) {
-      container.innerHTML = '<p>No photo albums available yet.</p>';
+    if (!container) {
+      console.error('Gallery container not found!');
       return;
     }
 
+    container.innerHTML = ''; // Clear old content
+
     sections.forEach(section => {
+      // Create album section
       const sectionDiv = document.createElement('div');
       sectionDiv.className = 'gallery-album';
       sectionDiv.innerHTML = `
@@ -211,7 +214,10 @@ async function loadGalleryFromManifest() {
       `;
       container.appendChild(sectionDiv);
 
+      // Get the .gallery div inside this section
       const galleryDiv = sectionDiv.querySelector('.gallery');
+
+      // Add images
       section.images.forEach(filename => {
         const caption = filename
           .replace(/\.[^/.]+$/, "")
@@ -234,9 +240,16 @@ async function loadGalleryFromManifest() {
     });
 
   } catch (error) {
-    console.error('Gallery error:', error);
-    document.getElementById('gallery-container').innerHTML = 
-      `<p style="color:red; text-align:center;">⚠️ Failed to load gallery.<br>${error.message}</p>`;
+    console.error('Gallery load error:', error);
+    const container = document.getElementById('gallery-container');
+    if (container) {
+      container.innerHTML = `
+        <p style="color:red; text-align:center; padding:20px;">
+          ⚠️ Failed to load photo gallery.<br>
+          ${error.message}
+        </p>
+      `;
+    }
   }
 }
 
