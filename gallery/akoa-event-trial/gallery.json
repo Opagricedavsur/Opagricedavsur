@@ -1,0 +1,5 @@
+// gallery.json with custom titles
+[
+  {"file": "Screenshot (1).png", "title": "Davao Workshop"},
+  {"file": "Warehouse_Inspection.jpg", "title": "NFA Warehouse Inspection"}
+]
