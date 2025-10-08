@@ -109,9 +109,9 @@
 
  <!-- Replace the hardcoded gallery with this -->
 <div class="gallery" id="dynamic-gallery">
-  <!-- Images will be inserted here by JS -->
+  <!-- Images will be inserted here -->
 </div>
-</section>
+<button id="loadMoreBtn" style="display:none; margin:20px auto; padding:10px 20px;">Load More</button>
 
       </section>
     </main>
@@ -143,6 +143,26 @@ async function loadGallery() {
     galleryContainer.innerHTML = ''; // Clear placeholder
 
     items.forEach(item => {
+     let currentPage = 0;
+const itemsPerPage = 12; // Show 12 images per load
+
+async function loadGallery(page = 0) {
+  try {
+    const response = await fetch('../gallery/akoa-event-trial/gallery.json');
+    if (!response.ok) throw new Error('Failed to fetch gallery.json');
+
+    const allItems = await response.json();
+    const start = page * itemsPerPage;
+    const end = start + itemsPerPage;
+    const itemsToDisplay = allItems.slice(start, end);
+
+    const galleryContainer = document.getElementById('dynamic-gallery');
+
+    if (page === 0) {
+      galleryContainer.innerHTML = ''; // Clear on first load
+    }
+
+    itemsToDisplay.forEach(item => {
       let filename = item.file;
       let caption = item.title || filename.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
 
@@ -160,6 +180,19 @@ async function loadGallery() {
       galleryContainer.appendChild(figure);
     });
 
+    // Show/hide "Load More" button
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (end < allItems.length) {
+      loadMoreBtn.style.display = 'block';
+      loadMoreBtn.onclick = () => {
+        currentPage++;
+        loadGallery(currentPage);
+      };
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
+
+    // Initialize Lightbox (if not already done)
     if (typeof lightbox !== 'undefined' && typeof lightbox.init === 'function') {
       lightbox.init();
     }
@@ -171,7 +204,8 @@ async function loadGallery() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadGallery);
+// Start with page 0
+document.addEventListener('DOMContentLoaded', () => loadGallery(0));
 </script>
 <script>
   // Set current year
