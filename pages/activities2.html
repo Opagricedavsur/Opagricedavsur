@@ -107,22 +107,10 @@
         <section id="activity-gallery" class="gallery-section">
   <h2>Activity Photo Gallery</h2>
 
-  <div class="gallery">
-    <!-- Example: Manually list 2-3 photos for now -->
-    <figure>
-      <a href="../gallery/akoa-event-trial/Screenshot (1).png" data-lightbox="gallery" data-title="Davao Workshop">
-        <img src="../gallery/akoa-event-trial/Screenshot (1).png" alt="Davao Workshop" loading="lazy">
-      </a>
-      <figcaption>Davao Workshop</figcaption>
-    </figure>
-
-    <figure>
-      <a href="../gallery/akoa-event-trial/Screenshot (12).png" data-lightbox="gallery" data-title="Warehouse Inspection">
-        <img src="/gallery/akoa-event-trial/Screenshot (12).png" alt="Warehouse Inspection" loading="lazy">
-      </a>
-      <figcaption>Warehouse Inspection</figcaption>
-    </figure>
-  </div>
+ <!-- Replace the hardcoded gallery with this -->
+<div class="gallery" id="dynamic-gallery">
+  <!-- Images will be inserted here by JS -->
+</div>
 </section>
 
       </section>
@@ -144,7 +132,44 @@
 <script src="../scripts/openmenu.js"></script>
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
+<script>
+// Fetch image list and populate gallery
+async function loadGallery() {
+  try {
+    const response = await fetch('../gallery/akoa-event-trial/gallery.json');
+    const filenames = await response.json();
+    const galleryContainer = document.getElementById('dynamic-gallery');
+    
+    filenames.forEach(filename => {
+      // Clean filename for caption (remove extension, replace underscores/spaces)
+      const caption = filename
+        .replace(/\.[^/.]+$/, "") // Remove extension
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize first letter of each word
 
+      const figure = document.createElement('figure');
+      figure.innerHTML = `
+        <a href="../gallery/akoa-event-trial/${filename}" data-lightbox="gallery" data-title="${caption}">
+          <img src="../gallery/akoa-event-trial/${filename}" alt="${caption}" loading="lazy">
+        </a>
+        <figcaption>${caption}</figcaption>
+      `;
+      galleryContainer.appendChild(figure);
+    });
+
+    // Re-initialize Lightbox if needed (some versions require this)
+    if (typeof lightbox !== 'undefined') {
+      lightbox.init();
+    }
+  } catch (error) {
+    console.error('Failed to load gallery:', error);
+    galleryContainer.innerHTML = '<p>Failed to load images. Please try again later.</p>';
+  }
+}
+
+// Load gallery when page is ready
+document.addEventListener('DOMContentLoaded', loadGallery);
+</script>
 <script>
   // Set current year
   document.getElementById('current-year').textContent = new Date().getFullYear();
