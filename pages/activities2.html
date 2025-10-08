@@ -52,6 +52,59 @@
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+  .album-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.album-header h3 {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #007bff;
+  color: #007bff;
+  font-size: 1.4em;
+}
+.view-all-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+.view-all-btn:hover {
+  background: #218838;
+}
+/* Keep your existing .gallery styles */
+.gallery-album {
+  margin-bottom: 40px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+.gallery figure {
+  margin: 0;
+  text-align: center;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+.gallery img:hover {
+  transform: scale(1.03);
+}
 </style>
 </head>
 
@@ -171,68 +224,97 @@
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
 <script>
+const ITEMS_PER_ALBUM = 4; // Show 12 photos per album initially
+
 async function loadGalleryFromManifest() {
   try {
     const response = await fetch('../gallery/gallery-manifest.json');
-    if (!response.ok) throw new Error('Failed to load gallery manifest');
+    if (!response.ok) throw new Error('Gallery data not found');
 
     const sections = await response.json();
     const container = document.getElementById('gallery-container');
+    if (!container) return;
 
-    if (!container) {
-      console.error('Gallery container not found!');
-      return;
-    }
-
-    container.innerHTML = ''; // Clear old content
+    container.innerHTML = '';
 
     sections.forEach(section => {
-      // Create album section
       const sectionDiv = document.createElement('div');
       sectionDiv.className = 'gallery-album';
+      
+      // Create header with "View All" button if needed
+      const isLargeAlbum = section.images.length > ITEMS_PER_ALBUM;
+      const viewAllBtn = isLargeAlbum 
+        ? `<button class="view-all-btn" data-folder="${section.folder}">View All (${section.images.length})</button>`
+        : '';
+      
       sectionDiv.innerHTML = `
-        <h3>${section.title}</h3>
+        <div class="album-header">
+          <h3>${section.title}</h3>
+          ${viewAllBtn}
+        </div>
         <div class="gallery" id="gallery-${section.folder}"></div>
       `;
       container.appendChild(sectionDiv);
 
-      // Get the .gallery div inside this section
+      // Load initial set of images
       const galleryDiv = sectionDiv.querySelector('.gallery');
+      const imagesToShow = isLargeAlbum 
+        ? section.images.slice(0, ITEMS_PER_ALBUM) 
+        : section.images;
 
-      // Add images
-      section.images.forEach(filename => {
-        const caption = filename
-          .replace(/\.[^/.]+$/, "")
-          .replace(/[-_]/g, " ")
-          .replace(/\b\w/g, l => l.toUpperCase());
+      renderImages(galleryDiv, section.folder, imagesToShow, section.title);
 
-        const figure = document.createElement('figure');
-        figure.innerHTML = `
-          <a href="../gallery/${section.folder}/${encodeURIComponent(filename)}" 
-             data-lightbox="album-${section.folder}" 
-             data-title="${caption.replace(/"/g, '&quot;')}">
-            <img src="../gallery/${section.folder}/${encodeURIComponent(filename)}" 
-                 alt="${caption}" 
-                 loading="lazy">
-          </a>
-          <figcaption>${caption}</figcaption>
-        `;
-        galleryDiv.appendChild(figure);
-      });
+      // Add event listener for "View All"
+      if (isLargeAlbum) {
+        const btn = sectionDiv.querySelector('.view-all-btn');
+        btn.addEventListener('click', () => {
+          galleryDiv.innerHTML = '';
+          renderImages(galleryDiv, section.folder, section.images, section.title);
+          btn.style.display = 'none';
+        });
+      }
     });
 
   } catch (error) {
-    console.error('Gallery load error:', error);
+    console.error('Gallery error:', error);
     const container = document.getElementById('gallery-container');
     if (container) {
       container.innerHTML = `
         <p style="color:red; text-align:center; padding:20px;">
-          ⚠️ Failed to load photo gallery.<br>
-          ${error.message}
+          ⚠️ Failed to load photo gallery.<br>${error.message}
         </p>
       `;
     }
   }
+}
+
+function renderImages(container, folder, filenames, albumTitle) {
+  filenames.forEach(filename => {
+    // Optional: Generate clean caption (or leave empty)
+    // const caption = generateCaption(filename);
+    const caption = ''; // ← Hides filename completely
+
+    const figure = document.createElement('figure');
+    figure.innerHTML = `
+      <a href="../gallery/${folder}/${encodeURIComponent(filename)}" 
+         data-lightbox="album-${folder}" 
+         data-title="${albumTitle}">
+        <img src="../gallery/${folder}/${encodeURIComponent(filename)}" 
+             alt="${albumTitle} photo"
+             loading="lazy">
+      </a>
+      ${caption ? `<figcaption>${caption}</figcaption>` : ''}
+    `;
+    container.appendChild(figure);
+  });
+}
+
+// Optional: If you ever want smart captions
+function generateCaption(filename) {
+  return filename
+    .replace(/\.[^/.]+$/, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\b\w/g, l => l.toUpperCase());
 }
 
 document.addEventListener('DOMContentLoaded', loadGalleryFromManifest);
