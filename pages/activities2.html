@@ -134,17 +134,13 @@
           </div>
         </section>
 
-        <!-- Activity Photo Gallery Section -->
-        <section id="activity-gallery" class="gallery-section">
+      <!-- Activity Photo Gallery Section -->
+<section id="activity-gallery" class="gallery-section">
   <h2>Activity Photo Gallery</h2>
-
- <!-- Replace the hardcoded gallery with this -->
-<div class="gallery" id="dynamic-gallery">
-  <!-- Images will be inserted here -->
-</div>
-<button id="loadMoreBtn" style="display:none; margin:20px auto; padding:10px 20px;">Load More</button>
-
-      </section>
+  <div id="gallery-container">
+    <!-- Sections will load here -->
+  </div>
+</section>
     </main>
   </div>
 
@@ -164,78 +160,66 @@
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
 <script>
-let currentPage = 0;
-const itemsPerPage = 12;
-
-async function loadGallery(page = 0) {
+async function loadGalleryFromManifest() {
   try {
-    const response = await fetch('../gallery/akoa-event-trial/gallery.json');
-    if (!response.ok) throw new Error('Failed to fetch gallery.json');
+    // Note: activities.html is in /pages/, so manifest is at ../gallery/gallery-manifest.json
+    const response = await fetch('../gallery/gallery-manifest.json');
+    if (!response.ok) throw new Error('Manifest not found');
 
-    const allItems = await response.json();
-    const start = page * itemsPerPage;
-    const end = start + itemsPerPage;
-    const itemsToDisplay = allItems.slice(start, end);
+    const sections = await response.json();
+    const container = document.getElementById('gallery-container');
 
-    const galleryContainer = document.getElementById('dynamic-gallery');
-
-    // Clear only on first page load
-    if (page === 0) {
-      galleryContainer.innerHTML = '';
+    if (sections.length === 0) {
+      container.innerHTML = '<p>No photo albums available.</p>';
+      return;
     }
 
-    itemsToDisplay.forEach(item => {
-      const filename = item.file;
-      const caption = item.title || 
-        filename
+    sections.forEach(section => {
+      // Create section container
+      const sectionEl = document.createElement('div');
+      sectionEl.className = 'gallery-album';
+      sectionEl.innerHTML = `
+        <h3>${section.title}</h3>
+        <div class="gallery" id="gallery-${section.folder}"></div>
+      `;
+      container.appendChild(sectionEl);
+
+      const galleryDiv = sectionEl.querySelector('.gallery');
+
+      section.images.forEach(filename => {
+        // Clean filename for caption: "photo_1.jpg" → "Photo 1"
+        const caption = filename
           .replace(/\.[^/.]+$/, "")
-          .replace(/_/g, " ")
+          .replace(/[-_]/g, " ")
           .replace(/\b\w/g, l => l.toUpperCase());
 
-      const figure = document.createElement('figure');
-      figure.innerHTML = `
-        <a href="../gallery/akoa-event-trial/${encodeURIComponent(filename)}" 
-           data-lightbox="gallery" 
-           data-title="${caption.replace(/"/g, '&quot;')}">
-          <img src="../gallery/akoa-event-trial/${encodeURIComponent(filename)}" 
-               alt="${caption}" 
-               loading="lazy">
-        </a>
-        <figcaption>${caption}</figcaption>
-      `;
-      galleryContainer.appendChild(figure);
+        const figure = document.createElement('figure');
+        figure.innerHTML = `
+          <a href="../gallery/${section.folder}/${encodeURIComponent(filename)}" 
+             data-lightbox="album-${section.folder}" 
+             data-title="${caption.replace(/"/g, '&quot;')}">
+            <img src="../gallery/${section.folder}/${encodeURIComponent(filename)}" 
+                 alt="${caption}" 
+                 loading="lazy">
+          </a>
+          <figcaption>${caption}</figcaption>
+        `;
+        galleryDiv.appendChild(figure);
+      });
     });
-
-    // Handle "Load More" button
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    if (end < allItems.length) {
-      loadMoreBtn.style.display = 'block';
-      // Update button click to load next page
-      loadMoreBtn.onclick = () => {
-        currentPage++;
-        loadGallery(currentPage);
-      };
-    } else {
-      loadMoreBtn.style.display = 'none';
-    }
-
-    // Re-init Lightbox for new images
-    if (typeof lightbox !== 'undefined' && typeof lightbox.init === 'function') {
-      lightbox.init();
-    }
 
   } catch (error) {
     console.error('Gallery load error:', error);
-    document.getElementById('dynamic-gallery').innerHTML = 
-      '<p style="color:red; text-align:center; padding:20px;">⚠️ Failed to load photo gallery.</p>';
+    document.getElementById('gallery-container').innerHTML = 
+      `<p style="color:red; text-align:center; padding:20px;">
+        ⚠️ Failed to load gallery.<br>
+        ${error.message}
+      </p>`;
   }
 }
 
-// Initialize gallery on page load
-document.addEventListener('DOMContentLoaded', () => {
-  currentPage = 0;
-  loadGallery(0);
-});
+// Load when page is ready
+document.addEventListener('DOMContentLoaded', loadGalleryFromManifest);
 </script>
 <script>
   // Set current year
