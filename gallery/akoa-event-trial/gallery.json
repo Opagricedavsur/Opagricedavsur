@@ -1,5 +1,13 @@
 [
-  {"file": "Screenshot (1).png", "title": "Davao Workshop"},
-  {"file": "Screenshot (12).png", "title": "NFA Warehouse Inspection"},
-  {"file": "Screenshot (34).png", "title": "Another Activity Title"}
+  {
+    "file": "Screenshot (1).png",
+    "title": "Davao Workshop",
+    "date": "2025-07-15"
+  },
+  {
+    "file": "Screenshot (12).png",
+    "title": "NFA Warehouse Inspection",
+    "date": "2025-07-10"
+  },
+  ...
 ]
