@@ -1,0 +1,11 @@
+{
+  "name": "opag-rice-section",
+  "version": "1.0.0",
+  "description": "OPAG Rice Section Activities Gallery",
+  "scripts": {
+    "build": "node scripts/generate-gallery-manifest.js"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
