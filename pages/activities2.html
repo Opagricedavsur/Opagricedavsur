@@ -12,22 +12,7 @@
    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
 <style>
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 10px;
-}
-.gallery figure {
-  margin: 0;
-  text-align: center;
-}
-.gallery img {
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
+
 #loadMoreBtn {
   display: block;
   margin: 20px auto;
@@ -160,15 +145,12 @@
           </div>
         </section>
 
-     <!-- Activity Photo Gallery Section -->
+   <!-- Activity Photo Gallery Section -->
 <section id="activity-gallery" class="gallery-section">
   <h2>Activity Photo Gallery</h2>
-
- <!-- Replace the hardcoded gallery with this -->
-<div class="gallery" id="dynamic-gallery">
-  <!-- Images will be inserted here -->
-</div>
-<button id="loadMoreBtn" style="display:none; margin:20px auto; padding:10px 20px;">Load More</button>
+  <div id="gallery-container">
+    <!-- Albums will load here -->
+  </div>
 </section>
     </main>
   </div>
