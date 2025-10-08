@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: yourusername/your-repo-name   # ← Replace with your GitHub repo
+  repo: Opagricedavsur/Opagricedavsur   # ← Replace with your GitHub repo
   branch: main                        # ← Your default branch (usually "main" or "master")
 
 media_folder: "gallery"               # Where uploaded images go
@@ -14,4 +14,5 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Image", name: "image", widget: "image"}
+
       - {label: "Caption", name: "caption", widget: "string"}
