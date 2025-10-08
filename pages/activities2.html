@@ -133,41 +133,56 @@
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
 <script>
-// Fetch image list and populate gallery
+// Fetch and render gallery from gallery.json (supports {file, title})
 async function loadGallery() {
   try {
     const response = await fetch('../gallery/akoa-event-trial/gallery.json');
-    const filenames = await response.json();
-    const galleryContainer = document.getElementById('dynamic-gallery');
+    if (!response.ok) throw new Error('Network response was not ok');
     
-    filenames.forEach(filename => {
-      // Clean filename for caption (remove extension, replace underscores/spaces)
-      const caption = filename
-        .replace(/\.[^/.]+$/, "") // Remove extension
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, l => l.toUpperCase()); // Capitalize first letter of each word
+    const items = await response.json();
+    const galleryContainer = document.getElementById('dynamic-gallery');
+
+    items.forEach(item => {
+      // Handle both string (legacy) and object (new) formats
+      let filename, caption;
+      if (typeof item === 'string') {
+        filename = item;
+        caption = filename.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+      } else if (item && item.file) {
+        filename = item.file;
+        caption = item.title || filename.replace(/\.[^/.]+$/, "");
+      } else {
+        return; // Skip invalid entries
+      }
+
+      // Escape quotes in caption to prevent HTML breakage
+      const safeCaption = caption.replace(/"/g, '&quot;');
 
       const figure = document.createElement('figure');
       figure.innerHTML = `
-        <a href="../gallery/akoa-event-trial/${filename}" data-lightbox="gallery" data-title="${caption}">
-          <img src="../gallery/akoa-event-trial/${filename}" alt="${caption}" loading="lazy">
+        <a href="../gallery/akoa-event-trial/${encodeURIComponent(filename)}" 
+           data-lightbox="gallery" 
+           data-title="${safeCaption}">
+          <img src="../gallery/akoa-event-trial/${encodeURIComponent(filename)}" 
+               alt="${safeCaption}" 
+               loading="lazy">
         </a>
         <figcaption>${caption}</figcaption>
       `;
       galleryContainer.appendChild(figure);
     });
 
-    // Re-initialize Lightbox if needed (some versions require this)
-    if (typeof lightbox !== 'undefined') {
+    // Lightbox auto-initializes in v2.11+, but re-init if needed
+    if (typeof lightbox !== 'undefined' && lightbox.init) {
       lightbox.init();
     }
   } catch (error) {
-    console.error('Failed to load gallery:', error);
-    galleryContainer.innerHTML = '<p>Failed to load images. Please try again later.</p>';
+    console.error('Gallery loading failed:', error);
+    document.getElementById('dynamic-gallery').innerHTML = 
+      '<p style="color:red; text-align:center;">⚠️ Failed to load photo gallery.</p>';
   }
 }
 
-// Load gallery when page is ready
 document.addEventListener('DOMContentLoaded', loadGallery);
 </script>
 <script>
