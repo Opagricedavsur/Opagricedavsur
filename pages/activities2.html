@@ -160,12 +160,15 @@
           </div>
         </section>
 
-      <!-- Activity Photo Gallery Section -->
+     <!-- Activity Photo Gallery Section -->
 <section id="activity-gallery" class="gallery-section">
   <h2>Activity Photo Gallery</h2>
-  <div id="gallery-container">
-    <!-- Sections will load here -->
-  </div>
+
+ <!-- Replace the hardcoded gallery with this -->
+<div class="gallery" id="dynamic-gallery">
+  <!-- Images will be inserted here -->
+</div>
+<button id="loadMoreBtn" style="display:none; margin:20px auto; padding:10px 20px;">Load More</button>
 </section>
     </main>
   </div>
@@ -188,32 +191,28 @@
 <script>
 async function loadGalleryFromManifest() {
   try {
-    // Note: activities.html is in /pages/, so manifest is at ../gallery/gallery-manifest.json
     const response = await fetch('../gallery/gallery-manifest.json');
-    if (!response.ok) throw new Error('Manifest not found');
+    if (!response.ok) throw new Error('Gallery data not found');
 
     const sections = await response.json();
     const container = document.getElementById('gallery-container');
 
     if (sections.length === 0) {
-      container.innerHTML = '<p>No photo albums available.</p>';
+      container.innerHTML = '<p>No photo albums available yet.</p>';
       return;
     }
 
     sections.forEach(section => {
-      // Create section container
-      const sectionEl = document.createElement('div');
-      sectionEl.className = 'gallery-album';
-      sectionEl.innerHTML = `
+      const sectionDiv = document.createElement('div');
+      sectionDiv.className = 'gallery-album';
+      sectionDiv.innerHTML = `
         <h3>${section.title}</h3>
         <div class="gallery" id="gallery-${section.folder}"></div>
       `;
-      container.appendChild(sectionEl);
+      container.appendChild(sectionDiv);
 
-      const galleryDiv = sectionEl.querySelector('.gallery');
-
+      const galleryDiv = sectionDiv.querySelector('.gallery');
       section.images.forEach(filename => {
-        // Clean filename for caption: "photo_1.jpg" → "Photo 1"
         const caption = filename
           .replace(/\.[^/.]+$/, "")
           .replace(/[-_]/g, " ")
@@ -235,16 +234,12 @@ async function loadGalleryFromManifest() {
     });
 
   } catch (error) {
-    console.error('Gallery load error:', error);
+    console.error('Gallery error:', error);
     document.getElementById('gallery-container').innerHTML = 
-      `<p style="color:red; text-align:center; padding:20px;">
-        ⚠️ Failed to load gallery.<br>
-        ${error.message}
-      </p>`;
+      `<p style="color:red; text-align:center;">⚠️ Failed to load gallery.<br>${error.message}</p>`;
   }
 }
 
-// Load when page is ready
 document.addEventListener('DOMContentLoaded', loadGalleryFromManifest);
 </script>
 <script>
