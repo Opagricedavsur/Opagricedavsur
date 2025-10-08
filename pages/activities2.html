@@ -11,6 +11,37 @@
   <script src="../scripts/platformStylesforactivities.js"></script>
    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+<style>
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+.gallery figure {
+  margin: 0;
+  text-align: center;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+#loadMoreBtn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 24px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#loadMoreBtn:hover {
+  background: #0056b3;
+}
+</style>
 </head>
 
 <body>
@@ -133,18 +164,8 @@
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
 <script>
-async function loadGallery() {
-  try {
-    const response = await fetch('../gallery/akoa-event-trial/gallery.json');
-    if (!response.ok) throw new Error('Failed to fetch gallery.json');
-
-    const items = await response.json();
-    const galleryContainer = document.getElementById('dynamic-gallery');
-    galleryContainer.innerHTML = ''; // Clear placeholder
-
-    items.forEach(item => {
-     let currentPage = 0;
-const itemsPerPage = 12; // Show 12 images per load
+let currentPage = 0;
+const itemsPerPage = 12;
 
 async function loadGallery(page = 0) {
   try {
@@ -158,13 +179,18 @@ async function loadGallery(page = 0) {
 
     const galleryContainer = document.getElementById('dynamic-gallery');
 
+    // Clear only on first page load
     if (page === 0) {
-      galleryContainer.innerHTML = ''; // Clear on first load
+      galleryContainer.innerHTML = '';
     }
 
     itemsToDisplay.forEach(item => {
-      let filename = item.file;
-      let caption = item.title || filename.replace(/\.[^/.]+$/, "").replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+      const filename = item.file;
+      const caption = item.title || 
+        filename
+          .replace(/\.[^/.]+$/, "")
+          .replace(/_/g, " ")
+          .replace(/\b\w/g, l => l.toUpperCase());
 
       const figure = document.createElement('figure');
       figure.innerHTML = `
@@ -180,10 +206,11 @@ async function loadGallery(page = 0) {
       galleryContainer.appendChild(figure);
     });
 
-    // Show/hide "Load More" button
+    // Handle "Load More" button
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if (end < allItems.length) {
       loadMoreBtn.style.display = 'block';
+      // Update button click to load next page
       loadMoreBtn.onclick = () => {
         currentPage++;
         loadGallery(currentPage);
@@ -192,7 +219,7 @@ async function loadGallery(page = 0) {
       loadMoreBtn.style.display = 'none';
     }
 
-    // Initialize Lightbox (if not already done)
+    // Re-init Lightbox for new images
     if (typeof lightbox !== 'undefined' && typeof lightbox.init === 'function') {
       lightbox.init();
     }
@@ -200,12 +227,15 @@ async function loadGallery(page = 0) {
   } catch (error) {
     console.error('Gallery load error:', error);
     document.getElementById('dynamic-gallery').innerHTML = 
-      '<p style="color:red; text-align:center; padding:20px;">⚠️ Failed to load photo gallery. Please check console.</p>';
+      '<p style="color:red; text-align:center; padding:20px;">⚠️ Failed to load photo gallery.</p>';
   }
 }
 
-// Start with page 0
-document.addEventListener('DOMContentLoaded', () => loadGallery(0));
+// Initialize gallery on page load
+document.addEventListener('DOMContentLoaded', () => {
+  currentPage = 0;
+  loadGallery(0);
+});
 </script>
 <script>
   // Set current year
