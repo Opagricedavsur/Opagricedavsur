@@ -78,13 +78,88 @@
   background: #218838;
 }
 /* Keep your existing .gallery styles */
-.gallery-album {
-  margin-bottom: 40px;
+
+
+
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+.gallery-category {
+  margin-bottom: 50px;
+}
+.gallery-category h2 {
+  background: #f8f9fa;
+  padding: 12px 20px;
+  border-left: 4px solid #007bff;
+  margin: 40px 0 20px;
+  font-size: 1.6em;
+  color: #333;
+}
+
+.category-preview {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
 }
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.preview-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #007bff;
+}
+.view-all-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+.view-all-btn:hover {
+  background: #218838;
+}
+
+.category-full {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-top: 20px;
+}
+.full-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.full-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #007bff;
+}
+.collapse-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+.collapse-btn:hover {
+  background: #c82333;
+}
+
+/* Keep your existing .gallery styles */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -224,7 +299,8 @@
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
 <script>
-const ITEMS_PER_ALBUM = 1;
+const ITEMS_PER_ALBUM = 1; // Show 1 photo per album initially
+const CATEGORY_PREVIEW_PHOTOS = 1; // Show 1 photo per category preview
 
 async function loadGalleryFromManifest() {
   try {
@@ -237,7 +313,6 @@ async function loadGalleryFromManifest() {
 
     container.innerHTML = '';
 
-    // Process categories (you can define order here if needed)
     Object.keys(categories).forEach(category => {
       const albums = categories[category];
       if (albums.length === 0) return;
@@ -245,45 +320,87 @@ async function loadGalleryFromManifest() {
       // Create category section
       const categoryDiv = document.createElement('div');
       categoryDiv.className = 'gallery-category';
-      categoryDiv.innerHTML = `<h2>${category}</h2>`; // Category = folder name
+      categoryDiv.innerHTML = `<h2>${category}</h2>`;
       container.appendChild(categoryDiv);
 
-      // Add albums
-      albums.forEach(album => {
-        const albumDiv = document.createElement('div');
-        albumDiv.className = 'gallery-album';
-        
-        const isLargeAlbum = album.images.length > ITEMS_PER_ALBUM;
-        const viewAllBtn = isLargeAlbum 
-          ? `<button class="view-all-btn" data-folder="${album.folder}">View All (${album.images.length})</button>`
-          : '';
-        
-        albumDiv.innerHTML = `
-          <div class="album-header">
-            <h3>${album.title}</h3> <!-- Album Title = subfolder name -->
-            ${viewAllBtn}
+      // Create preview section (show 1 photo from first album)
+      const previewDiv = document.createElement('div');
+      previewDiv.className = 'category-preview';
+      previewDiv.innerHTML = `
+        <div class="preview-header">
+          <h3>Latest Activity</h3>
+          <button class="view-all-btn" data-category="${category}">View All (${albums.length} activities)</button>
+        </div>
+        <div class="gallery" id="preview-${category}"></div>
+      `;
+      categoryDiv.appendChild(previewDiv);
+
+      // Render 1 photo from first album
+      const firstAlbum = albums[0];
+      const galleryDiv = previewDiv.querySelector('.gallery');
+      renderImages(galleryDiv, category, firstAlbum.folder, firstAlbum.images.slice(0, 1), firstAlbum.title);
+
+      // Add View All button click handler
+      const viewAllBtn = previewDiv.querySelector('.view-all-btn');
+      viewAllBtn.addEventListener('click', () => {
+        // Hide preview, show all albums
+        previewDiv.style.display = 'none';
+
+        // Add full albums section
+        const fullSection = document.createElement('div');
+        fullSection.className = 'category-full';
+        fullSection.innerHTML = `
+          <div class="full-header">
+            <h3>All Activities in ${category}</h3>
+            <button class="collapse-btn" data-category="${category}">Collapse</button>
           </div>
-          <div class="gallery" id="gallery-${category}-${album.folder}"></div>
         `;
-        categoryDiv.appendChild(albumDiv);
+        categoryDiv.appendChild(fullSection);
 
-        // Load initial images
-        const galleryDiv = albumDiv.querySelector('.gallery');
-        const imagesToShow = isLargeAlbum 
-          ? album.images.slice(0, ITEMS_PER_ALBUM) 
-          : album.images;
+        // Render all albums
+        albums.forEach(album => {
+          const albumDiv = document.createElement('div');
+          albumDiv.className = 'gallery-album';
 
-        renderImages(galleryDiv, category, album.folder, imagesToShow, album.title);
+          const isLargeAlbum = album.images.length > ITEMS_PER_ALBUM;
+          const viewAllBtn = isLargeAlbum 
+            ? `<button class="view-all-btn" data-folder="${album.folder}">View All (${album.images.length})</button>`
+            : '';
 
-        // View All button
-        if (isLargeAlbum) {
-          const btn = albumDiv.querySelector('.view-all-btn');
-          btn.addEventListener('click', () => {
-            galleryDiv.innerHTML = '';
-            renderImages(galleryDiv, category, album.folder, album.images, album.title);
-            btn.style.display = 'none';
-          });
-        }
+          albumDiv.innerHTML = `
+            <div class="album-header">
+              <h3>${album.title}</h3>
+              ${viewAllBtn}
+            </div>
+            <div class="gallery" id="gallery-${category}-${album.folder}"></div>
+          `;
+          fullSection.appendChild(albumDiv);
+
+          // Load initial images
+          const galleryDiv = albumDiv.querySelector('.gallery');
+          const imagesToShow = isLargeAlbum 
+            ? album.images.slice(0, ITEMS_PER_ALBUM) 
+            : album.images;
+
+          renderImages(galleryDiv, category, album.folder, imagesToShow, album.title);
+
+          // View All button
+          if (isLargeAlbum) {
+            const btn = albumDiv.querySelector('.view-all-btn');
+            btn.addEventListener('click', () => {
+              galleryDiv.innerHTML = '';
+              renderImages(galleryDiv, category, album.folder, album.images, album.title);
+              btn.style.display = 'none';
+            });
+          }
+        });
+
+        // Collapse button
+        const collapseBtn = fullSection.querySelector('.collapse-btn');
+        collapseBtn.addEventListener('click', () => {
+          fullSection.remove();
+          previewDiv.style.display = 'block';
+        });
       });
     });
 
