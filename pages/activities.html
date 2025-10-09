@@ -224,55 +224,67 @@
 <script src="../scripts/user_dashboard.js"></script>
 <script src="../scripts/session.js"></script>
 <script>
-const ITEMS_PER_ALBUM = 2; // Show 12 photos per album initially
+const ITEMS_PER_ALBUM = 4;
 
 async function loadGalleryFromManifest() {
   try {
     const response = await fetch('../gallery/gallery-manifest.json');
     if (!response.ok) throw new Error('Gallery data not found');
 
-    const sections = await response.json();
+    const categories = await response.json();
     const container = document.getElementById('gallery-container');
     if (!container) return;
 
     container.innerHTML = '';
 
-    sections.forEach(section => {
-      const sectionDiv = document.createElement('div');
-      sectionDiv.className = 'gallery-album';
-      
-      // Create header with "View All" button if needed
-      const isLargeAlbum = section.images.length > ITEMS_PER_ALBUM;
-      const viewAllBtn = isLargeAlbum 
-        ? `<button class="view-all-btn" data-folder="${section.folder}">View All (${section.images.length})</button>`
-        : '';
-      
-      sectionDiv.innerHTML = `
-        <div class="album-header">
-          <h3>${section.title}</h3>
-          ${viewAllBtn}
-        </div>
-        <div class="gallery" id="gallery-${section.folder}"></div>
-      `;
-      container.appendChild(sectionDiv);
+    // Process categories (you can define order here if needed)
+    Object.keys(categories).forEach(category => {
+      const albums = categories[category];
+      if (albums.length === 0) return;
 
-      // Load initial set of images
-      const galleryDiv = sectionDiv.querySelector('.gallery');
-      const imagesToShow = isLargeAlbum 
-        ? section.images.slice(0, ITEMS_PER_ALBUM) 
-        : section.images;
+      // Create category section
+      const categoryDiv = document.createElement('div');
+      categoryDiv.className = 'gallery-category';
+      categoryDiv.innerHTML = `<h2>${category}</h2>`; // Category = folder name
+      container.appendChild(categoryDiv);
 
-      renderImages(galleryDiv, section.folder, imagesToShow, section.title);
+      // Add albums
+      albums.forEach(album => {
+        const albumDiv = document.createElement('div');
+        albumDiv.className = 'gallery-album';
+        
+        const isLargeAlbum = album.images.length > ITEMS_PER_ALBUM;
+        const viewAllBtn = isLargeAlbum 
+          ? `<button class="view-all-btn" data-folder="${album.folder}">View All (${album.images.length})</button>`
+          : '';
+        
+        albumDiv.innerHTML = `
+          <div class="album-header">
+            <h3>${album.title}</h3> <!-- Album Title = subfolder name -->
+            ${viewAllBtn}
+          </div>
+          <div class="gallery" id="gallery-${category}-${album.folder}"></div>
+        `;
+        categoryDiv.appendChild(albumDiv);
 
-      // Add event listener for "View All"
-      if (isLargeAlbum) {
-        const btn = sectionDiv.querySelector('.view-all-btn');
-        btn.addEventListener('click', () => {
-          galleryDiv.innerHTML = '';
-          renderImages(galleryDiv, section.folder, section.images, section.title);
-          btn.style.display = 'none';
-        });
-      }
+        // Load initial images
+        const galleryDiv = albumDiv.querySelector('.gallery');
+        const imagesToShow = isLargeAlbum 
+          ? album.images.slice(0, ITEMS_PER_ALBUM) 
+          : album.images;
+
+        renderImages(galleryDiv, category, album.folder, imagesToShow, album.title);
+
+        // View All button
+        if (isLargeAlbum) {
+          const btn = albumDiv.querySelector('.view-all-btn');
+          btn.addEventListener('click', () => {
+            galleryDiv.innerHTML = '';
+            renderImages(galleryDiv, category, album.folder, album.images, album.title);
+            btn.style.display = 'none';
+          });
+        }
+      });
     });
 
   } catch (error) {
@@ -288,33 +300,20 @@ async function loadGalleryFromManifest() {
   }
 }
 
-function renderImages(container, folder, filenames, albumTitle) {
+function renderImages(container, category, folder, filenames, albumTitle) {
   filenames.forEach(filename => {
-    // Optional: Generate clean caption (or leave empty)
-    // const caption = generateCaption(filename);
-    const caption = ''; // ← Hides filename completely
-
     const figure = document.createElement('figure');
     figure.innerHTML = `
-      <a href="../gallery/${folder}/${encodeURIComponent(filename)}" 
-         data-lightbox="album-${folder}" 
+      <a href="../gallery/${category}/${folder}/${encodeURIComponent(filename)}" 
+         data-lightbox="album-${category}-${folder}" 
          data-title="${albumTitle}">
-        <img src="../gallery/${folder}/${encodeURIComponent(filename)}" 
+        <img src="../gallery/${category}/${folder}/${encodeURIComponent(filename)}" 
              alt="${albumTitle} photo"
              loading="lazy">
       </a>
-      ${caption ? `<figcaption>${caption}</figcaption>` : ''}
     `;
     container.appendChild(figure);
   });
-}
-
-// Optional: If you ever want smart captions
-function generateCaption(filename) {
-  return filename
-    .replace(/\.[^/.]+$/, "")
-    .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, l => l.toUpperCase());
 }
 
 document.addEventListener('DOMContentLoaded', loadGalleryFromManifest);
@@ -340,4 +339,5 @@ document.addEventListener('DOMContentLoaded', loadGalleryFromManifest);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 </body>
 </html>
+
 
